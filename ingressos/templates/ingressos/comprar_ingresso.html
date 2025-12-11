@@ -15,7 +15,11 @@
         <form method="POST" class="w-100 d-flex align-items-center border rounded p-3 shadow-lg " action="{% url 'comprar_ingresso' id_ingresso=ingresso.id %}" novalidate>
             {% csrf_token %}
             <div class="w-50">
-                <img class="img-ingresso" src="{{ ingresso.thumbnail.url }}">
+                {% if ingresso.thumbnail %}
+                    <img class="img-ingresso" src="{{ ingresso.thumbnail.url }}">
+                {% else %}
+                    <img src="{% static 'img/sem_imagem.png' %}" class="card-img-top image-thumbnail" alt="Sem foto cadastrada">
+                {% endif %}
             </div>
             <div class="w-50 d-flex flex-column">
                 <h2 class='h1'>Você está comprando o ingresso {{ ingresso.titulo }}</h2>

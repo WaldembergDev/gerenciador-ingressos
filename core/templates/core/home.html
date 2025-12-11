@@ -9,7 +9,11 @@
     <section class="d-flex gap-5">
         {% for ingresso in ingressos %}
         <div class="card" style="width: 25rem;">
-            <img src="{{ ingresso.thumbnail.url }}" class="card-img-top image-thumbnail" alt="jogo">
+            {% if ingresso.thumbnail %}
+              <img src="{{ ingresso.thumbnail.url }}" class="card-img-top image-thumbnail" alt="jogo">
+            {% else %}
+              <img src="{% static 'img/sem_imagem.png' %}" class="card-img-top image-thumbnail" alt="Sem foto cadastrada">
+            {% endif %}
             <div class="card-body">
               <h5 class="card-title">{{ ingresso.titulo }}</h5>
               <p class="card-text"><i class="bi bi-calendar-event"></i> {{ ingresso.data_horario }}</p>

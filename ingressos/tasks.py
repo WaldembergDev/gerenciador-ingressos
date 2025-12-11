@@ -58,3 +58,8 @@ def enviar_notificacao(self, numero:str, evento: str, data_evento: str):
     except Exception as e:
         logger.error(f"Falha ao enviar notificação: {e}")
         raise self.retry(countdown=60)
+
+
+def obter_proximos_eventos():
+    pass
+# https://api.maracana.rio.br/v1/bievents
