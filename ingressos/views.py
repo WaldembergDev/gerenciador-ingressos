@@ -13,7 +13,7 @@ from clientes.models import Cliente
 
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+@login_required
 def comprar_ingresso(request, id_ingresso):
     ingresso = get_object_or_404(Ingresso, pk=id_ingresso)
     if not request.user.is_authenticated:
@@ -61,7 +61,7 @@ def comprar_ingresso(request, id_ingresso):
     }
     return render(request, 'ingressos/comprar_ingresso.html', context=context)
 
-
+@login_required
 def visualizar_ingresso(request, id_ingresso):
     ingresso = get_object_or_404(Ingresso, pk=id_ingresso)
     if request.method == 'POST':

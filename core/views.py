@@ -23,7 +23,7 @@ def acesso_inicial(request):
             senha_valida = check_password(senha, senha_acesso)
             if senha_valida:
                 request.session['acesso_geral'] = senha_acesso
-                return redirect('home')   
+                return redirect('home')
             else:
                 messages.error(request, 'Senha não confere!')     
     else:

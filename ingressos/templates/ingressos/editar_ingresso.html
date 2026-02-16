@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Editar Ingresso{% endblock %}
 {% block content %}
-    <div class="d-flex justify-content-center">
-        <form class="border p-5 rounded w-50 mt-4 shadow-lg" method='POST' action="{% url 'editar_ingresso' id_ingresso=ingresso.id %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <h1 class='text-center'>Editar Ingresso</h1>
-            {{ form.as_p }}
-            <input type="submit" value="Confirmar Edições" class='btn btn-primary'>
-        </form>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8 col-lg-6">
+                <form class="border p-5 rounded shadow-lg" method='POST' action="{% url 'editar_ingresso' id_ingresso=ingresso.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h1 class='text-center'>Editar Ingresso</h1>
+                    {{ form.as_p }}
+                    <div class="d-grid">
+                        <input type="submit" value="Confirmar Edições" class='btn btn-primary'>
+                    </div>
+                </form>
+            </div>
     </div>
 {% endblock %}

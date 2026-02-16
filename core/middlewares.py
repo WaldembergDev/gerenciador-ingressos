@@ -4,7 +4,9 @@ from django.shortcuts import redirect
 
 def middleware_acesso_inicial(get_response):
     def middleware(request):
-        if not request.session.get('acesso_geral') and not request.path == '/core/acesso-inicial/':
+        if (not request.session.get('acesso_geral') and
+            not request.path == '/core/acesso-inicial/' and
+            not request.path.startswith('/admin/')):
             return redirect('acesso_inicial')
         
         response = get_response(request)        
