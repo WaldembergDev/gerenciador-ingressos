@@ -5,33 +5,73 @@
     <link rel="stylesheet" href="{% static 'ingressos/css/style.css' %}">
 {% endblock %}
 {% block content %}
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+    <h1 class="text-center mb-5">Você está comprando ingresso</h1>
     <!-- Exibindo a mensagem de erro do formulário -->
     {% if form.non_field_errors %}
         <div class="alert alert-danger mt-3" role="alert">
             {{ form.non_field_errors  }}
         </div>
     {% endif %}
-    <div class="d-flex justify-content-center">
-        <form method="POST" class="w-100 d-flex align-items-center border rounded p-3 shadow-lg " action="{% url 'comprar_ingresso' id_ingresso=ingresso.id %}" novalidate>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-10">
+        <form method="POST" id="formularioCompra" class="row g-1 justify-content-center border rounded p-4 shadow-sm " action="{% url 'comprar_ingresso' id_ingresso=ingresso.id %}">
             {% csrf_token %}
-            <div class="w-50">
+            <div class="col-md-8 col-lg-6 d-flex justify-content-center align-items-center">
                 {% if ingresso.thumbnail %}
                     <img class="img-ingresso" src="{{ ingresso.thumbnail.url }}">
                 {% else %}
                     <img src="{% static 'img/sem_imagem.png' %}" class="card-img-top image-thumbnail" alt="Sem foto cadastrada">
                 {% endif %}
             </div>
-            <div class="w-50 d-flex flex-column">
-                <h2 class='h1'>Você está comprando o ingresso {{ ingresso.titulo }}</h2>
+            <div class="col-md-8 col-lg-6 d-flex flex-column justify-content-center justify-items-center" >
+                <h2 class="text-center">{{ ingresso.titulo }}</h2>
                 <div class='mb-3'>
-                    <p>Dia do evento: {{ ingresso.data_horario }}</p>
-                    <p>Valor: {{ ingresso.preco }}</p>
-                    <p>Ingressos disponíveis: {{ ingresso.estoque_disponivel }}</p>
-                    <label class="form-label">{{ form.quantidade.label }}</label>
+                    <p><span class="fw-bold"> Data:</span> {{ ingresso.data_horario|date:"d/m/Y h:i" }}</p>
+                    <p><span class="fw-bold">Valor:</span> R$ {{ ingresso.preco }}</p>
+                    <p><span class="fw-bold">Ingressos disponíveis:</span> {{ ingresso.estoque_disponivel }}</p>
+                    <label class="form-label fw-bold">{{ form.quantidade.label }}:</label>
                     {{ form.quantidade }}
+                    {{ form.quantidade.errors }}
                 </div>
-                <button type="submit" class="btn btn-primary align-self-center">Comprar Agora</button>
+                <div class="d-flex justify-content-between">
+                    <button type="button"
+                            class="btn btn-secondary align-self-center btnCancelarAlteracoes">
+                            Cancelar Compra
+                    </button>
+                    <button type="submit"
+                            class="btn btn-primary align-self-center"
+                            data-evento="{{ ingresso.titulo }}"
+                            id="btnConfirmarCompra">
+                            Comprar Agora
+                    </button>
+                </div>
             </div>
         </form>
     </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalConfirmarCompra" tabindex="-1" aria-labelledby="modalConfirmarCompra" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmação de Compra</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Confirma a compra de <span class="fw-bold" id="spanQuantidade"></span> ingresso(s) para o evento <span class="fw-bold" id="spanEvento"></span></p>
+        </div>
+        <div class="modal-footer">
+            <form id="formConfirmacaoCompra" method="POST">
+                {% csrf_token %}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+<script src="{% static 'ingressos/js/comprar-ingresso.js' %}"> </script>
 {% endblock %}

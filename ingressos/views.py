@@ -22,9 +22,9 @@ def comprar_ingresso(request, id_ingresso):
     if request.method == 'POST':
         form = CompraForm(request.POST, ingresso=ingresso)
         if form.is_valid():
-            if request.user.is_admin:
-                messages.error(request, 'Administrador, faz sentido você comprar ingresso?')
-                return redirect('comprar_ingresso', ingresso.id)
+            # if request.user.is_admin:
+            #     messages.error(request, 'Administrador, faz sentido você comprar ingresso?')
+            #     return redirect('comprar_ingresso', ingresso.id)
             try:                
                 with transaction.atomic():
                     quantidade = form.cleaned_data['quantidade']
@@ -95,9 +95,9 @@ def exibir_todos_ingressos_comprados(request):
 
 @login_required
 def exibir_meus_ingressos(request):
-    if request.user.is_admin:
-            messages.error(request, 'Administrador, faz sentido você visualizar seus ingressos comprados?')
-            return redirect('home')
+    # if request.user.is_admin:
+    #         messages.error(request, 'Administrador, faz sentido você visualizar seus ingressos comprados?')
+    #         return redirect('home')
     usuario = request.user
     cliente = Cliente.objects.get(usuario=usuario)
     compras = HistoricoCompra.objects.filter(cliente=cliente)

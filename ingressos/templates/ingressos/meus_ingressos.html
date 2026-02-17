@@ -2,12 +2,16 @@
 {% load static %}
 {% block title %}Meus Ingressos{% endblock %}
 {% block content %}
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
     <h1 class="text-center">Meus ingressos</h1>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
             <th scope="col">Data da Compra</th>
             <th scope="col">Evento</th>
+            <th scope="col">Local</th>
             <th scope="col">Data do Evento</th>
             <th scope="col">Ações</th> 
         </tr>
@@ -15,9 +19,10 @@
         <tbody>
             {% for compra in compras %}
         <tr>
-            <td>{{ compra.data_compra }}</td>
+            <td>{{ compra.data_compra|date:"d/m/Y H:i" }}</td>
             <td>{{ compra.titulo }}</td>
-            <td>{{ compra.ingresso.data_horario }}</td>
+            <td>{{ compra.local }}</td>
+            <td>{{ compra.ingresso.data_horario|date:"d/m/Y H:i" }}</td>
             <td><button type="button" id="botaoAbrirModal" class="btn btn-primary btn-ingresso" data-id="{{ compra.id }}">Ver detalhes</button>
         </tr>
             {% empty %}
