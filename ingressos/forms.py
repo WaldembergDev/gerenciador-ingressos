@@ -23,9 +23,9 @@ class IngressoForm(forms.ModelForm):
         model = Ingresso
         fields = '__all__'
         widgets = {
+            'titulo': forms.TextInput(attrs = {'class': 'form-control'}),
             'tipo': forms.Select(attrs={'class': 'form-select'}),
             'thumbnail': forms.FileInput(attrs={'class': 'form-control'}),
-            'titulo': forms.TextInput(attrs = {'class': 'form-control'}),
             'local': forms.TextInput(attrs = {'class': 'form-control'}),
             'descricao': forms.TextInput(attrs= {'class': 'form-control'}),
             'data_horario': forms.DateTimeInput(attrs = {'type': 'datetime-local', 'class': 'form-control'}, format='%Y-%m-%dT%H:%M'),

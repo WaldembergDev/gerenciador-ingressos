@@ -1,16 +1,120 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Editar Ingresso{% endblock %}
 {% block content %}
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
     <div class="row justify-content-center mt-4">
         <div class="col-md-8 col-lg-6">
-                <form class="border p-5 rounded shadow-lg" method='POST' action="{% url 'editar_ingresso' id_ingresso=ingresso.id %}" enctype="multipart/form-data">
+                <h1 class='text-center'>Editar Ingresso</h1>
+                <form id="formularioDados" class="border p-5 rounded shadow-lg" method='POST' action="{% url 'editar_ingresso' id_ingresso=ingresso.id %}" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <h1 class='text-center'>Editar Ingresso</h1>
-                    {{ form.as_p }}
-                    <div class="d-grid">
-                        <input type="submit" value="Confirmar Edições" class='btn btn-primary'>
+                    <div class="row mb-3">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.titulo.label_tag }}
+                            </label>
+                            {{ form.titulo }}
+                            {{ form.titulo.errors }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.tipo.label_tag }}
+                            </label>
+                            {{ form.tipo }}
+                            {{ form.tipo.errors }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.status.label_tag }}
+                            </label>
+                            {{ form.status }}
+                            {{ form.status.errors }}
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.local.label_tag }}
+                            </label>
+                            {{ form.local }}
+                            {{ form.local.errors }}
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.descricao.label_tag }}
+                            </label>
+                            {{ form.descricao }}
+                            {{ form.descricao.errors }}
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.data_horario.label_tag }}
+                            </label>
+                            {{ form.data_horario }}
+                            {{ form.data_horario.errors }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.preco.label_tag }}
+                            </label>
+                            {{ form.preco }}
+                            {{ form.preco.errors }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.estoque_disponivel.label_tag }}
+                            </label>
+                            {{ form.estoque_disponivel }}
+                            {{ form.estoque_disponivel.errors }}
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.thumbnail.label_tag }}
+                            </label>
+                            {{ form.thumbnail }}
+                            {{ form.thumbnail.errors }}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <input type="button"
+                               data-href="{% url 'home' %}"
+                               value="Cancelar alterações"
+                               class='btn btn-secondary btnCancelarAlteracoes'>
+                        <input type="button"
+                               value="Salvar Alterações"
+                               class='btn btn-primary btnConfirmarEdicoes'
+                               data-bs-toggle="modal"
+                               data-bs-target="#modalConfirmarAlteracoes">
                     </div>
                 </form>
             </div>
     </div>
+
+
+    <!-- O Modal -->
+    <div class="modal fade" id="modalConfirmarAlteracoes" tabindex="-1" aria-labelledby="meuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="meuModalLabel">Confirmação de edição</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <p>Confirma a alteração do ingresso?</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <form method="POST" id="formularioConfirmacao">
+                {% csrf_token %}
+                <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </div>
+        </div>
+    </div>
+        
+    </div>
+    
+    <script src="{% static 'ingressos/js/editar-ingresso.js' %}"></script>
 {% endblock %}
