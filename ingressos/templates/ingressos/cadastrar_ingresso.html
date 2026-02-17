@@ -1,12 +1,87 @@
-    {% extends 'base.html' %}
-    {% block title %}Cadastrar Evento{% endblock %}
-    {% block content %}
-        <div class="d-flex justify-content-center">
-            <form class="border p-5 rounded w-50 mt-4 shadow-lg" method='POST' action="{% url 'cadastrar_ingresso' %}" enctype="multipart/form-data">
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cadastrar Evento{% endblock %}
+{% block content %}
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <h1 class='text-center'>Cadastrar Evento</h1>
+            <form class="border p-5 row rounded mt-4 shadow-lg" method='POST' action="{% url 'cadastrar_ingresso' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <h1 class='text-center'>Cadastrar Evento</h1>
-                {{ form.as_p }}
-                <input type="submit" value="Cadastrar Ingresso" class='btn btn-primary'>
+                <div class="mb-3">
+                    <label for="{{ form.titulo.id_for_label }}" class="form-label fw-bold">
+                        {{ form.titulo.label_tag }}
+                    </label>
+                    {{ form.titulo }}
+                    {{ form.titulo.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="{{ form.tipo.id_for_label }}" class="form-label fw-bold">
+                        {{ form.tipo.label_tag }}
+                    </label>
+                    {{ form.tipo }}
+                    {{ form.tipo.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="{{ form.status.id_for_label }}" class="form-label fw-bold">
+                        {{ form.status.label_tag }}
+                    </label>
+                    {{ form.status }}
+                    {{ form.status.errors }}
+                </div>
+                <div class="mb-3 col-12">
+                    <label for="{{ form.local.id_for_label }}" class="form-label fw-bold">
+                        {{ form.local.label_tag }}
+                    </label>
+                    {{ form.local }}
+                    {{ form.local.errors }}
+                </div>
+                <div class="mb-3 col-12">
+                    <label for="{{ form.descricao.id_for_label }}" class="form-label fw-bold">
+                        {{ form.descricao.label_tag }}
+                    </label>
+                    {{ form.descricao }}
+                    {{ form.descricao.errors }}
+                </div>
+                <div class="mb-3 col-12">
+                    <label for="{{ form.data_horario.id_for_label }}" class="form-label fw-bold">
+                        {{ form.data_horario.label_tag }}
+                    </label>
+                    {{ form.data_horario }}
+                    {{ form.data_horario.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="{{ form.preco.id_for_label }}" class="form-label fw-bold">
+                        {{ form.preco.label_tag }}
+                    </label>
+                    {{ form.preco }}
+                    {{ form.preco.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="{{ form.estoque_disponivel.id_for_label }}" class="form-label fw-bold">
+                        {{ form.estoque_disponivel.label_tag }}
+                    </label>
+                    {{ form.estoque_disponivel }}
+                    {{ form.estoque_disponivel.errors }}
+                </div>
+                <div class="mb-3 col-12">
+                    <label for="{{ form.thumbnail.id_for_label }}" class="form-label fw-bold">
+                        {{ form.thumbnail.label_tag }}
+                    </label>
+                    {{ form.thumbnail }}
+                    {{ form.thumbnail.errors }}
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <button id="bntCancelar" type="button" class="btn btn-secondary">Cancelar</button>
+                    <input type="submit" value="Salvar Evento" class='btn btn-primary'>
+                </div>
             </form>
         </div>
-    {% endblock %}
+    </div>
+    <!-- Scripts -->
+    <script src="{% static 'ingressos/js/cadastrar-ingresso.js' %}">
+    </script>
+{% endblock %}

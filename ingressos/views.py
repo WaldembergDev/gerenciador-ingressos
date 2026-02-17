@@ -79,7 +79,7 @@ def cadastrar_ingresso(request):
             messages.success(request, 'Ingresso cadastrado com sucesso!')
             return redirect('cadastrar_ingresso')
     else:
-        form = IngressoForm(esconder_campo=True)
+        form = IngressoForm()
     context = {
         'form': form
     }
