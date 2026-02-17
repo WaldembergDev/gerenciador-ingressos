@@ -5,29 +5,31 @@
   <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 {% endblock %}
 {% block content %}
-    <h1 class="display-4 text-center">Próximos Eventos</h1>
-    <section class="d-flex gap-5">
+    <h1 class="display-4 text-center mb-4">Próximos Eventos</h1>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for ingresso in ingressos %}
-        <div class="card" style="width: 25rem;">
+        <div class="col">
+        <div class="card h-100">
             {% if ingresso.thumbnail %}
               <img src="{{ ingresso.thumbnail.url }}" class="card-img-top image-thumbnail" alt="jogo">
             {% else %}
               <img src="{% static 'img/sem_imagem.png' %}" class="card-img-top image-thumbnail" alt="Sem foto cadastrada">
             {% endif %}
-            <div class="card-body">
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{ ingresso.titulo }}</h5>
               <p class="card-text"><i class="bi bi-calendar-event"></i> {{ ingresso.data_horario }}</p>
               <p class="card-text"><i class="bi bi-three-dots"></i> {{ ingresso.get_tipo_display }}</p>
               <p class="card-text"><i class="bi bi-geo-alt"></i> {{ ingresso.local }}</p>
               <p class="card-text"><i class="bi bi-box-seam"></i></i> {{ ingresso.estoque_disponivel }} ingresso(s) restante(s)</p>
-              <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-between mt-auto">
                 <a href="{% url 'comprar_ingresso' id_ingresso=ingresso.id %}" class="btn btn-primary">Comprar | R$ {{ ingresso.preco }}</a>
-                <a href="{% url 'editar_ingresso' id_ingresso=ingresso.id %}" class="btn btn-success">Editar</a>
+                <a href="{% url 'editar_ingresso' id_ingresso=ingresso.id %}" class="btn btn-outline-success">Editar</a>
               </div>
             </div>
           </div>
+        </div>
           {% empty %}
             <p class="text-center">Nenhum evento próximo disponível.</p>
           {% endfor %}
-    </section>
+        </div>
 {% endblock %}
