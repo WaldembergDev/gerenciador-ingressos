@@ -36,13 +36,17 @@ def acesso_inicial(request):
 
 def home(request):
     query = request.GET.get('q')
+    agora = timezone.now()
     if request.GET.get('q'):
         ingressos = Ingresso.objects.filter(
-            Q(titulo__icontains=query) | Q(descricao__icontains=query)
+            (Q(titulo__icontains=query) | Q(descricao__icontains=query)) &
+             Q(data_horario__gte=agora)
         ).distinct()
     else:
-        agora = timezone.now()
-        ingressos = Ingresso.objects.filter(data_horario__gte=agora)
+        
+        ingressos = Ingresso.objects.filter(
+            data_horario__gte=agora
+            ).order_by('data_horario')
     context = {
         'ingressos': ingressos,
         'query': query

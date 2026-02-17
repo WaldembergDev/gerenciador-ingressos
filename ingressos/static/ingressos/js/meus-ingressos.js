@@ -45,10 +45,18 @@ document.addEventListener('DOMContentLoaded', function(){
                 let valorPagoId = document.getElementById('valorPagoId');
                 let quantidadeId = document.getElementById('quantidadeId');
 
+                /* formatando a data */
+                const data = new Date(json.data_compra);
+                const dataFormatada = data.toLocaleString('pt-BR', {
+                    day: '2-digit', month: '2-digit', year: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
+                });
+
+
                 // salvando os dados no modal
                 titulo.textContent = json.titulo;
                 local.textContent = json.local;
-                dataCompraId.textContent = json.data_compra;
+                dataCompraId.textContent = dataFormatada;
                 valorPagoId.textContent = json.valor_pago;
                 quantidadeId.textContent = json.quantidade;
                 modalBootstrap.show();

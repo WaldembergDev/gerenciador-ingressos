@@ -100,7 +100,7 @@ def exibir_meus_ingressos(request):
     #         return redirect('home')
     usuario = request.user
     cliente = Cliente.objects.get(usuario=usuario)
-    compras = HistoricoCompra.objects.filter(cliente=cliente)
+    compras = HistoricoCompra.objects.filter(cliente=cliente).order_by('data_horario_evento')
     context = {
         'compras': compras
     }

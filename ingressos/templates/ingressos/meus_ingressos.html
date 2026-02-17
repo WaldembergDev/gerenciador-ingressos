@@ -5,11 +5,11 @@
     <a href="{% url 'home' %}" class="btn btn-outline-secondary">
         <i class="bi bi-arrow-left"></i> Voltar
     </a>
-    <h1 class="text-center">Meus ingressos</h1>
+    <h1 class="text-center mb-4">Meus ingressos</h1>
     <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th scope="col">Data da Compra</th>
+        <thead class="table-dark">
+        <tr class="align-middle text-center">
+            <th class="d-none d-sm-table-cell" scope="col">Data da Compra</th>
             <th scope="col">Evento</th>
             <th scope="col">Local</th>
             <th scope="col">Data do Evento</th>
@@ -18,17 +18,22 @@
         </thead>
         <tbody>
             {% for compra in compras %}
-        <tr>
-            <td>{{ compra.data_compra|date:"d/m/Y H:i" }}</td>
+        <tr class="align-middle text-center">
+            <td class="d-none d-sm-table-cell">{{ compra.data_compra|date:"d/m/Y H:i" }}</td>
             <td>{{ compra.titulo }}</td>
             <td>{{ compra.local }}</td>
             <td>{{ compra.ingresso.data_horario|date:"d/m/Y H:i" }}</td>
-            <td><button type="button" id="botaoAbrirModal" class="btn btn-primary btn-ingresso" data-id="{{ compra.id }}">Ver detalhes</button>
+            <td><button type="button" id="botaoAbrirModal" class="btn btn-primary btn-ingresso" data-id="{{ compra.id }}">Detalhes</button>
         </tr>
             {% empty %}
-            <tr>
-                <td>Ainda não existem compras registradas em seu nome.</td>
+            <!-- modo desktop -->
+            <tr class="d-none d-md-table-row text-center">
+                <td colspan="5">Ainda não existem compras registradas em seu nome.</td>
             </tr>
+            <!-- Modo mobile -->
+             <tr class="d-md-none text-center">
+                <td colspan="4">Ainda não existem compras registradas em seu nome.</td>
+             </tr>
             {% endfor %}
         </tbody>
     </table>
@@ -42,15 +47,15 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <p>Titulo: <span id="tituloId"></span></p>
-                    <p>Local: <span id="localId"></span></p>
-                    <p>Data da Compra: <span id="dataCompraId"></span></p>
-                    <p>Valor pago: <span id="valorPagoId"></span></p>
-                    <p>Quantidade: <span id="quantidadeId"></span></p>
+                    <p><span class="fw-bold">Titulo</span>: <span id="tituloId"></span></p>
+                    <p><span class="fw-bold">Local</span>: <span id="localId"></span></p>
+                    <p><span class="fw-bold">Data da Compra</span>: <span id="dataCompraId"></span></p>
+                    <p><span class="fw-bold">Valor pago</span>: R$ <span id="valorPagoId"></span></p>
+                    <p><span class="fw-bold">Quantidade</span>: <span id="quantidadeId"></span></p>
                 </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
         </div>
@@ -58,5 +63,5 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'ingressos/js/script.js' %}"></script>
+    <script src="{% static 'ingressos/js/meus-ingressos.js' %}"></script>
 {% endblock %}
