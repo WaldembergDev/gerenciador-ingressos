@@ -5,7 +5,30 @@
     <a href="{% url 'home' %}" class="btn btn-outline-secondary">
         <i class="bi bi-arrow-left"></i> Voltar
     </a>
-    <h1 class="text-center mb-4">Todos os ingressos vendidos</h1>
+    <h1 class="text-center mb-4 mt-4">Todos os ingressos vendidos</h1>
+
+    <!-- Filtros -->
+    <form action="." method="GET" class="row g-1 mb-3 border rounded p-4">
+          <h2 class="text-center col-12">Filtros</h2>
+          <div class="col-md-3">
+            <label for="inputComprador" class="form-label">Comprador</label>
+            <input value="{{ request.GET.inputComprador }}" type="text" class="form-control" name="comprador" id="inputComprador" aria-describedby="Data da Compra">
+          </div>
+          <div class="col-md-3">
+            <label for="inputEvento" class="form-label">Evento</label>
+            <input type="text" class="form-control" name="evento" id="inputEvento" aria-describedby="Data da Compra">
+          </div>
+          <div class="col-md-3">
+            <label for="inputDataEvento" class="form-label">Data do Evento</label>
+            <input type="date" class="form-control" name="dataEvento" id="inputDataEvento" aria-describedby="Data da Compra">
+          </div>
+          <div class="col-md-3 d-flex justify-content-center align-items-end gap-1">
+            <button type="button" class="btn btn-secondary">Limpar</button>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+          </div>
+    </form>
+
+    <!-- Tabela com os dados-->
     <table class="table table-striped table-hover">
         <thead class="table-dark text-center">
             <tr class="align-middle">

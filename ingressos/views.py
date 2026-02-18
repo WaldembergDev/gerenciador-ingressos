@@ -7,6 +7,7 @@ from .forms import CompraForm, IngressoForm
 from django.contrib import messages
 from clientes.models import Cliente
 from django.core.paginator import Paginator
+from datetime import datetime, date
 
 from django.contrib.auth.decorators import login_required
 
@@ -76,9 +77,28 @@ def cadastrar_ingresso(request):
 @login_required
 def exibir_todos_ingressos_comprados(request):
     # obtendo os ingressos comprados
-    ingressos_comprados = HistoricoCompra.objects.all()
-    # configurando o paginator (2 itens por página)
-    paginator = Paginator(ingressos_comprados, 2)
+    ingressos_comprados = HistoricoCompra.objects.order_by('data_horario_evento')
+    # aplicando filtro
+    filtros = {}
+    comprador = request.GET.get('comprador')
+    evento = request.GET.get('evento')
+    data_evento_str = request.GET.get('dataEvento')
+
+    if comprador:
+        filtros['cliente__usuario__first_name__icontains'] = comprador
+    
+    if evento:
+        filtros['titulo__icontains'] = evento
+    
+    if data_evento_str:
+        data_evento = datetime.strptime(data_evento_str, '%Y-%m-%d').date()
+        filtros['data_horario_evento__date'] = data_evento
+
+    if filtros:
+        ingressos_comprados = ingressos_comprados.filter(**filtros)
+
+    # configurando o paginator (30 itens por página)
+    paginator = Paginator(ingressos_comprados, 30)
     # capturando o número da página atual
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
