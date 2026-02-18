@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody class="align-middle text-center">
-            {% for historico in ingressos_comprados %}
+            {% for historico in page_obj %}
                 <tr>
                 <th scope="row">{{ historico.data_compra|date:"d/m/Y H:i" }}</th>
                 <td class="d-none d-lg-table-cell">{{ historico.cliente.usuario.first_name }}</td>
@@ -34,13 +34,16 @@
             {% empty %}
                 <!-- Para pc -->
                 <tr class="d-none d-md-table-row text-center">
-                  <td colspan="7">Ainda não houve nenhuma compra na plataforma!</th>
+                  <td colspan="7">Ainda não houve nenhuma compra na plataforma!</td>
                 </tr>
                 <!-- Para dispositivos móveis -->
                 <tr class="d-md-none d-sm-table-row text-center">
-                  <td colspan="5">Ainda não houve nenhuma compra na plataforma!</th>
+                  <td colspan="5">Ainda não houve nenhuma compra na plataforma!</td>
                 </tr>
             {% endfor %}
           </tbody>
     </table>
+
+    <!-- Paginação -->
+    {% include 'partials/_paginacao.html' %}
 {% endblock %}

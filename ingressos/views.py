@@ -1,15 +1,12 @@
-from email import message
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.db import transaction, models
+from django.db import transaction
 from django.urls import reverse
-
-from core.models import CustomUser
 from .models import Ingresso, HistoricoCompra
-from django.shortcuts import get_object_or_404
 from .forms import CompraForm, IngressoForm
 from django.contrib import messages
 from clientes.models import Cliente
+from django.core.paginator import Paginator
 
 from django.contrib.auth.decorators import login_required
 
@@ -78,9 +75,16 @@ def cadastrar_ingresso(request):
 
 @login_required
 def exibir_todos_ingressos_comprados(request):
+    # obtendo os ingressos comprados
     ingressos_comprados = HistoricoCompra.objects.all()
+    # configurando o paginator (2 itens por página)
+    paginator = Paginator(ingressos_comprados, 2)
+    # capturando o número da página atual
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'ingressos_comprados': ingressos_comprados
+        'page_obj': page_obj
     }
     return render(request, 'ingressos/todos_ingressos_comprados.html', context=context)
 
