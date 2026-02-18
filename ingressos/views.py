@@ -44,7 +44,7 @@ def comprar_ingresso(request, id_ingresso):
                         ingresso=ingresso_travado,
                         titulo=ingresso_travado.titulo,
                         local=ingresso_travado.local,
-                        valor_pago=ingresso_travado.preco,
+                        valor_pago=ingresso_travado.preco*quantidade,
                         quantidade=quantidade,
                         data_horario_evento=ingresso_travado.data_horario
                         )
@@ -60,15 +60,6 @@ def comprar_ingresso(request, id_ingresso):
         'ingresso': ingresso
     }
     return render(request, 'ingressos/comprar_ingresso.html', context=context)
-
-@login_required
-def visualizar_ingresso(request, id_ingresso):
-    ingresso = get_object_or_404(Ingresso, pk=id_ingresso)
-    if request.method == 'POST':
-        pass
-    else:
-        context = {'ingresso': ingresso}
-    return render(request, '')
 
 @login_required
 def cadastrar_ingresso(request):
@@ -134,4 +125,23 @@ def editar_ingresso(request, id_ingresso):
         'ingresso': ingresso
     }
     return render(request, 'ingressos/editar_ingresso.html', context=context)
+
+
+@login_required
+def historico_venda_detail(request, id_historico):
+    historico = get_object_or_404(HistoricoCompra, id=id_historico)
+    context = {
+        'historico': historico
+    }
+    return render(request, 'ingressos/historico_compra_detail.html', context)
+
     
+
+@login_required
+def visualizar_ingresso(request, id_ingresso):
+    ingresso = get_object_or_404(Ingresso, pk=id_ingresso)
+    if request.method == 'POST':
+        pass
+    else:
+        context = {'ingresso': ingresso}
+    return render(request, '')

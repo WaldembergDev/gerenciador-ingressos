@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load clean_text %}
+{% block title %}Detalhes da Venda{% endblock %}
+{% block content %}
+    <a href="{% url 'todos_ingressos_comprados' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+    <h1 class="text-center mb-4">Detalhes da Venda</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-8">
+            <div class="card border-0 shadow-sm">   
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <tbody class="align-middle">
+                            <tr>
+                                <th class="bg-light">Evento</th>
+                                <td>{{ historico.titulo }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Data do Evento</th>
+                                <td>{{ historico.data_horario_evento|date:"d/m/Y H:i" }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Local</th>
+                                <td>{{ historico.local }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Quantidade</th>
+                                <td>{{ historico.quantidade }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Valor Total (R$)</th>
+                                <td>{{ historico.valor_pago }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Cliente</th>
+                                <td>{{ historico.cliente.usuario.first_name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Telefone de Contato</th>
+                                <td><a rel="noopener noreferrer"
+                                       target="_blank"
+                                       href="https://web.whatsapp.com/send/?phone=55{{ historico.cliente.telefone|limpar_especiais }}&text=Olá,+{{ historico.cliente.usuario.first_name }},+podemos+falar+sobre+a+compra+do+evento+{{ historico.titulo }}?">
+                                       {{ historico.cliente.telefone }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">E-mail</th>
+                                <td>{{ historico.cliente.usuario.email }}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Data da Compra</th>
+                                <td>{{ historico.data_compra|date:"d/m/Y H:i" }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+{% endblock %}
