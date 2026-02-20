@@ -1,66 +1,76 @@
 {% extends 'base.html' %}
 {% block title %}Criar Conta{% endblock %}
 {% block content %}
-        <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-8">
-                <h1 class="text-center mb-4">Criar Conta</h1>
-                <form method='POST' action="{% url 'criar_conta_cliente' %}" class="row border rounded-4 shadow-sm p-4">
-                    {% csrf_token %}
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ custom_user_form.first_name.id_for_label }}" class="form-label fw-bold">{{ custom_user_form.first_name.label }}</label>
-                        {{ custom_user_form.first_name }}
-                        {{ custom_user_form.first_name.errors }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ custom_user_form.last_name.id_for_label }}" class="form-label fw-bold">{{ custom_user_form.last_name.label }}</label>
-                        {{ custom_user_form.last_name }}
-                        {{ custom_user_form.last_name.errors }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ custom_user_form.email.id_for_label }}" class="form-label fw-bold">{{ custom_user_form.email.label }}</label>
-                        {{ custom_user_form.email }}
-                        {{ custom_user_form.email.errors }}
-                    </div>
-                    <div class='col-md-6 mb-3'>
-                        <label for="{{ cliente_form.telefone.id_for_label }}" class="form-label fw-bold">{{ cliente_form.telefone.label }}</label>
-                        {{ cliente_form.telefone }}
-                        {{ cliente_form.telefone.errors }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ cliente_form.sexo.id_for_label }}" class="form-label fw-bold">{{ cliente_form.sexo.label }}</label>
-                        {{ cliente_form.sexo }}
-                        {{ cliente_form.sexo.errors }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ cliente_form.data_nascimento.id_for_label }}" class="form-label fw-bold">{{ cliente_form.data_nascimento.label }}</label>
-                        {{ cliente_form.data_nascimento }}
-                        {{ cliente_form.data_nascimento.errors }}                    
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ cliente_form.cpf.id_for_label }}" class="form-label fw-bold">{{ cliente_form.cpf.label }}</label>
-                        {{ cliente_form.cpf }}
-                        {{ cliente_form.cpf.errors }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ cliente_form.rg.id_for_label }}" class="form-label fw-bold">{{ cliente_form.rg.label }}</label>
-                        {{ cliente_form.rg }}
-                        {{ cliente_form.rg.errors }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ custom_user_form.password.id_for_label }}" class="form-label fw-bold">{{ custom_user_form.password.label }}</label>
-                        {{ custom_user_form.password }}
-                        {{ custom_user_form.password.errors }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ custom_user_form.password2.id_for_label }}" class="form-label fw-bold">{{ custom_user_form.password2.label }}</label>
-                        {{ custom_user_form.password2 }}
-                        {{ custom_user_form.password2.errors }}
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
-                        <a href="" class="btn btn-secondary">Cancelar</a>
-                        <input type="submit" value="Criar Conta" class="btn btn-primary">
-                    </div>
-                </form>
+    <div class="d-flex flex-column align-items-center">
+        <h1 class="text-center">Criar Conta</h1>
+        <form method='POST' action="{% url 'criar_conta_cliente' %}" class="w-75" novalidate>
+            {% csrf_token %}
+            <div class="mb-3 row">
+                <div class="col">
+                    <label for="{{ custom_user_form.first_name.id_for_label }}" class="form-label">{{ custom_user_form.first_name.label }}</label>
+                    {{ custom_user_form.first_name }}
+                    {{ custom_user_form.first_name.errors }}
+                </div>
+                <div class="col">
+                    <label for="{{ custom_user_form.last_name.id_for_label }}" class="form-label">{{ custom_user_form.last_name.label }}</label>
+                    {{ custom_user_form.last_name }}
+                    {{ custom_user_form.last_name.errors }}
+                </div>
             </div>
-        </div>
+            <div class='mb-3 row'>
+                <div class="col">
+                    <label for="{{ custom_user_form.email.id_for_label }}" class="form-label">{{ custom_user_form.email.label }}</label>
+                    {{ custom_user_form.email }}
+                    {{ custom_user_form.email.errors }}
+                </div>
+                <div class='col'>
+                    <label for="{{ cliente_form.telefone.id_for_label }}" class="form-label">{{ cliente_form.telefone.label }}</label>
+                    {{ cliente_form.telefone }}
+                    {{ cliente_form.telefone.errors }}
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col">
+                    <label for="{{ cliente_form.sexo.id_for_label }}" class="form-label">{{ cliente_form.sexo.label }}</label>
+                    {{ cliente_form.sexo }}
+                    {{ cliente_form.sexo.errors }}
+                </div>
+                <div class="col">
+                    <label for="{{ cliente_form.data_nascimento.id_for_label }}" class="form-label">{{ cliente_form.data_nascimento.label }}</label>
+                    {{ cliente_form.data_nascimento }}
+                    {{ cliente_form.data_nascimento.errors }}                    
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col">
+                    <label for="{{ cliente_form.cpf.id_for_label }}" class="form-label">{{ cliente_form.cpf.label }}</label>
+                    {{ cliente_form.cpf }}
+                    {{ cliente_form.cpf.errors }}
+                </div>
+                <div class="col">
+                    <label for="{{ cliente_form.rg.id_for_label }}" class="form-label">{{ cliente_form.rg.label }}</label>
+                    {{ cliente_form.rg }}
+                    {{ cliente_form.rg.errors }}
+                </div>
+                
+            </div>
+            <div class="mb-3 row">
+                <div class="col">
+                    <label for="{{ custom_user_form.password.id_for_label }}" class="form-label">{{ custom_user_form.password.label }}</label>
+                    {{ custom_user_form.password }}
+                    {{ custom_user_form.password.errors }}
+                </div>
+                <div class="col">
+                    <label for="{{ custom_user_form.password2.id_for_label }}" class="form-label">{{ custom_user_form.password2.label }}</label>
+                    {{ custom_user_form.password2 }}
+                    {{ custom_user_form.password2.errors }}
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col">
+                    <input type="submit" value="Criar Conta" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock %}
