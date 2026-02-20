@@ -22,8 +22,8 @@
             <label for="inputDataEvento" class="form-label">Data do Evento</label>
             <input value="{{ request.GET.dataEvento }}" type="date" class="form-control" name="dataEvento" id="inputDataEvento" aria-describedby="Data da Compra">
           </div>
-          <div class="col-md-3 d-flex justify-content-center align-items-end gap-1">
-            <a href="." type="button" class="btn btn-secondary">Limpar</a>
+          <div class="col-md-3 d-flex flex-column flex-md-row justify-content-center align-items-md-end gap-3 mt-3 mt-md-0">
+            <a href="." type="button" class="btn btn-secondary col-md-6">Limpar</a>
             <button type="submit" class="btn btn-primary">Buscar</button>
           </div>
     </form>
