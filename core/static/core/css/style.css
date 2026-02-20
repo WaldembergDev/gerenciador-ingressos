@@ -5,11 +5,20 @@
 }
 
 /* configurando imagem da tela de login */
-.image-maraca{
-  max-width: 100%;
-  object-fit: cover;  
+.login-icon-main {
+    font-size: 15rem;
+    line-height: 1;
+}
+
+/* Ajuste para telas menores */
+@media (max-width: 768px) {
+    .login-icon-main {
+        font-size: 6rem;
+        margin-bottom: 2rem;
+    }
 }
 
 .cadeado{
   font-size: 150px;
 }
+
