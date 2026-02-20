@@ -8,15 +8,54 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: write # Essencial para o robô comentar
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Pega o histórico para conseguir comparar as branches
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependências
+        run: pip install -q -U google-generativeai
 
       - name: Gerar Resumo com Gemini
-        uses: google-gemini/gemini-github-action@v1
-        with:
-          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
-          prompt: "Por favor, resume as mudanças deste Pull Request de forma técnica e clara, focando no que foi alterado no Django e Bootstrap."
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<EOF
+          import os
+          import google.generativeai as genai
+          import subprocess
+
+          # 1. Configura a IA
+          genai.configure(api_key=os.environ['GEMINI_API_KEY'])
+          model = genai.GenerativeModel('gemini-pro')
+
+          # 2. Captura o diff (mudanças) entre a base e a branch atual
+          try:
+              diff = subprocess.check_output(['git', 'diff', 'origin/main...HEAD']).decode('utf-8')
+              
+              if not diff:
+                  resumo = "Nenhuma mudança significativa detectada no código."
+              else:
+                  # 3. Solicita o resumo
+                  prompt = f"Atue como um desenvolvedor sênior. Resuma as seguintes mudanças de código de forma clara, em tópicos, focando no impacto para o projeto:\n\n{diff}"
+                  response = model.generate_content(prompt)
+                  resumo = "### 🤖 Resumo Automático (Gemini)\n\n" + response.text
+          except Exception as e:
+              resumo = f"Erro ao gerar resumo: {str(e)}"
+
+          # 4. Cria um arquivo temporário com o resumo
+          with open("comment.txt", "w", encoding="utf-8") as f:
+              f.write(resumo)
+          
+          # 5. Usa o GitHub CLI para postar o comentário no PR
+          subprocess.run(['gh', 'pr', 'comment', os.environ['PR_NUMBER'], '--body-file', 'comment.txt'], check=True)
+          EOF
