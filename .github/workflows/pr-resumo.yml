@@ -1,0 +1,22 @@
+name: Resumo Automático de PR
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  resumir:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Gerar Resumo com Gemini
+        uses: google-gemini/gemini-github-action@v1
+        with:
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          prompt: "Por favor, resume as mudanças deste Pull Request de forma técnica e clara, focando no que foi alterado no Django e Bootstrap."
