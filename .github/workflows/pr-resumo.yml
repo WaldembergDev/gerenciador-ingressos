@@ -36,7 +36,7 @@ jobs:
 
           # 1. Configura a IA
           genai.configure(api_key=os.environ['GEMINI_API_KEY'])
-          model = genai.GenerativeModel('gemini-pro')
+          model = genai.GenerativeModel('1.5-flash')
 
           # 2. Captura o diff (mudanças) entre a base e a branch atual
           try:
