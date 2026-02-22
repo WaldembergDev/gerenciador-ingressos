@@ -8,7 +8,7 @@ from django.contrib import messages
 from clientes.models import Cliente
 from django.core.paginator import Paginator
 from datetime import datetime, date
-
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -177,3 +177,15 @@ def ingresso_list(request):
         'ingressos': ingressos
     }
     return render(request, 'ingressos/ingresso_list.html', context)
+
+
+@login_required
+@require_POST
+def ingresso_delete(request, id_ingresso):
+    ingresso = get_object_or_404(Ingresso, id=id_ingresso)
+    if ingresso.quantidade_vendido > 0:
+        messages.error(request, 'Não é possível excluir o ingresso, pois já existem ingressos vendidos')
+        return redirect('ingresso_list')
+    ingresso.delete()
+    messages.success(request, 'Ingresso excluído com sucesso!')
+    return redirect('ingresso_list')
