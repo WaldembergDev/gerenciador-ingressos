@@ -21,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for ingresso in ingressos %}
+            {% for ingresso in page_obj %}
             <tr class="align-middle">
             <th class="d-none d-md-table-cell" scope="row">{{ ingresso.get_tipo_display }}</th>
             <td>{{ ingresso.titulo }}</td>
@@ -69,6 +69,7 @@
         </div>
     </div>
     </div>
+    {% include 'partials/_paginacao.html' %}
     
     <script src="{% static 'ingressos/js/listar-ingressos.js' %}">
         

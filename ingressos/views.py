@@ -173,8 +173,13 @@ def visualizar_ingresso(request, id_ingresso):
 @login_required
 def ingresso_list(request):
     ingressos = Ingresso.objects.all()
+    paginator = Paginator(ingressos, 30)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'ingressos': ingressos
+        'page_obj': page_obj
     }
     return render(request, 'ingressos/ingresso_list.html', context)
 
