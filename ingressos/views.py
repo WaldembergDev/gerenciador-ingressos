@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from datetime import datetime, date
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 @login_required
 def comprar_ingresso(request, id_ingresso):
@@ -172,7 +173,8 @@ def visualizar_ingresso(request, id_ingresso):
 
 @login_required
 def ingresso_list(request):
-    ingressos = Ingresso.objects.all()
+    ingressos = Ingresso.objects.all().order_by('data_horario')
+    
     paginator = Paginator(ingressos, 30)
 
     page_number = request.GET.get('page')
