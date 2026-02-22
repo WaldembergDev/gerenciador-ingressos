@@ -21,9 +21,8 @@
               <p class="card-text"><i class="bi bi-three-dots"></i> {{ ingresso.get_tipo_display }}</p>
               <p class="card-text"><i class="bi bi-geo-alt"></i> {{ ingresso.local }}</p>
               <p class="card-text"><i class="bi bi-box-seam"></i></i> {{ ingresso.estoque_disponivel }} ingresso(s) restante(s)</p>
-              <div class="d-flex justify-content-between mt-auto">
+              <div class="d-flex justify-content-end mt-auto">
                 <a href="{% url 'comprar_ingresso' id_ingresso=ingresso.id %}" class="btn btn-primary">Comprar | R$ {{ ingresso.preco }}</a>
-                <a href="{% url 'editar_ingresso' id_ingresso=ingresso.id %}" class="btn btn-outline-success">Editar</a>
               </div>
             </div>
           </div>

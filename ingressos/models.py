@@ -31,6 +31,18 @@ class Ingresso(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+    @property
+    def quantidade_vendido(self):
+        vendas = HistoricoCompra.objects.filter(ingresso=self)
+        quantidade = vendas.count()
+        return quantidade
+    
+    @property
+    def estoque_inicial(self):
+        estoque = self.estoque_disponivel + self.quantidade_vendido
+        return estoque
+
 
 class HistoricoCompra(models.Model):
     id = models.UUIDField(
@@ -38,8 +50,8 @@ class HistoricoCompra(models.Model):
         default=uuid.uuid4,
         editable=False
     )
-    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
-    ingresso = models.ForeignKey(Ingresso, on_delete=models.PROTECT)
+    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT, related_name='clientes')
+    ingresso = models.ForeignKey(Ingresso, on_delete=models.PROTECT, related_name='ingressos_vendidos')
     titulo = models.CharField(max_length=120, verbose_name='Título')
     local = models.CharField(max_length=120)
     data_horario_evento = models.DateTimeField()

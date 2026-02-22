@@ -1,43 +1,58 @@
 {% load static %}
-<!-- Header -->
-<nav class="navbar bg-body-tertiary">
+{% if request.session.acesso_geral %}
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-    <div class="d-flex justify-content-center align-items-center gap-3">
-        
-    <a href="{% url 'home' %}" class="navbar-brand"><img id="header-logo" src="{% static 'img/logo.png' %}"></a>
-        {% if user.is_authenticated %}
-        <a href={% url 'home' %} class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">Início</a>
-        <a href={% url 'meus_ingressos' %} class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">Meus Ingressos</a>
-        {% if user.is_admin %}
-            <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Área Administrativa
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{% url 'todos_ingressos_comprados' %}">Ingressos vendidos</a></li>
-                <li><a class="dropdown-item link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{% url 'cadastrar_ingresso' %}">Cadastrar Ingresso</a></li>
-            </ul>
-            </div>
-        {% endif %}
-        {% endif %}
+      <a href="{% url 'home' %}" class="navbar-brand"><img id="header-logo" src="{% static 'img/logo.png' %}"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 p-2">
+          <li class="nav-item">
+            <a class="nav-link {% if "core/home/" in request.path %} active border-bottom border-2 border-success{% endif %}" 
+              aria-current="page"
+              href="{% url 'home' %}"><i class="bi bi-house"></i> Início</a>
+          </li>
+          <hr class="d-lg-none text-secondary-emphasis my-3">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link {% if '/meus-ingressos/' in request.path %} active border-bottom border-2 border-success{% endif %}" href="{% url 'meus_ingressos' %}"><i class="bi bi-ticket-perforated"></i> Meus Ingressos</a>
+            </li>
+            <hr class="d-lg-none text-secondary-emphasis my-3">
+            {% if user.is_admin %}
+              <li class="nav-item dropdown 
+                {% if '/todos-ingressos-comprados' in request.path or '/cadastrar-ingresso/' in request.path or '/lista-ingressos/' in request.path  %}active border-bottom border-success {% endif %} ">
+                <a class="nav-link dropdown-toggle active" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Área Administrativa
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'todos_ingressos_comprados' %}">Ingressos Vendidos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'cadastrar_ingresso' %}">Cadastrar Ingresso</a></li>
+                  <li><a class="dropdown-item" href="{% url 'ingresso_list' %}">Listar Ingressos</a></li>
+                </ul>
+              </li>
+              <hr class="d-lg-none text-secondary-emphasis my-3">
+            {% endif %}
+          {% endif %}
+        </ul>
+        <div class="d-flex flex-column flex-lg-row gap-3">
+          <form class="d-flex flex-column flex-lg-row gap-3" role="search" action="{% url 'home' %}" method="GET">
+            <input name="q" class="form-control me-2" type="search" placeholder="Buscar Evento" aria-label="Search"/>
+              <button title="Buscar" class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+          </form>
+          {% if user.is_authenticated %}
+            <form class="d-flex" method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button title="Sair" class="btn btn-outline-danger w-100" type="submit"><i class="bi bi-box-arrow-right"></i></button>
+            </form>
+          {% else %}
+            <form class="d-flex" method="POST" action="{% url 'core_login' %}">
+            {% csrf_token %}
+            <button class="btn btn-outline-primary" type="submit">Logar/Inscrever-se</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
     </div>
-    <div class='d-flex flex-row gap-2'>
-        <form class="d-flex" role="search" action="{% url 'home' %}" method="GET">
-        <input class="form-control me-2" type="search" placeholder="Buscar Evento" aria-label="Search" name="q"/>
-        <button class="btn btn-outline-success" type="submit">Buscar</button>
-        </form>
-        {% if user.is_authenticated %}
-        <form class="d-flex" method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button class="btn btn-outline-success" type="submit">Sair</button>
-        </form>
-    <div>
-    {% endif %}
-    {% if not user.is_authenticated %}
-        <form class="d-flex" method="POST" action="{% url 'core_login' %}">
-        {% csrf_token %}
-        <button class="btn btn-outline-success" type="submit">Logar/Inscrever-se</button>
-        </form>
-    {% endif %}
-    </div>
-</nav>
+  </nav>
+{% endif %}

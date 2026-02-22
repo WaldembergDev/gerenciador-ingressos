@@ -8,8 +8,9 @@ from django.contrib import messages
 from clientes.models import Cliente
 from django.core.paginator import Paginator
 from datetime import datetime, date
-
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 @login_required
 def comprar_ingresso(request, id_ingresso):
@@ -141,7 +142,7 @@ def editar_ingresso(request, id_ingresso):
         if form.is_valid():
             form.save()
             messages.success(request, 'Dados salvos com sucesso!')
-            return redirect('editar_ingresso', ingresso.id)
+            return redirect('ingresso_list')
     else:
         form = IngressoForm(instance=ingresso)
     context = {
@@ -169,3 +170,29 @@ def visualizar_ingresso(request, id_ingresso):
     else:
         context = {'ingresso': ingresso}
     return render(request, '')
+
+@login_required
+def ingresso_list(request):
+    ingressos = Ingresso.objects.all().order_by('data_horario')
+    
+    paginator = Paginator(ingressos, 30)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj
+    }
+    return render(request, 'ingressos/ingresso_list.html', context)
+
+
+@login_required
+@require_POST
+def ingresso_delete(request, id_ingresso):
+    ingresso = get_object_or_404(Ingresso, id=id_ingresso)
+    if ingresso.quantidade_vendido > 0:
+        messages.error(request, 'Não é possível excluir o ingresso, pois já existem ingressos vendidos')
+        return redirect('ingresso_list')
+    ingresso.delete()
+    messages.success(request, 'Ingresso excluído com sucesso!')
+    return redirect('ingresso_list')
