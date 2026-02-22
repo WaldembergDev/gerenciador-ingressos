@@ -5,15 +5,19 @@
 <link rel="stylesheet" type="text/css" href="{% static 'core/css/style.css' %}">
 {% endblock %}
 {% block content %}
-        <div class="d-flex flex-column flex-grow-1 align-items-center justify-content-center">
-        <form action="{% url 'acesso_inicial' %}" method="POST" class="w-50 d-flex flex-column border rounded border-3 shadow-sm p-5">
+    <div class="row justify-content-center vh-100 align-items-center">
+        <div class="col-md-8 col-lg-6">
+        <form action="{% url 'acesso_inicial' %}"
+              method="POST"
+              class="d-flex flex-column justify-content-center border rounded-4 p-4 shadow-sm">
             {% csrf_token %}
             <i class="text-center bi bi-lock-fill cadeado"></i>
-            <div class="mb-3">
-                <label for="{{ form_acesso.senha.id_for_label }}" class="form-label">Senha fornecida pelo administrador</label>
+            <div class="mb-3 text-center">
+                <label for="{{ form_acesso.senha.id_for_label }}" class="form-label fw-bold">Senha fornecida pelo administrador</label>
                 {{ form_acesso.senha }}
             </div>
             <button type="submit" class="btn btn-primary">Entrar da plataforma</button>
         </form>
-        <div>
+    </div>
+    </div>
 {% endblock %}
