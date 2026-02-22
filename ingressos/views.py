@@ -141,7 +141,7 @@ def editar_ingresso(request, id_ingresso):
         if form.is_valid():
             form.save()
             messages.success(request, 'Dados salvos com sucesso!')
-            return redirect('editar_ingresso', ingresso.id)
+            return redirect('ingresso_list')
     else:
         form = IngressoForm(instance=ingresso)
     context = {
@@ -169,3 +169,11 @@ def visualizar_ingresso(request, id_ingresso):
     else:
         context = {'ingresso': ingresso}
     return render(request, '')
+
+@login_required
+def ingresso_list(request):
+    ingressos = Ingresso.objects.all()
+    context = {
+        'ingressos': ingressos
+    }
+    return render(request, 'ingressos/ingresso_list.html', context)
