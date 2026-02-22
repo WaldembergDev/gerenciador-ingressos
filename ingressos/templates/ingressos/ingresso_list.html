@@ -9,13 +9,13 @@
     <table class="table table-striped table-hover">
         <thead class="table-dark ">
             <tr class="align-middle text-center">
-            <th scope="col">Tipo</th>
+            <th class="d-none d-md-table-cell" scope="col ">Tipo</th>
             <th scope="col">Titulo</th>
-            <th scope="col">Local</th>
+            <th class="d-none d-md-table-cell" scope="col">Local</th>
             <th scope="col">Descricao</th>
             <th scope="col">Data Hora</th>
             <th scope="col">Preço(R$)</th>
-            <th scope="col">Venda</th>
+            <th class="d-none d-md-table-cell" scope="col">Venda</th>
             <th scope="col">Status</th>
             <th scope="col">Ações</th>
             </tr>
@@ -23,13 +23,13 @@
         <tbody>
             {% for ingresso in ingressos %}
             <tr class="align-middle">
-            <th scope="row">{{ ingresso.get_tipo_display }}</th>
+            <th class="d-none d-md-table-cell" scope="row">{{ ingresso.get_tipo_display }}</th>
             <td>{{ ingresso.titulo }}</td>
-            <td>{{ ingresso.local }}</td>
+            <td class="d-none d-md-table-cell">{{ ingresso.local }}</td>
             <td>{{ ingresso.descricao }}</td>
             <td>{{ ingresso.data_horario|date:"d/m/Y H:i" }}</td>
             <td>{{ ingresso.preco }}</td>
-            <td>{{ ingresso.quantidade_vendido }}/{{ ingresso.estoque_inicial }}</td>
+            <td class="d-none d-md-table-cell">{{ ingresso.quantidade_vendido }}/{{ ingresso.estoque_inicial }}</td>
             <td>{{ ingresso.get_status_display }}</td>
             <td>
                 <div class="d-flex gap-2">
@@ -52,19 +52,19 @@
         <div class="modal-content">
         <div class="modal-header">
             <h1 class="modal-title fs-5">Confirmação de Exclusão</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Fechar</button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <p>Confirma a exclusão do evento <b id="corpoModal"></b></p>
         </div>
         
-        <div class="modal-footer">
-            <form id="formConfirmacaoExclusao" method="POST">
-            {% csrf_token %}
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar Exclusão</button>
-                <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
-            </form>
-        </div>
+        <form id="formConfirmacaoExclusao" method="POST">
+            <div class="modal-footer d-flex justify-content-between">
+                {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar Exclusão</button>
+                    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+            </div>
+        </form>
         
         </div>
     </div>
