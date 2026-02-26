@@ -19,13 +19,18 @@ def acesso_inicial(request):
         form_acesso = AcessoGeralForm(request.POST)
         if form_acesso.is_valid():
             senha = form_acesso.cleaned_data.get('senha')
-            senha_acesso = AcessoGeral.objects.order_by('-id').first().senha
+            obj_acesso_geral = AcessoGeral.objects.order_by('-id').first()
+            if not obj_acesso_geral:
+                messages.error(request, 'Contate o administrador do sistema!')
+                return redirect('acesso_inicial')
+            senha_acesso = obj_acesso_geral.senha
             senha_valida = check_password(senha, senha_acesso)
             if senha_valida:
                 request.session['acesso_geral'] = senha_acesso
                 return redirect('home')
             else:
-                messages.error(request, 'Senha não confere!')     
+                messages.error(request, 'Senha não confere!')
+                return redirect('acesso_inicial')    
     else:
         form_acesso = AcessoGeralForm()
     context = {
