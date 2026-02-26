@@ -7,10 +7,9 @@ from .forms import CompraForm, IngressoForm
 from django.contrib import messages
 from clientes.models import Cliente
 from django.core.paginator import Paginator
-from datetime import datetime, date
+from datetime import datetime
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
 
 @login_required
 def comprar_ingresso(request, id_ingresso):
@@ -21,9 +20,9 @@ def comprar_ingresso(request, id_ingresso):
     if request.method == 'POST':
         form = CompraForm(request.POST, ingresso=ingresso)
         if form.is_valid():
-            # if request.user.is_admin:
-            #     messages.error(request, 'Administrador, faz sentido você comprar ingresso?')
-            #     return redirect('comprar_ingresso', ingresso.id)
+            if request.user.is_admin:
+                messages.error(request, 'Você está logado como administrador. Para testar compras, use uma conta de cliente')
+                return redirect('comprar_ingresso', ingresso.id)
             try:                
                 with transaction.atomic():
                     quantidade = form.cleaned_data['quantidade']
@@ -111,9 +110,9 @@ def exibir_todos_ingressos_comprados(request):
 
 @login_required
 def exibir_meus_ingressos(request):
-    # if request.user.is_admin:
-    #         messages.error(request, 'Administrador, faz sentido você visualizar seus ingressos comprados?')
-    #         return redirect('home')
+    if request.user.is_admin:
+            messages.error(request, 'Você está logado como administrador. Para visualizar seus ingressos comprados, logue como cliente.')
+            return redirect('home')
     usuario = request.user
     cliente = Cliente.objects.get(usuario=usuario)
     compras = HistoricoCompra.objects.filter(cliente=cliente).order_by('data_horario_evento')
