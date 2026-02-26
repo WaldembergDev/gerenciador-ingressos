@@ -9,7 +9,8 @@ from clientes.models import Cliente
 from django.core.paginator import Paginator
 from datetime import datetime
 from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from core.utils import superuser_check
 
 @login_required
 def comprar_ingresso(request, id_ingresso):
@@ -60,6 +61,32 @@ def comprar_ingresso(request, id_ingresso):
     return render(request, 'ingressos/comprar_ingresso.html', context=context)
 
 @login_required
+def exibir_meus_ingressos(request):
+    if request.user.is_admin:
+            messages.error(request, 'Você está logado como administrador. Para visualizar seus ingressos comprados, logue como cliente.')
+            return redirect('home')
+    usuario = request.user
+    cliente = Cliente.objects.get(usuario=usuario)
+    compras = HistoricoCompra.objects.filter(cliente=cliente).order_by('data_horario_evento')
+    context = {
+        'compras': compras
+    }
+    return render(request, 'ingressos/meus_ingressos.html', context=context)
+
+@login_required
+def json_detalhes_compra(request, id_historico):
+    detalhes = get_object_or_404(HistoricoCompra, id=id_historico, cliente__usuario=request.user)
+    dados = {
+        'titulo': detalhes.titulo,
+        'local': detalhes.local,
+        'data_compra': detalhes.data_compra,
+        'valor_pago': detalhes.valor_pago,
+        'quantidade': detalhes.quantidade
+    }
+    return JsonResponse(dados)
+
+@login_required
+@user_passes_test(superuser_check)
 def cadastrar_ingresso(request):
     if request.method == 'POST':
         form = IngressoForm(request.POST, request.FILES, esconder_campo=True)
@@ -75,6 +102,7 @@ def cadastrar_ingresso(request):
     return render(request, 'ingressos/cadastrar_ingresso.html', context=context)
 
 @login_required
+@user_passes_test(superuser_check)
 def exibir_todos_ingressos_comprados(request):
     # obtendo os ingressos comprados
     ingressos_comprados = HistoricoCompra.objects.order_by('data_horario_evento')
@@ -108,32 +136,9 @@ def exibir_todos_ingressos_comprados(request):
     }
     return render(request, 'ingressos/todos_ingressos_comprados.html', context=context)
 
-@login_required
-def exibir_meus_ingressos(request):
-    if request.user.is_admin:
-            messages.error(request, 'Você está logado como administrador. Para visualizar seus ingressos comprados, logue como cliente.')
-            return redirect('home')
-    usuario = request.user
-    cliente = Cliente.objects.get(usuario=usuario)
-    compras = HistoricoCompra.objects.filter(cliente=cliente).order_by('data_horario_evento')
-    context = {
-        'compras': compras
-    }
-    return render(request, 'ingressos/meus_ingressos.html', context=context)
 
 @login_required
-def json_detalhes_compra(request, id_historico):
-    detalhes = get_object_or_404(HistoricoCompra, id=id_historico)
-    dados = {
-        'titulo': detalhes.titulo,
-        'local': detalhes.local,
-        'data_compra': detalhes.data_compra,
-        'valor_pago': detalhes.valor_pago,
-        'quantidade': detalhes.quantidade
-    }
-    return JsonResponse(dados)
-
-@login_required
+@user_passes_test(superuser_check)
 def editar_ingresso(request, id_ingresso):
     ingresso = get_object_or_404(Ingresso, id=id_ingresso)
     if request.method == 'POST':
@@ -152,6 +157,7 @@ def editar_ingresso(request, id_ingresso):
 
 
 @login_required
+@user_passes_test(superuser_check)
 def historico_venda_detail(request, id_historico):
     historico = get_object_or_404(HistoricoCompra, id=id_historico)
     context = {
@@ -159,18 +165,9 @@ def historico_venda_detail(request, id_historico):
     }
     return render(request, 'ingressos/historico_compra_detail.html', context)
 
-    
 
 @login_required
-def visualizar_ingresso(request, id_ingresso):
-    ingresso = get_object_or_404(Ingresso, pk=id_ingresso)
-    if request.method == 'POST':
-        pass
-    else:
-        context = {'ingresso': ingresso}
-    return render(request, '')
-
-@login_required
+@user_passes_test(superuser_check)
 def ingresso_list(request):
     ingressos = Ingresso.objects.all().order_by('data_horario')
     
@@ -186,6 +183,7 @@ def ingresso_list(request):
 
 
 @login_required
+@user_passes_test(superuser_check)
 @require_POST
 def ingresso_delete(request, id_ingresso):
     ingresso = get_object_or_404(Ingresso, id=id_ingresso)
