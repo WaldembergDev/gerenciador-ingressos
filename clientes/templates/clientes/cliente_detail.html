@@ -7,6 +7,12 @@
     <h1 class="text-center mb-4">Detalhes de {{ usuario_form.instance.first_name }}</h1>
     <div class="row justify-content-center">
         <div class="row col-md-8 col-lg-6">
+            <!-- Reset de senha -->
+             <form method="POST" action="{% url 'admin_resetar_senha_usuario' usuario_form.instance.id %}" class="d-flex col justify-content-end mb-2">
+                {% csrf_token %}
+                <input value="Reset de Senha" type="submit" class="btn btn-outline-warning">
+             </form>
+            
             <form method="POST" action="." class="row justify-content-center border p-4 shadow">
                 {% csrf_token %}
                 <div class="mb-3 col-md-6">

@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -137,8 +139,6 @@ AUTH_USER_MODEL = 'core.CustomUser'
 LOGIN_URL = 'core_login'
 
 # messages
-from django.contrib.messages import constants as messages
-
 MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
     messages.INFO: 'info',
@@ -150,8 +150,6 @@ LOGOUT_REDIRECT_URL = '/core/login'
 
 
 # configurações de e-mails
-from decouple import config
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = config('EMAIL_HOST')

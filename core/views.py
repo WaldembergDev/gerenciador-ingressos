@@ -90,9 +90,9 @@ def login(request):
 
 @login_required
 @user_passes_test(superuser_check)
-def admin_resetar_senha_cliente(request, id_usuario):
+def admin_resetar_senha_usuario(request, id_usuario):
     usuario = get_object_or_404(User, id=id_usuario)
     usuario.set_password('12345678')
     usuario.save()
     messages.success(request, 'Senha alterada com sucesso!')
-    return redirect(request.path)
+    return redirect('cliente_list')
