@@ -3,12 +3,14 @@ from django.shortcuts import get_object_or_404, render, redirect
 from ingressos.models import Ingresso
 from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .forms import EmailAuthenticationForm, AcessoGeralForm
-from .models import AcessoGeral
+from .models import AcessoGeral, CustomUser
 from django.db.models import Q
 from django.utils import timezone
 from django.contrib.auth.hashers import check_password
+from .utils import superuser_check
 
 
 User = get_user_model()
@@ -84,3 +86,13 @@ def login(request):
         'next': next
     }
     return render(request, 'core/login.html', context=context)
+
+
+@login_required
+@user_passes_test(superuser_check)
+def admin_resetar_senha_cliente(request, id_usuario):
+    usuario = get_object_or_404(User, id=id_usuario)
+    usuario.set_password('12345678')
+    usuario.save()
+    messages.success(request, 'Senha alterada com sucesso!')
+    return redirect(request.path)
