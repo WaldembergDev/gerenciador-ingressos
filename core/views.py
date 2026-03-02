@@ -1,15 +1,17 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from ingressos.models import Ingresso
-from django.contrib.auth import login as auth_login, logout as auth_logout
+from django.contrib.auth import login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import EmailAuthenticationForm, AcessoGeralForm
 from .models import AcessoGeral
 from django.db.models import Q
 from django.utils import timezone
-
 from django.contrib.auth.hashers import check_password
+
+
+User = get_user_model()
 
 # Create your views here.
 def acesso_inicial(request):

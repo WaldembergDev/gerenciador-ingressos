@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}Detalhes do Cliente{% endblock %}
+{% block content %}
+    <a href="{% url 'cliente_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+    <h1 class="text-center mb-4">Detalhes de {{ usuario_form.instance.first_name }}</h1>
+    <div class="row justify-content-center">
+        <div class="row col-md-8 col-lg-6">
+            <form method="POST" action="." class="row justify-content-center border p-4 shadow">
+                {% csrf_token %}
+                <div class="mb-3 col-md-6">
+                    <label class="fw-bold form-label" for="{{ usuario_form.first_name.id_for_label }}">{{ usuario_form.first_name.label }}</label>
+                    {{ usuario_form.first_name }}
+                    {{ usuario_form.first_name.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="fw-bold form-label" for="{{ usuario_form.last_name.id_for_label }}">{{ usuario_form.last_name.label }}</label>
+                    {{ usuario_form.last_name }}
+                    {{ usuario_form.last_name.errors }}
+                </div>
+                <div class="mb-3 col-md-8">
+                    <label class="fw-bold form-label" for="{{ usuario_form.email.id_for_label }}">{{ usuario_form.email.label }}</label>
+                    {{ usuario_form.email }}
+                    {{ usuario_form.email.errors }}
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label class="fw-bold form-label" for="{{ cliente_form.telefone.id_for_label }}">{{ cliente_form.telefone.label }}</label>
+                    {{ cliente_form.telefone }}
+                    {{ cliente_form.telefone.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="fw-bold form-label" for="{{ cliente_form.data_nascimento.id_for_label }}">{{ cliente_form.data_nascimento.label }}</label>
+                    {{ cliente_form.data_nascimento }}
+                    {{ cliente_form.data_nascimento.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="fw-bold form-label" for="{{ cliente_form.sexo.id_for_label }}">{{ cliente_form.sexo.label }}</label>
+                    {{ cliente_form.sexo }}
+                    {{ cliente_form.sexo.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="fw-bold form-label" for="{{ cliente_form.rg.id_for_label }}">{{ cliente_form.rg.label }}</label>
+                    {{ cliente_form.rg }}
+                    {{ cliente_form.rg.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="fw-bold form-label" for="{{ cliente_form.cpf.id_for_label }}">{{ cliente_form.cpf.label }}</label>
+                    {{ cliente_form.cpf }}
+                    {{ cliente_form.cpf.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="form-label fw-bold text-secondary">Status</label>
+                    {{ usuario_form.is_active }}
+                    {{ usuario_form.is_active.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="form-label fw-bold text-secondary">Registrado em</label>
+                    <input type="text" readonly class="form-control-plaintext border-bottom" value="{{ usuario_form.instance.date_joined|date:'d/m/Y H:i' }}">
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="form-label fw-bold text-secondary">Total de Compras</label>
+                    <input type="text" readonly class="form-control-plaintext border-bottom" value="{{ cliente_form.instance.compras.all|length }}">
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="form-label fw-bold text-secondary">Gasto na Plataforma (R$)</label>
+                    <input type="text" readonly class="form-control-plaintext border-bottom" value="{{ valor_total_compras.total|default:0 }}">
+                </div>
+                <div class="mb-3 d-flex flex-column flex-md-row justify-content-between gap-2">
+                <a href="{% url 'cliente_list' %}" class="btn btn-outline-secondary"><i class="bi bi-x-circle"></i> Cancelar Alterações</a>
+                <button type="submit" class="btn btn-outline-primary"><i class="bi bi-check-circle"></i> Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock%}

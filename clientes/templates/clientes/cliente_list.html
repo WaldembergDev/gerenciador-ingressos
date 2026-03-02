@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}Lista de Clientes{% endblock %}
+{% block content %}
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+    <h1 class="text-center mb-4">Listagem de clientes</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-dark align-middle text-center">
+            <th scope="col">Nome</th>
+            <th class="d-none d-md-table-cell" scope="col">E-mail</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Número de Compras</th>
+            <th scope="col">Status</th>
+            <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+                <tr class="align-middle text-center">
+                    <th scope="row">{{ cliente.usuario.first_name }}</th>
+                    <td class="d-none d-md-table-cell">{{ cliente.usuario.email }}</td>
+                    <td>{{ cliente.telefone }}</td>
+                    <td>{{ cliente.compras.all|length }}</td>
+                    <td>
+                        {% if cliente.obter_status == 'Ativo' %}
+                            <span class="badge text-bg-primary">{{ cliente.obter_status }}</span>
+                        {% else %}
+                            <span class="badge text-bg-secondary">{{ cliente.obter_status }}</span>
+                        {% endif %}
+
+                    </td>
+                    <td>
+                        <a href="{% url 'cliente_detail' cliente.id %}" title="Ver detalhes/Editar" class="btn btn-outline-primary">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <!-- Botão de desativar/ativar -->
+                        <button
+                        {% if cliente.obter_status == 'Ativo' %}
+                            title="Desativar"
+                            class="btn btn-outline-danger bntToggleStatus"
+                        {% else %}
+                            title="Ativar"
+                            class="btn btn-outline-success bntToggleStatus"
+                        {% endif %}
+                        data-cliente-id="{{ cliente.id }}"
+                        data-cliente-status="{{ cliente.obter_status }}"
+                        data-cliente-nome="{{ cliente.usuario.first_name }}">
+                        {% if cliente.obter_status == 'Ativo' %}
+                            <i class="bi bi-person-x"></i>
+                        {% else %}
+                            <i class="bi bi-person-plus"></i>
+                        {% endif %}
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Modal confirmação de ação -->
+    <div class="modal fade" id="modalConfirmarAlteracao" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmação de Ação</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Confirma a <span class="fw-bold" id="corpoModalAcao"></span> do cliente <span id="corpoModalCliente" class="fw-bold"></span>?</p>
+        </div>
+        <div class="modal-footer">
+            <form id="formConfirmacao" action="#" method="POST">
+                {% csrf_token %}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger">Confirmar</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        let botoes = document.querySelectorAll('.bntToggleStatus');
+        let modal = document.getElementById('modalConfirmarAlteracao');
+        botoes.forEach((botao) =>{
+            botao.addEventListener('click', () =>{
+                let idCliente = botao.getAttribute('data-cliente-id');
+                let nomeCliente = botao.getAttribute('data-cliente-nome');
+                let statusCliente = botao.getAttribute('data-cliente-status');
+                let corpoModalCliente = document.getElementById('corpoModalCliente');
+                let corpoModalAcao = document.getElementById('corpoModalAcao');
+                let modalBootstrap = new bootstrap.Modal(modal);
+                modalBootstrap.show();
+                corpoModalAcao.textContent = (statusCliente == 'Ativo') ? 'Desativação' : 'Ativação';
+                corpoModalCliente.textContent = nomeCliente;
+                // Captando o formulário de confirmação
+                let formConfirmacao = document.getElementById('formConfirmacao');
+                console.log(idCliente);
+                formConfirmacao.addEventListener('submit', (event)=>{
+                    event.preventDefault();
+                    formConfirmacao.action = `/clientes/toggle-cliente-status/${idCliente}/`;
+                    formConfirmacao.submit();
+                });
+            })
+        })
+    </script>
+{% endblock %}

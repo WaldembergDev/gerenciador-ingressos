@@ -8,16 +8,21 @@ class Cliente(models.Model):
         MASCULINO = 'M', 'Masculino'
         FEMININO = 'F', 'Feminino'
         OUTRO = 'O', 'Outro'
+        
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     telefone = models.CharField(max_length=20)
     data_nascimento = models.DateField()
-    rg = models.CharField(max_length=13, verbose_name='RG')
-    cpf = models.CharField(max_length=14, unique=True, verbose_name='CPF')
-    sexo = models.CharField(max_length=2, choices=SexoEnum.choices)
+    rg = models.CharField(max_length=13, verbose_name='RG', null=True, blank=True)
+    cpf = models.CharField(max_length=14, unique=True, verbose_name='CPF', null=True, blank=True)
+    sexo = models.CharField(max_length=2, choices=SexoEnum.choices, null=True, blank=True)
     usuario = models.OneToOneField(CustomUser, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.telefone
+    
+    @property
+    def obter_status(self):
+        return 'Ativo' if self.usuario.is_active else 'Inativo'
 
 class Endereco(models.Model):
     class UfEnum(models.TextChoices):

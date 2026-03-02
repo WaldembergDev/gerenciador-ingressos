@@ -1,6 +1,7 @@
 from dataclasses import fields
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from prompt_toolkit import widgets
 from .models import AcessoGeral, CustomUser
 from django.contrib.auth.hashers import check_password
 from django.forms import ValidationError
@@ -42,5 +43,18 @@ class AcessoGeralForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'senha': forms.PasswordInput(attrs={'class': 'form-control'})
+        }
+
+class CustomUserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'is_active']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'is_active': forms.Select(
+                attrs={'class': 'form-select'},
+                choices=[(True, 'Ativo'), (False, 'Inativo')])
         }
 

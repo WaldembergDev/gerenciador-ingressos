@@ -50,7 +50,7 @@ class HistoricoCompra(models.Model):
         default=uuid.uuid4,
         editable=False
     )
-    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT, related_name='clientes')
+    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT, related_name='compras')
     ingresso = models.ForeignKey(Ingresso, on_delete=models.PROTECT, related_name='ingressos_vendidos')
     titulo = models.CharField(max_length=120, verbose_name='Título')
     local = models.CharField(max_length=120)
