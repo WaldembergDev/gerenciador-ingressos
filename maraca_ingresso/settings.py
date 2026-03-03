@@ -183,3 +183,11 @@ NUMERO_NOTIFICACAO=config('NUMERO_NOTIFICACAO')
 # desativando o celery
 CELERY_TASK_ALWAYS_EAGER = True
 # CELERY_TASK_EAGER_PROPAGATES = True # exibe o erro: faz o código tentar novamente se der erro.
+
+# Configurações do AbacatePay
+ABACATEPAY_API_KEY = config('ABACATEPAY_API_KEY')
+
+# Configurações do Asaas
+ASAAS_API_KEY = config('ASAAS_API_KEY')
+ASAAS_END_POINT = config('ASAAS_END_POINT')
+ASAAS_USER_AGENT = config('ASAAS_USER_AGENT')
