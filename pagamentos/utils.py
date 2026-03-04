@@ -12,7 +12,7 @@ class Asaas():
     USER_AGENT = settings.ASAAS_USER_AGENT
     
     def criar_qr_code_pix_dinamico(self, id_cobranca: str):
-        url = f'{self.END_POINT}/v3/payments/id/pixQrCode'
+        url = f'{self.END_POINT}/v3/payments/{id_cobranca}/pixQrCode'
 
         headers = {
             f'User-Agent': self.USER_AGENT,
@@ -28,15 +28,18 @@ class Asaas():
             response = requests.get(url, headers=headers, params=params)
             response.raise_for_status()
             dados = response.json()
-            print(response.text)
-            print(dados)
+            encodedImage = dados.get('encodedImage')
+            payload = dados.get('payload')
+            validade = dados.get('expirationDate')
+            description = dados.get('description')
+            return (encodedImage, payload, validade, description)
         except Exception as e:
             print(f'Erro: {e}')
     
     def criar_cliente(self, name: str, cpf_cnpj: str):
         url = f'{self.END_POINT}/v3/customers'
 
-        params = {
+        payload = {
             'name': name,
             'cpfCnpj': cpf_cnpj
         }
@@ -47,11 +50,13 @@ class Asaas():
             'access_token': self.API_KEY
         }
 
-        response = requests.post(url, params=params, headers=headers)
+        response = requests.post(url, json=payload, headers=headers)
 
         try:
             response.raise_for_status()
+            dados = response.json()
             print('Cliente criado com sucesso!')
+            return dados.get('id')
         except Exception as e:
             print(f'Erro: {e}')
     
@@ -88,7 +93,7 @@ class Asaas():
                        data_vencimento: date):
         url = f'{self.END_POINT}/v3/payments'
 
-        params = {
+        payload = {
             'customer': id_cliente,
             'billingType': forma_pagamento,
             'value': valor,
@@ -102,7 +107,7 @@ class Asaas():
         }
 
         try:
-            response = requests.post(url, headers=headers, params=params)
+            response = requests.post(url, headers=headers, json=payload)
             dados = response.json()
             return dados.get('id')
         except Exception as e:

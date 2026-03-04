@@ -45,6 +45,11 @@ class Ingresso(models.Model):
 
 
 class HistoricoCompra(models.Model):
+    class Status(models.TextChoices):
+        PENDENTE = 'P', 'Pendente'
+        APROVADO = 'A', 'Aprovado'
+        CANCELADO = 'C', 'Cancelado'
+
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -58,6 +63,13 @@ class HistoricoCompra(models.Model):
     data_compra = models.DateTimeField(auto_now_add=True)
     valor_pago = models.DecimalField(max_digits=6, decimal_places=2)
     quantidade = models.PositiveSmallIntegerField()
+    status = models.CharField(max_length=1,
+                              choices=Status.choices,
+                              default=Status.PENDENTE)
+    id_cobranca_asaas = models.CharField(max_length=32,
+                                         verbose_name='Id da cobrança gerada no Asaas',
+                                         null=True,
+                                         blank=True)
 
     def __str__(self):
         return f'{self.data_compra:%d/%m/%Y %H:%M} - {self.titulo}'

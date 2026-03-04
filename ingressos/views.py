@@ -38,7 +38,7 @@ def comprar_ingresso(request, id_ingresso):
                     # obtendo o perfil de cliente do usuário logado
                     cliente = Cliente.objects.get(usuario=usuario)
         
-                    HistoricoCompra.objects.create(
+                    historico = HistoricoCompra.objects.create(
                         cliente=cliente,
                         ingresso=ingresso_travado,
                         titulo=ingresso_travado.titulo,
@@ -48,7 +48,7 @@ def comprar_ingresso(request, id_ingresso):
                         data_horario_evento=ingresso_travado.data_horario
                         )
                     messages.success(request, 'Obrigado! Seu ingresso foi comprado com sucesso! Aguarde o contato do administrador')
-                    return redirect('home')
+                    return redirect('criar_pagamento', id_historico_compra=historico.id )
             except Exception as e:
                 messages.error(request, e)
                 return redirect('comprar_ingresso', ingresso.id)

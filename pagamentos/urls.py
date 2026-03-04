@@ -4,5 +4,5 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.criar_pagamento, name='criar_pagamento'),
+    path('novo-pagamento/<uuid:id_historico_compra>/', views.criar_pagamento, name='criar_pagamento'),
 ]
