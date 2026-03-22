@@ -4,20 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('ingressos', '0001_initial'),
+        ("ingressos", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='ingresso',
-            name='thumbnail',
-            field=models.ImageField(blank=True, null=True, upload_to=''),
+            model_name="ingresso",
+            name="thumbnail",
+            field=models.ImageField(blank=True, null=True, upload_to=""),
         ),
         migrations.AddField(
-            model_name='ingresso',
-            name='tipo',
-            field=models.CharField(choices=[('JOGO', 'Jogo'), ('SHOW', 'Show')], default='JOGO', max_length=5),
+            model_name="ingresso",
+            name="tipo",
+            field=models.CharField(
+                choices=[("JOGO", "Jogo"), ("SHOW", "Show")],
+                default="JOGO",
+                max_length=5,
+            ),
         ),
     ]

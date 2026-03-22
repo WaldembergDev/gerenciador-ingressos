@@ -38,6 +38,7 @@
               <th scope="col">Evento</th>
               <th class="d-none d-lg-table-cell" scope="col">Quantidade</th>
               <th scope="col">Total (R$)</th>
+              <th scope="col">Status</th>
               <th scope="col">Ações</th>
             </tr>
           </thead>
@@ -50,6 +51,17 @@
                 <td>{{ historico.titulo }}</td>
                 <td class="d-none d-lg-table-cell">{{ historico.quantidade }}</td>
                 <td>{{ historico.valor_pago }}</td>
+                <td>
+                  {% if historico.status == 'P' %}
+                    <span class="badge text-bg-warning">
+                  {% elif historico.status == 'A' %}
+                    <span class="badge text-bg-success">
+                  {% else %}
+                    <span class="badge text-bg-danger">
+                  {% endif %}                    
+                    {{ historico.get_status_display }}
+                  </span>
+                </td>
                 <td>
                   <a href="{% url 'historico_venda' historico.id %}" class="btn btn-primary">Detalhes</button>
                 </td>

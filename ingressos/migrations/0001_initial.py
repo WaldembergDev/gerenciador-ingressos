@@ -6,37 +6,72 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('clientes', '0001_initial'),
+        ("clientes", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Ingresso',
+            name="Ingresso",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('titulo', models.CharField(max_length=120, verbose_name='Título')),
-                ('local', models.CharField(max_length=120, verbose_name='Local do ingresso')),
-                ('descricao', models.CharField(max_length=255, verbose_name='Descrição do Ingresso')),
-                ('data_horario', models.DateTimeField()),
-                ('preco', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('estoque_disponivel', models.PositiveSmallIntegerField()),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("titulo", models.CharField(max_length=120, verbose_name="Título")),
+                (
+                    "local",
+                    models.CharField(max_length=120, verbose_name="Local do ingresso"),
+                ),
+                (
+                    "descricao",
+                    models.CharField(
+                        max_length=255, verbose_name="Descrição do Ingresso"
+                    ),
+                ),
+                ("data_horario", models.DateTimeField()),
+                ("preco", models.DecimalField(decimal_places=2, max_digits=6)),
+                ("estoque_disponivel", models.PositiveSmallIntegerField()),
             ],
         ),
         migrations.CreateModel(
-            name='HistoricoCompra',
+            name="HistoricoCompra",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('titulo', models.CharField(max_length=120, verbose_name='Título')),
-                ('local', models.CharField(max_length=120)),
-                ('data_compra', models.DateTimeField(auto_now_add=True)),
-                ('valor_pago', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('quantidade', models.PositiveSmallIntegerField()),
-                ('cliente', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='clientes.cliente')),
-                ('ingresso', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='ingressos.ingresso')),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("titulo", models.CharField(max_length=120, verbose_name="Título")),
+                ("local", models.CharField(max_length=120)),
+                ("data_compra", models.DateTimeField(auto_now_add=True)),
+                ("valor_pago", models.DecimalField(decimal_places=2, max_digits=6)),
+                ("quantidade", models.PositiveSmallIntegerField()),
+                (
+                    "cliente",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="clientes.cliente",
+                    ),
+                ),
+                (
+                    "ingresso",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="ingressos.ingresso",
+                    ),
+                ),
             ],
         ),
     ]

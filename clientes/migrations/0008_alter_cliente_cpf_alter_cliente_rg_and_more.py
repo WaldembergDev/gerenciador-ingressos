@@ -4,25 +4,33 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('clientes', '0007_remove_cliente_criado_em'),
+        ("clientes", "0007_remove_cliente_criado_em"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='cliente',
-            name='cpf',
-            field=models.CharField(blank=True, max_length=14, null=True, unique=True, verbose_name='CPF'),
+            model_name="cliente",
+            name="cpf",
+            field=models.CharField(
+                blank=True, max_length=14, null=True, unique=True, verbose_name="CPF"
+            ),
         ),
         migrations.AlterField(
-            model_name='cliente',
-            name='rg',
-            field=models.CharField(blank=True, max_length=13, null=True, verbose_name='RG'),
+            model_name="cliente",
+            name="rg",
+            field=models.CharField(
+                blank=True, max_length=13, null=True, verbose_name="RG"
+            ),
         ),
         migrations.AlterField(
-            model_name='cliente',
-            name='sexo',
-            field=models.CharField(blank=True, choices=[('M', 'Masculino'), ('F', 'Feminino'), ('O', 'Outro')], max_length=2, null=True),
+            model_name="cliente",
+            name="sexo",
+            field=models.CharField(
+                blank=True,
+                choices=[("M", "Masculino"), ("F", "Feminino"), ("O", "Outro")],
+                max_length=2,
+                null=True,
+            ),
         ),
     ]

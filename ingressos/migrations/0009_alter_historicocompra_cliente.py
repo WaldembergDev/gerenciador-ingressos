@@ -5,16 +5,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('clientes', '0003_alter_cliente_cpf_alter_cliente_rg'),
-        ('ingressos', '0008_alter_historicocompra_ingresso'),
+        ("clientes", "0003_alter_cliente_cpf_alter_cliente_rg"),
+        ("ingressos", "0008_alter_historicocompra_ingresso"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='historicocompra',
-            name='cliente',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='compras', to='clientes.cliente'),
+            model_name="historicocompra",
+            name="cliente",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="compras",
+                to="clientes.cliente",
+            ),
         ),
     ]

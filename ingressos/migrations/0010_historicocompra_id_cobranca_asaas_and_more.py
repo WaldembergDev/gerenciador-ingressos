@@ -4,20 +4,28 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('ingressos', '0009_alter_historicocompra_cliente'),
+        ("ingressos", "0009_alter_historicocompra_cliente"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='historicocompra',
-            name='id_cobranca_asaas',
-            field=models.CharField(blank=True, max_length=32, null=True, verbose_name='Id da cobrança gerada no Asaas'),
+            model_name="historicocompra",
+            name="id_cobranca_asaas",
+            field=models.CharField(
+                blank=True,
+                max_length=32,
+                null=True,
+                verbose_name="Id da cobrança gerada no Asaas",
+            ),
         ),
         migrations.AddField(
-            model_name='historicocompra',
-            name='status',
-            field=models.CharField(choices=[('P', 'Pendente'), ('A', 'Aprovado'), ('C', 'Cancelado')], default='P', max_length=1),
+            model_name="historicocompra",
+            name="status",
+            field=models.CharField(
+                choices=[("P", "Pendente"), ("A", "Aprovado"), ("C", "Cancelado")],
+                default="P",
+                max_length=1,
+            ),
         ),
     ]

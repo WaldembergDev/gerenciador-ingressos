@@ -4,20 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('ingressos', '0003_alter_ingresso_preco'),
+        ("ingressos", "0003_alter_ingresso_preco"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='ingresso',
-            name='status',
-            field=models.CharField(choices=[('ATIVO', 'Ativo'), ('INATIVO', 'Inativo')], default='ATIVO', max_length=7),
+            model_name="ingresso",
+            name="status",
+            field=models.CharField(
+                choices=[("ATIVO", "Ativo"), ("INATIVO", "Inativo")],
+                default="ATIVO",
+                max_length=7,
+            ),
         ),
         migrations.AlterField(
-            model_name='ingresso',
-            name='estoque_disponivel',
+            model_name="ingresso",
+            name="estoque_disponivel",
             field=models.PositiveSmallIntegerField(default=2),
         ),
     ]

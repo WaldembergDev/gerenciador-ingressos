@@ -4,30 +4,30 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0001_initial'),
+        ("core", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelManagers(
-            name='customuser',
-            managers=[
-            ],
+            name="customuser",
+            managers=[],
         ),
         migrations.AddField(
-            model_name='customuser',
-            name='is_admin',
+            model_name="customuser",
+            name="is_admin",
             field=models.BooleanField(default=False),
         ),
         migrations.AlterField(
-            model_name='customuser',
-            name='email',
-            field=models.EmailField(max_length=255, unique=True, verbose_name='Endereço de E-mail'),
+            model_name="customuser",
+            name="email",
+            field=models.EmailField(
+                max_length=255, unique=True, verbose_name="Endereço de E-mail"
+            ),
         ),
         migrations.AlterField(
-            model_name='customuser',
-            name='is_active',
+            model_name="customuser",
+            name="is_active",
             field=models.BooleanField(default=True),
         ),
     ]

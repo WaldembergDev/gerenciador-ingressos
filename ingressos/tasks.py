@@ -1,20 +1,17 @@
 import requests
-from decouple import config
 from celery import shared_task
 import logging
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
-@shared_task(name='notificacao_compra_whatsapp', bind=True, max_retries=3)
-def enviar_notificacao(self, numero:str, evento: str, data_evento: str):
-    url = 'https://graph.facebook.com/v22.0/964251236763798/messages'
+
+@shared_task(name="notificacao_compra_whatsapp", bind=True, max_retries=3)
+def enviar_notificacao(self, numero: str, evento: str, data_evento: str):
+    url = "https://graph.facebook.com/v22.0/964251236763798/messages"
     token = settings.TOKEN_WHATSAPP
 
-    headers = {
-        'Authorization': f'Bearer {token}',
-        'Content-Type': 'application/json'
-    }
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
     data = {
         "messaging_product": "whatsapp",
@@ -23,32 +20,20 @@ def enviar_notificacao(self, numero:str, evento: str, data_evento: str):
         "type": "template",
         "template": {
             "name": "notificacao_compra",
-            "language": {
-            "code": "pt_BR"
-            },
+            "language": {"code": "pt_BR"},
             "components": [
-            # <!-- Only required if the template uses body component parameters -->
-            {
-                "type": "body",
-                "parameters": [
+                # <!-- Only required if the template uses body component parameters -->
                 {
-                    "type": "text",
-                    "parameter_name": "evento",
-                    "text": evento
-                },
-                {
-                    "type": "text",
-                    "parameter_name": "data",
-                    "text": data_evento
-                },
-                
-                # <!-- Additional parameters values would follow, if needed -->
-
-                ]
-            }
-            ]
-        }
-        }
+                    "type": "body",
+                    "parameters": [
+                        {"type": "text", "parameter_name": "evento", "text": evento},
+                        {"type": "text", "parameter_name": "data", "text": data_evento},
+                        # <!-- Additional parameters values would follow, if needed -->
+                    ],
+                }
+            ],
+        },
+    }
 
     response = requests.post(url, headers=headers, json=data)
 
@@ -62,4 +47,6 @@ def enviar_notificacao(self, numero:str, evento: str, data_evento: str):
 
 def obter_proximos_eventos():
     pass
+
+
 # https://api.maracana.rio.br/v1/bievents
