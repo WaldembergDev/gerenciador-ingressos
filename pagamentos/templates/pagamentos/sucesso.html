@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Pagamento Realizado com sucesso!{% endblock %}
+{% block content %}
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card text-center">
+                <div class="card-header">
+                    Pagamento realizado com sucesso!
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Pedido #{{ pedido.id }}</h5>
+                    <p class="card-text">Seu pagamento no valor de {{ pedido.valor_pago }} foi realizado com sucesso! Aguarde o contato do administrador ou entre em contato para combinar sobre o ingresso!</p>
+                    <p class="card-text fw-bold">Dados da compra:</p>
+                    <div class="alert alert-light border my-4 text-start">
+                        <strong>Número do Pedido:</strong> #{{ pedido.id }}<br>
+                        <strong>Forma de Pagamento:</strong> PIX<br>
+                        <strong>Valor total:</strong> {{ pedido.valor_pago }}<br>
+                    </div>              
+                </div>
+                <div class="card-footer text-body-secondary">
+                    <a href="{% url 'meus_ingressos' %}" class="btn btn-primary">Visualizar meus pedidos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('clientes', '0003_alter_cliente_cpf_alter_cliente_rg'),
+        ("clientes", "0003_alter_cliente_cpf_alter_cliente_rg"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='cliente',
-            name='status',
-            field=models.IntegerField(choices=[(0, 'Inativo'), (1, 'Ativo')], default=1),
+            model_name="cliente",
+            name="status",
+            field=models.IntegerField(
+                choices=[(0, "Inativo"), (1, "Ativo")], default=1
+            ),
         ),
     ]

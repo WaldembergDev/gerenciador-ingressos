@@ -13,16 +13,28 @@
             <th scope="col">Evento</th>
             <th scope="col">Local</th>
             <th scope="col">Data do Evento</th>
+            <th scope="col">Status</th>
             <th scope="col">Ações</th> 
         </tr>
         </thead>
         <tbody>
-            {% for compra in compras %}
+            {% for compra in page_obj %}
         <tr class="align-middle text-center">
             <td class="d-none d-sm-table-cell">{{ compra.data_compra|date:"d/m/Y H:i" }}</td>
             <td>{{ compra.titulo }}</td>
             <td>{{ compra.local }}</td>
             <td>{{ compra.ingresso.data_horario|date:"d/m/Y H:i" }}</td>
+            <td>
+                  {% if compra.status == 'P' %}
+                    <span class="badge text-bg-warning">
+                  {% elif compra.status == 'A' %}
+                    <span class="badge text-bg-success">
+                  {% else %}
+                    <span class="badge text-bg-danger">
+                  {% endif %}                    
+                    {{ compra.get_status_display }}
+                  </span>
+                </td>
             <td><button type="button" id="botaoAbrirModal" class="btn btn-primary btn-ingresso" data-id="{{ compra.id }}">Detalhes</button>
         </tr>
             {% empty %}
@@ -37,6 +49,7 @@
             {% endfor %}
         </tbody>
     </table>
+    {% include 'partials/_paginacao.html' %}
     <!-- Modal -->
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -50,7 +63,7 @@
                     <p><span class="fw-bold">Titulo</span>: <span id="tituloId"></span></p>
                     <p><span class="fw-bold">Local</span>: <span id="localId"></span></p>
                     <p><span class="fw-bold">Data da Compra</span>: <span id="dataCompraId"></span></p>
-                    <p><span class="fw-bold">Valor pago</span>: R$ <span id="valorPagoId"></span></p>
+                    <p><span class="fw-bold">Valor Total</span>: R$ <span id="valorPagoId"></span></p>
                     <p><span class="fw-bold">Quantidade</span>: <span id="quantidadeId"></span></p>
                 </div>
             </div>

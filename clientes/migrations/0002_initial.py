@@ -6,23 +6,26 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('clientes', '0001_initial'),
+        ("clientes", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='cliente',
-            name='usuario',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
+            model_name="cliente",
+            name="usuario",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AddField(
-            model_name='endereco',
-            name='cliente',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, to='clientes.cliente'),
+            model_name="endereco",
+            name="cliente",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.PROTECT, to="clientes.cliente"
+            ),
         ),
     ]

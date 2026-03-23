@@ -20,7 +20,7 @@
             {% for cliente in clientes %}
                 <tr class="align-middle text-center">
                     <th scope="row">{{ cliente.usuario.first_name }}</th>
-                    <td class="d-none d-md-table-cell">{{ cliente.usuario.email }}</td>
+                    <td clas="d-none d-md-table-cell">{{ cliente.usuario.email }}</td>
                     <td>{{ cliente.telefone }}</td>
                     <td>{{ cliente.compras.all|length }}</td>
                     <td>
@@ -54,6 +54,10 @@
                         {% endif %}
                         </button>
                     </td>
+                </tr>
+            {% empty %}
+                <tr class="align-middle text-center">
+                    <td scope='row' colspan='6'>Não há clientes cadastrados</td>
                 </tr>
             {% endfor %}
         </tbody>

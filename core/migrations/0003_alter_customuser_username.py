@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0002_alter_customuser_managers_customuser_is_admin_and_more'),
+        ("core", "0002_alter_customuser_managers_customuser_is_admin_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='customuser',
-            name='username',
+            model_name="customuser",
+            name="username",
             field=models.CharField(blank=True, max_length=150, null=True, unique=True),
         ),
     ]
