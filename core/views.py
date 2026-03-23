@@ -43,15 +43,16 @@ def acesso_inicial(request):
 def home(request):
     query = request.GET.get("q")
     agora = timezone.now()
+    ingressos = Ingresso.objects.filter(
+        data_horario__gte=agora, status=Ingresso.StatusIngresso.ATIVO
+    ).order_by("data_horario")
+
     if request.GET.get("q"):
-        ingressos = Ingresso.objects.filter(
+        ingressos = ingressos.filter(
             (Q(titulo__icontains=query) | Q(descricao__icontains=query))
             & Q(data_horario__gte=agora)
         ).distinct()
-    else:
-        ingressos = Ingresso.objects.filter(data_horario__gte=agora).order_by(
-            "data_horario"
-        )
+
     context = {"ingressos": ingressos, "query": query}
     return render(request, "core/home.html", context)
 

@@ -112,8 +112,8 @@ class Asaas:
             "chargeTypes": ["DETACHED"],
             "minutesToExpire": 10,
             "callback": {
-                "successUrl": "https://meusite.com",
-                "cancelUrl": "https://meusite.com",
+                "successUrl": f"https://censurable-zona-permissibly.ngrok-free.dev/pagamentos/sucesso/{item.get('id')}/",
+                "cancelUrl": "https://censurable-zona-permissibly.ngrok-free.dev/pagamentos/cancelado/",
             },
             "items": [
                 {
@@ -136,14 +136,9 @@ class Asaas:
             response = requests.post(url, json=payload, headers=headers)
             response.raise_for_status()
             dados = response.json()
-            id = dados.get('id')
-            link = dados.get('link')
+            id = dados.get("id")
+            link = dados.get("link")
             return id, link
         except Exception as e:
             print(f"Erro: {e}")
             return None
-    
-    
-
-
-

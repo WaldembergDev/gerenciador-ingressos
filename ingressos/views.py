@@ -76,7 +76,12 @@ def exibir_meus_ingressos(request):
     compras = HistoricoCompra.objects.filter(cliente=cliente).order_by(
         "data_horario_evento"
     )
-    context = {"compras": compras}
+    paginator = Paginator(compras, 20)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    context = {"page_obj": page_obj}
+
     return render(request, "ingressos/meus_ingressos.html", context=context)
 
 

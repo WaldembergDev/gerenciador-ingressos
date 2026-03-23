@@ -1,5 +1,4 @@
 from django.db import models
-import uuid
 from clientes.models import Cliente
 from django.core.validators import MinValueValidator
 
@@ -14,7 +13,6 @@ class Ingresso(models.Model):
         ATIVO = "ATIVO", "Ativo"
         INATIVO = "INATIVO", "Inativo"
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     tipo = models.CharField(
         max_length=5, choices=TipoIngresso.choices, default=TipoIngresso.JOGO
     )
@@ -36,7 +34,7 @@ class Ingresso(models.Model):
 
     @property
     def quantidade_vendido(self):
-        vendas = HistoricoCompra.objects.filter(ingresso=self)
+        vendas = HistoricoCompra.objects.filter(ingresso=self, status=HistoricoCompra.Status.APROVADO)
         quantidade = vendas.count()
         return quantidade
 
@@ -52,7 +50,6 @@ class HistoricoCompra(models.Model):
         APROVADO = "A", "Aprovado"
         CANCELADO = "C", "Cancelado"
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     cliente = models.ForeignKey(
         Cliente, on_delete=models.PROTECT, related_name="compras"
     )
@@ -76,4 +73,4 @@ class HistoricoCompra(models.Model):
     )
 
     def __str__(self):
-        return f"{self.data_compra:%d/%m/%Y %H:%M} - {self.titulo}"
+        return f"{self.data_compra:%d/%m/%Y %H:%M} - {self.titulo} - {self.id}"

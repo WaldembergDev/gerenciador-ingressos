@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Pedido Cancelado{% endblock %}
+{% block content %}
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card text-center">
+                <div class="card-header">
+                    Pedido Cancelado
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Pedido #{{ pedido.id }}</h5>
+                    <p class="card-text">Seu pedido foi cancelado com sucesso!</p>            
+                </div>
+                <div class="card-footer text-body-secondary">
+                    <a href="{% url 'meus_ingressos' %}" class="btn btn-primary">Visualizar meus pedidos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -7,7 +7,7 @@ def middleware_acesso_inicial(get_response):
             not request.session.get("acesso_geral")
             and not request.path == "/core/acesso-inicial/"
             and not request.path.startswith("/admin/")
-            and not request.path.startswith('/pagamentos/webhook/')
+            and not request.path.startswith("/pagamentos/webhook/")
         ):
             return redirect("acesso_inicial")
 
