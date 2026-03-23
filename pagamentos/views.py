@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
+from django.conf import settings
+
 
 
 # Create your views here.
@@ -66,8 +68,20 @@ def criar_checkout(request, id_historico_compra):
 
 
 @csrf_exempt
-@require_POST
 def receber_webhook(request):
+    auth_token = request.headers.get('asaas-access-token')
+    if not auth_token == settings.ASAAS_TOKEN_WEBHOOK:
+        return HttpResponse('Entrei onde não deveria')
+        #return HttpResponse(content="Chave inválida!", status=403)
     data = json.loads(request.body)
     print(f"Webook recebido: {data}")
+    event = data.get('event')
+    id_checkout = data.get('checkout').get('id')
+    pedido = get_object_or_404(HistoricoCompra, id_checkout_asaas=id_checkout)
+    if event == 'CHECKOUT_EXPIRED' or event == 'CHECKOUT_CANCELED':
+        pedido.status = HistoricoCompra.Status.CANCELADO
+        pedido.ingresso.estoque_disponivel += 1
+    elif event == 'CHECKOUT_PAID':
+        pedido.status = HistoricoCompra.Status.APROVADO
+    pedido.save()
     return HttpResponse(content="Tudo certo!", status=200)

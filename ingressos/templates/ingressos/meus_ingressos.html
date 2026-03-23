@@ -13,6 +13,7 @@
             <th scope="col">Evento</th>
             <th scope="col">Local</th>
             <th scope="col">Data do Evento</th>
+            <th scope="col">Status</th>
             <th scope="col">Ações</th> 
         </tr>
         </thead>
@@ -23,6 +24,17 @@
             <td>{{ compra.titulo }}</td>
             <td>{{ compra.local }}</td>
             <td>{{ compra.ingresso.data_horario|date:"d/m/Y H:i" }}</td>
+            <td>
+                  {% if compra.status == 'P' %}
+                    <span class="badge text-bg-warning">
+                  {% elif compra.status == 'A' %}
+                    <span class="badge text-bg-success">
+                  {% else %}
+                    <span class="badge text-bg-danger">
+                  {% endif %}                    
+                    {{ compra.get_status_display }}
+                  </span>
+                </td>
             <td><button type="button" id="botaoAbrirModal" class="btn btn-primary btn-ingresso" data-id="{{ compra.id }}">Detalhes</button>
         </tr>
             {% empty %}

@@ -191,6 +191,7 @@ ABACATEPAY_API_KEY = config("ABACATEPAY_API_KEY")
 ASAAS_API_KEY = config("ASAAS_API_KEY")
 ASAAS_END_POINT = config("ASAAS_END_POINT")
 ASAAS_USER_AGENT = config("ASAAS_USER_AGENT")
+ASAAS_TOKEN_WEBHOOK = config('ASAAS_TOKEN_WEBHOOK')
 
 # configurações para subir a aplicação utilizando ngrok
 CSRF_TRUSTED_ORIGINS = ["https://*.ngrok-free.app"]

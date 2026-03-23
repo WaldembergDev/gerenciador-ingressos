@@ -142,3 +142,8 @@ class Asaas:
         except Exception as e:
             print(f"Erro: {e}")
             return None
+    
+    
+
+
+

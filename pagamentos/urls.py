@@ -8,5 +8,5 @@ urlpatterns = [
         views.criar_checkout,
         name="criar_pagamento",
     ),
-    path("webook/", views.receber_webhook, name="receber_webhook"),
+    path("webhook/", views.receber_webhook, name="receber_webhook"),
 ]
