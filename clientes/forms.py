@@ -15,8 +15,3 @@ class ClienteForm(forms.ModelForm):
             "cpf": forms.TextInput(attrs={"class": "form-control"}),
             "sexo": forms.Select(attrs={"class": "form-select"}),
         }
-
-
-# class ClienteUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Cliente

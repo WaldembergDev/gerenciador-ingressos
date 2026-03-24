@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ClienteForm
-from core.forms import CustomUserForm, CustomUserUpdateForm
+from core.forms import CustomUserForm, CustomUserUpdateFormAdmin
 from django.contrib import messages
 from .models import Cliente
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -57,20 +57,19 @@ def toggle_cliente_status(request, id_cliente):
 @user_passes_test(superuser_check)
 def cliente_detail(request, id_cliente):
     cliente = get_object_or_404(Cliente, id=id_cliente)
-    valor_total_compras = cliente.compras.aggregate(total=Sum("valor_pago"))
+    valor_total_compras = cliente.compras.filter(status='A').aggregate(total=Sum("valor_pago"))
     if request.method == "POST":
         cliente_form = ClienteForm(request.POST, instance=cliente)
-        usuario_form = CustomUserUpdateForm(request.POST, instance=cliente.usuario)
+        usuario_form = CustomUserUpdateFormAdmin(request.POST, instance=cliente.usuario)
         print(cliente_form.errors)
         if cliente_form.is_valid() and usuario_form.is_valid():
-            print("Estou aqui")
             usuario_form.save()
             cliente_form.save()
             messages.success(request, "Dados do cliente atualizado com sucesso!")
             return redirect("cliente_detail", cliente.id)
     else:
         cliente_form = ClienteForm(instance=cliente)
-        usuario_form = CustomUserUpdateForm(instance=cliente.usuario)
+        usuario_form = CustomUserUpdateFormAdmin(instance=cliente.usuario)
     context = {
         "cliente_form": cliente_form,
         "usuario_form": usuario_form,

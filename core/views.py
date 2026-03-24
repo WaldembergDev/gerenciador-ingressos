@@ -3,12 +3,14 @@ from ingressos.models import Ingresso
 from django.contrib.auth import login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from .forms import EmailAuthenticationForm, AcessoGeralForm
+from .forms import EmailAuthenticationForm, AcessoGeralForm, CustomUserUpdateForm
 from .models import AcessoGeral
 from django.db.models import Q
 from django.utils import timezone
 from django.contrib.auth.hashers import check_password
 from .utils import superuser_check
+from clientes.models import Cliente
+from clientes.forms import ClienteForm
 
 
 User = get_user_model()
@@ -88,3 +90,25 @@ def admin_resetar_senha_usuario(request, id_usuario):
     usuario.save()
     messages.success(request, "Senha alterada com sucesso!")
     return redirect("cliente_list")
+
+@login_required
+def minha_conta(request):
+    perfil_usuario = request.user
+    perfil_cliente = Cliente.objects.filter(usuario=perfil_usuario).first()
+    if request.method == 'POST':
+        form_custom_user = CustomUserUpdateForm(request.POST, instance=perfil_usuario)
+        form_cliente = ClienteForm(request.POST, instance=perfil_cliente)
+        if form_custom_user.is_valid() and form_cliente.is_valid():
+            form_custom_user.save()
+            form_cliente.save()
+            messages.success(request, 'Dados atualizados com sucesso!')
+            return redirect('minha_conta')
+    else:
+        form_custom_user = CustomUserUpdateForm(instance=perfil_usuario)
+        form_cliente = ClienteForm(instance=perfil_cliente)
+      
+    context = {
+        'form_custom_user': form_custom_user,
+        'form_cliente': form_cliente
+    }
+    return render(request, 'core/minha_conta.html', context)
