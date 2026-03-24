@@ -1,4 +1,20 @@
-.venv
+# Python compilado
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ambientes Virtuais (Essencial!)
+.venv/
+venv/
+env/
+
+# Banco de Dados Local (Não suba seu db.sqlite3 de teste)
 *.sqlite3
+
+# Arquivos de Configuração Sensíveis (Segurança!)
 .env
-media
+
+# Media e Static coletados
+/media/
+/staticfiles/
