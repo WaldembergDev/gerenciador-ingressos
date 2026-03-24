@@ -4,15 +4,15 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Ambientes Virtuais (Essencial!)
+# Ambientes Virtuais
 .venv/
 venv/
 env/
 
-# Banco de Dados Local (Não suba seu db.sqlite3 de teste)
+# Banco de Dados Local
 *.sqlite3
 
-# Arquivos de Configuração Sensíveis (Segurança!)
+# Arquivos de Configuração Sensíveis
 .env
 
 # Media e Static coletados
