@@ -46,7 +46,7 @@
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="bi bi-person-circle me-2"></i> <span>{{ request.user.first_name|default:"Usuário" }}</span>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end"> <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Minha Conta</a></li>
+                <ul class="dropdown-menu dropdown-menu-end"> <li><a class="dropdown-item" href="{% url 'minha_conta' %}"><i class="bi bi-gear me-2"></i>Minha Conta</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
                     <form method="POST" action="{% url 'logout' %}">

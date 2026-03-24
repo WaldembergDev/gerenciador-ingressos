@@ -63,7 +63,6 @@ def cliente_detail(request, id_cliente):
         usuario_form = CustomUserUpdateForm(request.POST, instance=cliente.usuario)
         print(cliente_form.errors)
         if cliente_form.is_valid() and usuario_form.is_valid():
-            print("Estou aqui")
             usuario_form.save()
             cliente_form.save()
             messages.success(request, "Dados do cliente atualizado com sucesso!")

@@ -105,6 +105,7 @@ class Asaas:
             print(f"Erro: {e}")
 
     def criar_checkout(self, item: dict) -> tuple[str, str] | None:
+        base_url = settings.BASE_URL.rstrip('/')
         url = f"{self.END_POINT}/v3/checkouts"
 
         payload = {
@@ -112,8 +113,8 @@ class Asaas:
             "chargeTypes": ["DETACHED"],
             "minutesToExpire": 10,
             "callback": {
-                "successUrl": f"https://censurable-zona-permissibly.ngrok-free.dev/pagamentos/sucesso/{item.get('id')}/",
-                "cancelUrl": "https://censurable-zona-permissibly.ngrok-free.dev/pagamentos/cancelado/",
+                "successUrl": f"{base_url}/pagamentos/sucesso/{item.get('id')}/",
+                "cancelUrl": f"{base_url}/pagamentos/cancelado/",
             },
             "items": [
                 {

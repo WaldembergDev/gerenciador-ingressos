@@ -30,10 +30,6 @@ class CustomUserForm(forms.ModelForm):
             "password": forms.PasswordInput(attrs={"class": "form-control"}),
         }
 
-    # def __init__(self, *args, **kwargs):
-    #     self.custom_user = kwargs.pop('custom_user', None)
-    #     super(ConfirmarSenhaForm, self).__init__(*args, **kwargs)
-
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
@@ -53,7 +49,7 @@ class AcessoGeralForm(forms.ModelForm):
 class CustomUserUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ["first_name", "last_name", "email", "is_active"]
+        fields = ["first_name", "last_name", "email", "is_active", 'autoriza_notificacoes']
         widgets = {
             "first_name": forms.TextInput(attrs={"class": "form-control"}),
             "last_name": forms.TextInput(attrs={"class": "form-control"}),
@@ -62,4 +58,8 @@ class CustomUserUpdateForm(forms.ModelForm):
                 attrs={"class": "form-select"},
                 choices=[(True, "Ativo"), (False, "Inativo")],
             ),
+            "autoriza_notificacoes": forms.Select(
+                attrs={'class': 'form-select'},
+                choices=[(True, 'Sim'), (False, 'Não')]
+            )
         }

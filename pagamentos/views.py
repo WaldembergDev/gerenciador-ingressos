@@ -71,8 +71,7 @@ def criar_checkout(request, id_historico_compra):
 def receber_webhook(request):
     auth_token = request.headers.get("asaas-access-token")
     if not auth_token == settings.ASAAS_TOKEN_WEBHOOK:
-        return HttpResponse("Entrei onde não deveria")
-        # return HttpResponse(content="Chave inválida!", status=403)
+        return HttpResponse(content="Chave inválida!", status=403)
     data = json.loads(request.body)
     event = data.get("event")
     id_checkout = data.get("checkout").get("id")
