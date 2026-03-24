@@ -12,7 +12,7 @@ Um sistema de gerenciamento de ingressos que permite aos usuários comprar e ger
 ## Tecnologias
 - Django 5.2.7
 - Bootstrap 5
-- Stripe API para pagamentos
+- Asaas API para pagamentos
 
 ## Instruções de Instalação
 1. Clone este repositório:
@@ -65,7 +65,7 @@ gerenciador_ingressos/
 
 ## Visão Geral das Dependências
 - **Django**: Framework web de alto nível que promove o desenvolvimento rápido.
-- **Stripe**: Solução de pagamento que fornece a capacidade de realizar transações de forma segura.
+- **Asaas**: Solução de pagamento que fornece a capacidade de realizar transações de forma segura.
 
 ## Diretrizes de Contribuição
 1. Faça o fork do projeto
