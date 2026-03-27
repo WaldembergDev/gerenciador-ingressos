@@ -57,7 +57,9 @@ def toggle_cliente_status(request, id_cliente):
 @user_passes_test(superuser_check)
 def cliente_detail(request, id_cliente):
     cliente = get_object_or_404(Cliente, id=id_cliente)
-    valor_total_compras = cliente.compras.filter(status='A').aggregate(total=Sum("valor_pago"))
+    valor_total_compras = cliente.compras.filter(status="A").aggregate(
+        total=Sum("valor_pago")
+    )
     if request.method == "POST":
         cliente_form = ClienteForm(request.POST, instance=cliente)
         usuario_form = CustomUserUpdateFormAdmin(request.POST, instance=cliente.usuario)

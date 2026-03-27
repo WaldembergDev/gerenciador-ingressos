@@ -91,24 +91,22 @@ def admin_resetar_senha_usuario(request, id_usuario):
     messages.success(request, "Senha alterada com sucesso!")
     return redirect("cliente_list")
 
+
 @login_required
 def minha_conta(request):
     perfil_usuario = request.user
     perfil_cliente = Cliente.objects.filter(usuario=perfil_usuario).first()
-    if request.method == 'POST':
+    if request.method == "POST":
         form_custom_user = CustomUserUpdateForm(request.POST, instance=perfil_usuario)
         form_cliente = ClienteForm(request.POST, instance=perfil_cliente)
         if form_custom_user.is_valid() and form_cliente.is_valid():
             form_custom_user.save()
             form_cliente.save()
-            messages.success(request, 'Dados atualizados com sucesso!')
-            return redirect('minha_conta')
+            messages.success(request, "Dados atualizados com sucesso!")
+            return redirect("minha_conta")
     else:
         form_custom_user = CustomUserUpdateForm(instance=perfil_usuario)
         form_cliente = ClienteForm(instance=perfil_cliente)
-      
-    context = {
-        'form_custom_user': form_custom_user,
-        'form_cliente': form_cliente
-    }
-    return render(request, 'core/minha_conta.html', context)
+
+    context = {"form_custom_user": form_custom_user, "form_cliente": form_cliente}
+    return render(request, "core/minha_conta.html", context)

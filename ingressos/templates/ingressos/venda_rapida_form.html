@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Venda Rápida{% endblock %}
+{% block content %}
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+    <h1 class="text-center">Venda Rápida</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-8">
+            <form method="POST" action="." class="row border rounded-2 shadow-sm p-5 mt-5">
+                {% csrf_token %}
+                <div class="mb-3 col-md-6">
+                    <label for="{{ form.cliente.id_for_label }}" class="form-label fw-bold">{{ form.cliente.label }}</label>
+                    {{ form.cliente }}
+                    {{ form.cliente.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="{{ form.ingresso.id_for_label }}" class="form-label fw-bold">{{ form.ingresso.label }}</label>
+                    {{ form.ingresso }}
+                    {{ form.ingresso.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="{{ form.quantidade.id_for_label }}" class="form-label fw-bold">{{ form.quantidade.label }}</label>
+                    {{ form.quantidade }}
+                    {{ form.quantidade.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="{{ form.status.id_for_label }}" class="form-label fw-bold">{{ form.status.label }}</label>
+                    {{ form.status }}
+                    {{ form.status.errors }}
+                </div>
+                <div class="mb-3 d-grid justify-content-md-end">
+                    <button type="submit" class="btn btn-primary se">
+                        <i class="bi bi-bag-check"></i> Confirmar Venda
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

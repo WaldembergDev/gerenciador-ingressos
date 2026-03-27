@@ -12,5 +12,5 @@ urlpatterns = [
         views.admin_resetar_senha_usuario,
         name="admin_resetar_senha_usuario",
     ),
-    path('minha_conta/', views.minha_conta, name='minha_conta')
+    path("minha_conta/", views.minha_conta, name="minha_conta"),
 ]

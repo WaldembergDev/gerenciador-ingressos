@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0006_customuser_autoriza_notificacoes'),
+        ("core", "0006_customuser_autoriza_notificacoes"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='customuser',
-            name='autoriza_notificacoes',
-            field=models.BooleanField(default=True, verbose_name='Autoriza notificações'),
+            model_name="customuser",
+            name="autoriza_notificacoes",
+            field=models.BooleanField(
+                default=True, verbose_name="Autoriza notificações"
+            ),
         ),
     ]

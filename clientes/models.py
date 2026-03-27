@@ -23,7 +23,7 @@ class Cliente(models.Model):
     usuario = models.OneToOneField(CustomUser, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.telefone
+        return self.usuario.first_name
 
     @property
     def obter_status(self):
