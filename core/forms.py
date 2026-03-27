@@ -82,3 +82,18 @@ class CustomUserUpdateForm(forms.ModelForm):
                 attrs={"class": "form-select"}, choices=[(True, "Sim"), (False, "Não")]
             ),
         }
+
+
+class ResetSenhaForm(forms.ModelForm):
+    confirmacao_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        label="Confirmação de Senha",
+        max_length=120,
+        )
+    
+    class Meta:
+        model = CustomUser
+        fields = ['password']
+        widgets = {
+            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+        }

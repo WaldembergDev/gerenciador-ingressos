@@ -3,7 +3,7 @@ from ingressos.models import Ingresso
 from django.contrib.auth import login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from .forms import EmailAuthenticationForm, AcessoGeralForm, CustomUserUpdateForm
+from .forms import EmailAuthenticationForm, AcessoGeralForm, CustomUserUpdateForm, ResetSenhaForm
 from .models import AcessoGeral
 from django.db.models import Q
 from django.utils import timezone
@@ -107,6 +107,29 @@ def minha_conta(request):
     else:
         form_custom_user = CustomUserUpdateForm(instance=perfil_usuario)
         form_cliente = ClienteForm(instance=perfil_cliente)
+        form_reset_password = ResetSenhaForm()
 
-    context = {"form_custom_user": form_custom_user, "form_cliente": form_cliente}
+    context = {"form_custom_user": form_custom_user,
+               "form_cliente": form_cliente,
+               "form_reset_password": form_reset_password}
     return render(request, "core/minha_conta.html", context)
+
+@login_required
+def reset_senha(request):
+    usuario = request.user
+    form = ResetSenhaForm(request.POST, instance=usuario)
+    print('entrei aqui')
+    if form.is_valid():
+        password = form.cleaned_data['password']
+        confirmacao_password = form.cleaned_data['confirmacao_password']
+        if password != confirmacao_password:
+            messages.error(request, 'As senhas digitadas não são iguais!')
+            return redirect('minha_conta')
+        usuario.set_password(password)
+        usuario.save()
+        messages.success(request, 'Senha atualizada com sucesso!')
+        return redirect('minha_conta')
+    else:
+        messages.error(request, 'Erro ao validar o formulário')
+        return redirect('minha_conta')
+    
