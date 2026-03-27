@@ -69,9 +69,9 @@ class VendaRapidaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["cliente"].queryset = Cliente.objects.filter(
+        self.fields["cliente"].queryset = Cliente.objects.filter(  # type: ignore
             usuario__is_active=True
         ).all()
-        self.fields['ingresso'].queryset = Ingresso.objects.filter(
-           data_horario__gte=now(), status=Ingresso.StatusIngresso.ATIVO
+        self.fields["ingresso"].queryset = Ingresso.objects.filter(  # type: ignore
+            data_horario__gte=now(), status=Ingresso.StatusIngresso.ATIVO
         )

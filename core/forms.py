@@ -49,7 +49,13 @@ class AcessoGeralForm(forms.ModelForm):
 class CustomUserUpdateFormAdmin(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ["first_name", "last_name", "email", "is_active", 'autoriza_notificacoes']
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "is_active",
+            "autoriza_notificacoes",
+        ]
         widgets = {
             "first_name": forms.TextInput(attrs={"class": "form-control"}),
             "last_name": forms.TextInput(attrs={"class": "form-control"}),
@@ -59,21 +65,20 @@ class CustomUserUpdateFormAdmin(forms.ModelForm):
                 choices=[(True, "Ativo"), (False, "Inativo")],
             ),
             "autoriza_notificacoes": forms.Select(
-                attrs={'class': 'form-select'},
-                choices=[(True, 'Sim'), (False, 'Não')]
-            )
+                attrs={"class": "form-select"}, choices=[(True, "Sim"), (False, "Não")]
+            ),
         }
+
 
 class CustomUserUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ["first_name", "last_name", "email", 'autoriza_notificacoes']
+        fields = ["first_name", "last_name", "email", "autoriza_notificacoes"]
         widgets = {
             "first_name": forms.TextInput(attrs={"class": "form-control"}),
             "last_name": forms.TextInput(attrs={"class": "form-control"}),
             "email": forms.EmailInput(attrs={"class": "form-control"}),
             "autoriza_notificacoes": forms.Select(
-                attrs={'class': 'form-select'},
-                choices=[(True, 'Sim'), (False, 'Não')]
-            )
+                attrs={"class": "form-select"}, choices=[(True, "Sim"), (False, "Não")]
+            ),
         }

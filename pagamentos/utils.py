@@ -105,7 +105,7 @@ class Asaas:
             print(f"Erro: {e}")
 
     def criar_checkout(self, item: dict) -> tuple[str, str] | None:
-        base_url = settings.BASE_URL.rstrip('/')
+        base_url = settings.BASE_URL.rstrip("/")
         url = f"{self.END_POINT}/v3/checkouts"
 
         payload = {

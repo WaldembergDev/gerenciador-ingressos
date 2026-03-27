@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0005_acessogeral_alter_customuser_first_name_and_more'),
+        ("core", "0005_acessogeral_alter_customuser_first_name_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='customuser',
-            name='autoriza_notificacoes',
+            model_name="customuser",
+            name="autoriza_notificacoes",
             field=models.BooleanField(default=True),
         ),
     ]

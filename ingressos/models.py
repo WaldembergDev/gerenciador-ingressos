@@ -1,6 +1,7 @@
 from django.db import models
 from clientes.models import Cliente
 from django.core.validators import MinValueValidator
+from django.db.models import Sum
 
 
 # Create your models here.
@@ -34,9 +35,11 @@ class Ingresso(models.Model):
 
     @property
     def quantidade_vendido(self):
-        vendas = HistoricoCompra.objects.filter(ingresso=self, status=HistoricoCompra.Status.APROVADO)
-        quantidade = vendas.count()
-        return quantidade
+        vendas = HistoricoCompra.objects.filter(
+            ingresso=self, status=HistoricoCompra.Status.APROVADO
+        )
+        quantidade = vendas.aggregate(total_soma=Sum("quantidade")).get("total_soma")
+        return quantidade if quantidade is not None else 0
 
     @property
     def estoque_inicial(self):

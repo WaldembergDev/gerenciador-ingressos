@@ -30,7 +30,9 @@ class CustomUser(AbstractUser):
     email = models.EmailField(
         verbose_name="Endereço de E-mail", max_length=255, unique=True
     )
-    autoriza_notificacoes = models.BooleanField(default=True, verbose_name='Autoriza notificações')
+    autoriza_notificacoes = models.BooleanField(
+        default=True, verbose_name="Autoriza notificações"
+    )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     USERNAME_FIELD = "email"

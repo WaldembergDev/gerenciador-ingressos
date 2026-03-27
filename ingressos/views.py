@@ -202,10 +202,11 @@ def ingresso_delete(request, id_ingresso):
     messages.success(request, "Ingresso excluído com sucesso!")
     return redirect("ingresso_list")
 
+
 @login_required
 @user_passes_test(superuser_check)
 def venda_rapida(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = VendaRapidaForm(request.POST)
         if form.is_valid():
             venda = form.save(commit=False)
@@ -215,14 +216,14 @@ def venda_rapida(request):
             venda.valor_pago = venda.ingresso.preco * venda.quantidade
             venda.save()
             # atualizando o estoque de ingressos se a venda tiver sido aprovada
-            if venda.status == 'A':
+            if venda.status == "A":
                 venda.ingresso.estoque_disponivel -= venda.quantidade
                 venda.ingresso.save()
-            messages.success(request, 'Venda registrada com sucesso!')
-            return redirect('ingresso_list')
+            messages.success(request, "Venda registrada com sucesso!")
+            return redirect("ingresso_list")
     else:
         form = VendaRapidaForm()
     context = {
-        'form': form # type: ignore
+        "form": form  # type: ignore
     }
-    return render(request, 'ingressos/venda_rapida_form.html', context)
+    return render(request, "ingressos/venda_rapida_form.html", context)
