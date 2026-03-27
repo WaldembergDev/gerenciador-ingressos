@@ -31,4 +31,5 @@ urlpatterns = [
     ),
     path("lista-ingressos/", views.ingresso_list, name="ingresso_list"),
     path("deletar/<int:id_ingresso>/", views.ingresso_delete, name="ingresso_delete"),
+    path('venda-rapida/', views.venda_rapida, name="venda_rapida")
 ]

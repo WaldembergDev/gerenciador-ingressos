@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ingresso
+from .models import HistoricoCompra, Ingresso
 
 
 class CompraForm(forms.Form):
@@ -52,3 +52,14 @@ class IngressoForm(forms.ModelForm):
 
         if esconder_campo:
             del self.fields["status"]
+
+class VendaRapidaForm(forms.ModelForm):
+    class Meta:
+        model = HistoricoCompra
+        fields = ['cliente', 'ingresso', 'quantidade', 'status']
+        widgets = {
+            'cliente': forms.Select(attrs={'class': 'form-select'}),
+            'ingresso': forms.Select(attrs={'class': 'form-select'}),
+            'quantidade': forms.NumberInput(attrs={'class': 'form-control'}),
+            "status": forms.Select(attrs={"class": "form-select"}),
+        }
