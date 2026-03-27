@@ -1,5 +1,7 @@
 from django import forms
 from .models import HistoricoCompra, Ingresso
+from clientes.models import Cliente
+from django.utils.timezone import now
 
 
 class CompraForm(forms.Form):
@@ -53,13 +55,23 @@ class IngressoForm(forms.ModelForm):
         if esconder_campo:
             del self.fields["status"]
 
+
 class VendaRapidaForm(forms.ModelForm):
     class Meta:
         model = HistoricoCompra
-        fields = ['cliente', 'ingresso', 'quantidade', 'status']
+        fields = ["cliente", "ingresso", "quantidade", "status"]
         widgets = {
-            'cliente': forms.Select(attrs={'class': 'form-select'}),
-            'ingresso': forms.Select(attrs={'class': 'form-select'}),
-            'quantidade': forms.NumberInput(attrs={'class': 'form-control'}),
+            "cliente": forms.Select(attrs={"class": "form-select"}),
+            "ingresso": forms.Select(attrs={"class": "form-select"}),
+            "quantidade": forms.NumberInput(attrs={"class": "form-control"}),
             "status": forms.Select(attrs={"class": "form-select"}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["cliente"].queryset = Cliente.objects.filter(
+            usuario__is_active=True
+        ).all()
+        self.fields['ingresso'].queryset = Ingresso.objects.filter(
+           data_horario__gte=now(), status=Ingresso.StatusIngresso.ATIVO
+        )
