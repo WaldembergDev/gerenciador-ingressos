@@ -4,7 +4,13 @@
     <h1 class="text-center mb-4">Minha conta</h1>
     <div class="row justify-content-center">
         <div class="col-md-10 col-lg-8">
-            <form method='POST' action="." class="row border rounded-3 p-5 shadow-sm">
+            <!-- Informações básicas da conta-->
+            <div class="card shadow-sm">
+            <div class="card-header">
+                Informações Básicas
+            </div>
+            <div class="card-body ">
+                <form method='POST' action="." class="row ">
                 {% csrf_token %}
                 <div class="mb-3 col-md-6">
                     <label for="{{ form_custom_user.first_name.id_for_label }}" class="form-label fw-bold">
@@ -74,6 +80,34 @@
                     <input class="btn btn-primary" type="submit" value="Alterar dados">
                 </div>
             </form>
+            </div>
+            </div>
+            
+            <!-- Informações básicas da conta-->
+             <div class="card shadow-sm mt-5">
+            <div class="card-header bg-warning">
+                Segurança
+            </div>
+            <div class="card-body">
+                <form class="row" method="POST" action="{% url 'reset_senha' %}">
+                    {% csrf_token %}
+                    <div class="col-md-6 mb-3">
+                        <label for="" class="form-label fw-bold">{{ form_reset_password.password.label }}</label>
+                        {{ form_reset_password.password }}
+                        {{ form_reset_password.password.errors }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="" class="form-label fw-bold">{{ form_reset_password.confirmacao_password.label }}</label>
+                        {{ form_reset_password.confirmacao_password }}
+                        {{ form_reset_password.confirmacao_password.errors }}
+                    </div>
+                    <div class="mb-3 d-grid justify-content-md-end">
+                        <button type="submit" class="btn btn-primary">Alterar Senha</button>
+                    </div>
+                </form>    
+            </div>
+            </div>
+            
         </div>
     </div>
 {% endblock %}
