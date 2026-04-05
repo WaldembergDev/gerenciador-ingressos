@@ -1,12 +1,24 @@
 {% extends 'base_email.html' %}
+
 {% block content %}
-    <p>Prezado, {{nome_usuario}}, tudo bem?</p>
-    <p>Seguem os dados da compra:</p>
-    <p>Titulo: {{ titulo }}</p>
-    <p>Dia e horário do evento: {{ data_horario_evento }}</p>
-    <p>Quantidade de ingressos: {{ quantidade }}</p>
-    <p>Valor total pago: {{ valor_pago }}</p>
-    <p>Local: {{ local }}</p>
-    <p>Obrigado por usar meus serviços.</p>
-    <p>Atenciosamente,<br>Equipe do site</p>
+    <div style="padding: 20px; font-family: Arial, sans-serif; color: #333333; line-height: 1.6;">
+        <p style="font-size: 16px;">Olá, <strong>{{ nome_usuario }}</strong>, tudo bem?</p>
+        
+        <p style="font-size: 16px;">Sua compra foi confirmada! Confira os detalhes do seu pedido abaixo:</p>
+        
+        <div style="background-color: #f8f9fa; border-left: 4px solid #007bff; padding: 15px; margin: 20px 0; border-radius: 4px;">
+            <p style="margin: 5px 0;"><strong>Evento:</strong> {{ titulo }}</p>
+            <p style="margin: 5px 0;"><strong>Data e Horário:</strong> {{ data_horario_evento }}</p>
+            <p style="margin: 5px 0;"><strong>Quantidade:</strong> {{ quantidade }} ingresso(s)</p>
+            <p style="margin: 5px 0;"><strong>Valor Total:</strong> R$ {{ valor_pago }}</p>
+            <p style="margin: 5px 0;"><strong>Local:</strong> {{ local }}</p>
+        </div>
+
+        <p style="font-size: 16px;">Obrigado por usar nossos serviços. Esperamos que aproveite o evento!</p>
+        
+        <p style="font-size: 14px; color: #777777; margin-top: 30px;">
+            Atenciosamente,<br>
+            <strong>Equipe do Site</strong>
+        </p>
+    </div>
 {% endblock %}

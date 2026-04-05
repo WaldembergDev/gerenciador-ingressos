@@ -1,7 +1,27 @@
 {% extends 'base_email.html' %}
-{% block title %}E-mail de Registro{% endblock %}
+
+{% block title %}Bem-vindo ao {{ nome_do_site }}{% endblock %}
+
 {% block content %}
-    <h1>Olá, {{ nome_usuario }}!</h1>
-    <p>Obrigado por se registrar em nosso site.</p>
-    <p>Atenciosamente,<br>Equipe do site</p>
+    <div style="padding: 30px; font-family: Arial, sans-serif; color: #333333; line-height: 1.6;">
+        <h1 style="color: #2d3436; font-size: 24px; margin-top: 0;">Olá, {{ nome_usuario }}! 👋</h1>
+        
+        <p style="font-size: 16px;">
+            É um prazer ter você conosco! Ficamos muito felizes que você decidiu se registrar em nosso site.
+        </p>
+        
+        <p style="font-size: 16px;">
+            A partir de agora, você terá acesso a todas as nossas funcionalidades e poderá acompanhar seus pedidos de forma simples e rápida. 🚀
+        </p>
+
+        
+
+        <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 25px 0;">
+
+        <p style="font-size: 14px; color: #777777;">
+            Obrigado por usar nossos serviços.<br>
+            Atenciosamente,<br>
+            <strong>Equipe Ingresso</strong>
+        </p>
+    </div>
 {% endblock %}

@@ -22,7 +22,7 @@
                     <th scope="row">{{ cliente.usuario.first_name }}</th>
                     <td clas="d-none d-md-table-cell">{{ cliente.usuario.email }}</td>
                     <td>{{ cliente.telefone }}</td>
-                    <td>{{ cliente.compras.all|length }}</td>
+                    <td>{{ cliente.obter_quantidade_comprada }}</td>
                     <td>
                         {% if cliente.obter_status == 'Ativo' %}
                             <span class="badge text-bg-primary">{{ cliente.obter_status }}</span>

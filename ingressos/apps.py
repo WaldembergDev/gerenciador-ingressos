@@ -6,4 +6,4 @@ class IngressosConfig(AppConfig):
     name = "ingressos"
 
     def ready(self):
-        pass
+        import ingressos.signals

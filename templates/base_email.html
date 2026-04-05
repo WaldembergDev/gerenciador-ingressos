@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>{% block title %} {% endblock %}</title>
-    </head>
-    <body>
-        {% block content %}
-        {% endblock %}
-    </body>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Confirmação{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+            background-color: #f4f4f4;
+        }
+        table {
+            border-spacing: 0;
+        }
+        td {
+            padding: 0;
+        }
+        img {
+            border: 0;
+        }
+        .wrapper {
+            width: 100%;
+            table-layout: fixed;
+            background-color: #f4f4f4;
+            padding-bottom: 40px;
+        }
+        .main {
+            background-color: #ffffff;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            border-spacing: 0;
+            font-family: Arial, sans-serif;
+            color: #333333;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <center class="wrapper">
+        <table class="main" width="100%">
+            <tr>
+                <td style="padding: 20px 0; text-align: center;">
+                    <h2 style="color: #444; margin: 0;">Ingressos</h2>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding: 0;">
+                    {% block content %}
+                    {% endblock %}
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding: 20px; text-align: center; font-size: 12px; color: #999999;">
+                    <p style="margin: 0;">Este é um e-mail automático, por favor não responda.</p>
+                </td>
+            </tr>
+        </table>
+    </center>
+</body>
 </html>

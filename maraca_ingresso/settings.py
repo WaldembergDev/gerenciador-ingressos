@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "core",
     "ingressos",
     "pagamentos",
+    'integracoes'
 ]
 
 MIDDLEWARE = [
@@ -199,3 +200,5 @@ CSRF_TRUSTED_ORIGINS = ["https://*.ngrok-free.app"]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 BASE_URL = config("BASE_URL")
+
+WHAPI_TOKEN = config('WHAPI_TOKEN')

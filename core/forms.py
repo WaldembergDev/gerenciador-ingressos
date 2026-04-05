@@ -22,10 +22,12 @@ class CustomUserForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ["email", "password", "first_name", "last_name"]
+        fields = ["email", "password", "first_name", "last_name", 'autoriza_notificacoes']
         widgets = {
             "first_name": forms.TextInput(attrs={"class": "form-control"}),
             "last_name": forms.TextInput(attrs={"class": "form-control"}),
+            'autoriza_notificacoes': forms.Select(choices=((True, 'Sim'), (False, 'Não')),
+                                                  attrs={'class': 'form-control'}),
             "email": forms.EmailInput(attrs={"class": "form-control"}),
             "password": forms.PasswordInput(attrs={"class": "form-control"}),
         }
