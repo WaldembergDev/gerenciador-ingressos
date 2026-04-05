@@ -66,7 +66,7 @@
                 </div>
                 <div class="mb-3 col-md-6">
                     <label class="form-label fw-bold text-secondary">Total de Compras</label>
-                    <input type="text" readonly class="form-control-plaintext border-bottom" value="{{ cliente_form.instance.compras.all|length }}">
+                    <input type="text" readonly class="form-control-plaintext border-bottom" value="{{ cliente_form.instance.obter_quantidade_comprada }}">
                 </div>
                 <div class="mb-3 col-md-6">
                     <label class="form-label fw-bold text-secondary">Gasto na Plataforma (R$)</label>

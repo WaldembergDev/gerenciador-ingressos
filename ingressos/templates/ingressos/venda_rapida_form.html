@@ -29,7 +29,8 @@
                     {{ form.status }}
                     {{ form.status.errors }}
                 </div>
-                <div class="mb-3 d-grid justify-content-md-end">
+                <div class="mb-3 d-flex flex-column flex-md-row justify-content-between">
+                    <a class="btn btn-outline-secondary" href="{% url 'home' %}">Cancelar</a>
                     <button type="submit" class="btn btn-primary se">
                         <i class="bi bi-bag-check"></i> Confirmar Venda
                     </button>

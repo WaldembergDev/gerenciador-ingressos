@@ -210,6 +210,11 @@ def venda_rapida(request):
         form = VendaRapidaForm(request.POST)
         if form.is_valid():
             venda = form.save(commit=False)
+            # verificando se a quantidade solicitada é maior que a quantidade disponível
+            quantidade = form.cleaned_data.get('quantidade')            
+            if quantidade > venda.ingresso.estoque_disponivel:
+                messages.error(request, 'Quantidade informada acima do estoque disponível')
+                return redirect('venda_rapida')
             venda.titulo = venda.ingresso.titulo
             venda.local = venda.ingresso.local
             venda.data_horario_evento = venda.ingresso.data_horario

@@ -27,16 +27,6 @@
                         {{ cliente_form.telefone.errors }}
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="{{ cliente_form.sexo.id_for_label }}" class="form-label fw-bold">{{ cliente_form.sexo.label }}</label>
-                        {{ cliente_form.sexo }}
-                        {{ cliente_form.sexo.errors }}
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="{{ cliente_form.data_nascimento.id_for_label }}" class="form-label fw-bold">{{ cliente_form.data_nascimento.label }}</label>
-                        {{ cliente_form.data_nascimento }}
-                        {{ cliente_form.data_nascimento.errors }}                    
-                    </div>
-                    <div class="col-md-6 mb-3">
                         <label for="{{ cliente_form.cpf.id_for_label }}" class="form-label fw-bold">{{ cliente_form.cpf.label }}</label>
                         {{ cliente_form.cpf }}
                         {{ cliente_form.cpf.errors }}
@@ -45,6 +35,21 @@
                         <label for="{{ cliente_form.rg.id_for_label }}" class="form-label fw-bold">{{ cliente_form.rg.label }}</label>
                         {{ cliente_form.rg }}
                         {{ cliente_form.rg.errors }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="{{ cliente_form.sexo.id_for_label }}" class="form-label fw-bold">{{ cliente_form.sexo.label }}</label>
+                        {{ cliente_form.sexo }}
+                        {{ cliente_form.sexo.errors }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="{{ cliente_form.data_nascimento.id_for_label }}" class="form-label fw-bold">{{ cliente_form.data_nascimento.label }}</label>
+                        {{ cliente_form.data_nascimento }}
+                        {{ cliente_form.data_nascimento.errors }}                    
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="{{ custom_user_form.autoriza_notificacoes.id_for_label }}" class="form-label fw-bold">{{ custom_user_form.autoriza_notificacoes.label }}</label>
+                        {{ custom_user_form.autoriza_notificacoes }}
+                        {{ custom_user_form.autoriza_notificacoes.errors }}
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="{{ custom_user_form.password.id_for_label }}" class="form-label fw-bold">{{ custom_user_form.password.label }}</label>

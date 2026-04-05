@@ -1,21 +1,24 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import HistoricoCompra
-from .tasks import enviar_notificacao
-from datetime import datetime
-from django.conf import settings
-from core.tasks import enviar_email_de_confirmacao
+from .tasks import enviar_notificacao_whatsapp, enviar_email_confirmacao_pagamento
+from .utils import criar_mensagem_whatsapp
 
 
 @receiver(post_save, sender=HistoricoCompra)
-def create_or_update_profile(sender, instance, created, **kwargs):
-    if created:
+def pagamento_aprovado(sender, instance, created, **kwargs):
+    if instance.status == HistoricoCompra.Status.APROVADO.value:
         # enviando notificação de Whatsapp para o administrador
-        numero = settings.NUMERO_NOTIFICACAO
-        evento = instance.titulo
-        data_evento = datetime.strftime(instance.data_horario_evento, "%d/%m/%Y %H:%M")
-        enviar_notificacao.delay(numero, evento, data_evento)
-        # enviando notificação ao responsável pela compra
+        mensagem = criar_mensagem_whatsapp(
+            instance.id,
+            instance.titulo,
+            instance.data_horario_evento.strftime('%d/%m/%Y %H:%M'),
+            instance.quantidade,
+            instance.valor_pago,
+            instance.cliente.usuario.first_name)
+        numero = instance.cliente.telefone
+        enviar_notificacao_whatsapp.delay(numero, mensagem)
+        # enviando notificação para o cliente
         template = "ingressos/emails/email_confirmacao_compra.html"
         destinatario = instance.cliente.usuario.email
         assunto = "Confirmação de Compra"
@@ -27,4 +30,4 @@ def create_or_update_profile(sender, instance, created, **kwargs):
             "quantidade": instance.quantidade,
             "local": instance.local,
         }
-        enviar_email_de_confirmacao.delay(template, destinatario, assunto, contexto)
+        enviar_email_confirmacao_pagamento.delay(template, destinatario, assunto, contexto)

@@ -118,7 +118,6 @@ def minha_conta(request):
 def reset_senha(request):
     usuario = request.user
     form = ResetSenhaForm(request.POST, instance=usuario)
-    print('entrei aqui')
     if form.is_valid():
         password = form.cleaned_data['password']
         confirmacao_password = form.cleaned_data['confirmacao_password']

@@ -50,7 +50,7 @@ def criar_checkout(request, id_historico_compra):
     item = {
         "id": pedido.id,
         "description": pedido.titulo,
-        "imageBase64": "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
+        "imageBase64": "",
         "name": pedido.titulo,
         "quantity": pedido.quantidade,
         "value": str(pedido.ingresso.preco),
