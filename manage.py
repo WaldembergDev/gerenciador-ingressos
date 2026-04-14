@@ -5,12 +5,12 @@ import os
 import sys
 from decouple import config
 
-settings_path = config('PATH_SETTINGS', cast=str)
+settings_path = config('PATH_SETTINGS', cast=str) 
 
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_path)
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_path) # type: ignore
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
