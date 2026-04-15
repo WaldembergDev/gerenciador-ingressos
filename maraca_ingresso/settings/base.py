@@ -15,20 +15,13 @@ from decouple import config
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-0rqso-d5f62^fuhy%2%u63hzylyc^ho8hko%47cg018ph$ewk@"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["*"]
-
+SECRET_KEY = config('SECRET_KEY')
 
 # Application definition
 
@@ -45,6 +38,7 @@ INSTALLED_APPS = [
     "pagamentos",
     'integracoes'
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -74,19 +68,8 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = "maraca_ingresso.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -106,7 +89,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -117,7 +99,6 @@ TIME_ZONE = "America/Sao_Paulo"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -149,7 +130,6 @@ MESSAGE_TAGS = {
 }
 
 LOGOUT_REDIRECT_URL = "/core/login"
-
 
 # configurações de e-mails
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -185,9 +165,6 @@ NUMERO_NOTIFICACAO = config("NUMERO_NOTIFICACAO")
 CELERY_TASK_ALWAYS_EAGER = True
 # CELERY_TASK_EAGER_PROPAGATES = True # exibe o erro: faz o código tentar novamente se der erro.
 
-# Configurações do AbacatePay
-ABACATEPAY_API_KEY = config("ABACATEPAY_API_KEY")
-
 # Configurações do Asaas
 ASAAS_API_KEY = config("ASAAS_API_KEY")
 ASAAS_END_POINT = config("ASAAS_END_POINT")
@@ -202,3 +179,5 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 BASE_URL = config("BASE_URL")
 
 WHAPI_TOKEN = config('WHAPI_TOKEN')
+
+PATH_SETTINGS = config('PATH_SETTINGS')
