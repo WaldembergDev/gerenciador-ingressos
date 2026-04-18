@@ -181,3 +181,7 @@ BASE_URL = config("BASE_URL")
 WHAPI_TOKEN = config('WHAPI_TOKEN')
 
 PATH_SETTINGS = config('PATH_SETTINGS')
+
+# Configurações para User Agent
+APP_NAME = 'ingresso_mc'
+APP_VERSION = '1.0.0'

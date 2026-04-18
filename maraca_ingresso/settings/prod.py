@@ -13,3 +13,5 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+USER_AGENT_STRING = f'{APP_NAME}/{APP_VERSION} (ambiente: prod)'

@@ -7,7 +7,7 @@ class Asaas:
     # Constantes
     END_POINT = settings.ASAAS_END_POINT
     API_KEY = settings.ASAAS_API_KEY
-    USER_AGENT = settings.ASAAS_USER_AGENT
+    USER_AGENT = settings.USER_AGENT_STRING
 
     def criar_qr_code_pix_dinamico(self, id_cobranca: str):
         url = f"{self.END_POINT}/v3/payments/{id_cobranca}/pixQrCode"
