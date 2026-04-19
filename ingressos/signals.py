@@ -13,10 +13,11 @@ def pagamento_aprovado(sender, instance, created, **kwargs):
         mensagem = criar_mensagem_whatsapp(
             instance.id,
             instance.titulo,
-            instance.data_horario_evento.strftime('%d/%m/%Y %H:%M'),
+            instance.data_horario_evento.strftime("%d/%m/%Y %H:%M"),
             instance.quantidade,
             instance.valor_pago,
-            instance.cliente.usuario.first_name)
+            instance.cliente.usuario.first_name,
+        )
         numero = settings.NUMERO_NOTIFICACAO
         enviar_notificacao_whatsapp.delay(numero, mensagem)
         # enviando notificação para o cliente
@@ -31,4 +32,6 @@ def pagamento_aprovado(sender, instance, created, **kwargs):
             "quantidade": instance.quantidade,
             "local": instance.local,
         }
-        enviar_email_confirmacao_pagamento.delay(template, destinatario, assunto, contexto)
+        enviar_email_confirmacao_pagamento.delay(
+            template, destinatario, assunto, contexto
+        )

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Nova Senha de Acesso Geral{% endblock %}
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="." method="POST" class="row justify-content-center border rounded-4 shadow-sm p-4">
+                {% csrf_token %}
+                <h1 class="text-center">Nova Senha de Acesso Geral</h1>
+                <p class="text-center text-body-secondary">Ao resetar a senha, todos os usuários que estiverem logados serão automaticamente deslogados e precisarão logar novamente com a nova senha gerada</p>
+                <div class="mb-3 col-md-6">
+                    <label class="fw-bold form-label">{{ form.senha.label }}</label>
+                    {{ form.senha }}
+                    {{ form.senha.errors }}
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label class="fw-bold form-label">{{ form.confirmacao_password.label }}</label>
+                    {{ form.confirmacao_password }}
+                    {{ form.confirmacao_password.errors }}
+                </div>
+                <div class="mb-3 d-grid">
+                    <button class="btn btn-primary">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

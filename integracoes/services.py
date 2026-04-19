@@ -10,24 +10,20 @@ from django.utils.html import strip_tags
 
 
 class Whapi:
-
-    API_URL = 'https://gate.whapi.cloud/'
+    API_URL = "https://gate.whapi.cloud/"
 
     def __init__(self):
         self.token = settings.WHAPI_TOKEN
-    
-    def send_message_text(self, number: str, message: str):
-        url = f'{self.API_URL}messages/text'
 
-        payload = {
-            'to': number,
-            'body': message   
-        }
+    def send_message_text(self, number: str, message: str):
+        url = f"{self.API_URL}messages/text"
+
+        payload = {"to": number, "body": message}
 
         headers = {
-            'accept': 'application/json',
-            'content-type': 'application/json',
-            'authorization': f'Bearer {self.token}'
+            "accept": "application/json",
+            "content-type": "application/json",
+            "authorization": f"Bearer {self.token}",
         }
 
         response = requests.post(url, json=payload, headers=headers)
@@ -37,12 +33,11 @@ class Whapi:
             dados = response.json()
             return JsonResponse(dados, status=201)
         except Exception as e:
-            print(f'Erro: {e}')
+            print(f"Erro: {e}")
             return None
 
 
 class EmailService:
-
     def __init__(self):
         self.email_host_user = settings.EMAIL_HOST_USER
 
@@ -68,5 +63,3 @@ class EmailService:
         email.attach_alternative(html_content, "text/html")
         # 6. Enviar o e-mail
         email.send()
-
-        

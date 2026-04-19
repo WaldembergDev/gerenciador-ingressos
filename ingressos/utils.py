@@ -1,10 +1,12 @@
-def criar_mensagem_whatsapp(id_venda: int,
-                            evento: str,
-                            data_evento: str,
-                            quantidade: int,
-                            valor_total: float,
-                            comprador: str):
-    mensagem =f""" *Notificação de Sistema*
+def criar_mensagem_whatsapp(
+    id_venda: int,
+    evento: str,
+    data_evento: str,
+    quantidade: int,
+    valor_total: float,
+    comprador: str,
+):
+    mensagem = f""" *Notificação de Sistema*
 A venda {id_venda} teve seu pagamento confirmado.
 Seguem os detalhes da venda:
 Evento: {evento}
