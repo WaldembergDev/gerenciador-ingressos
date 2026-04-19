@@ -62,12 +62,19 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">
+                            {{ form.preco_par.label_tag }}
+                            </label>
+                            {{ form.preco_par }}
+                            {{ form.preco_par.errors }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">
                             {{ form.estoque_disponivel.label_tag }}
                             </label>
                             {{ form.estoque_disponivel }}
                             {{ form.estoque_disponivel.errors }}
                         </div>
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold">
                             {{ form.thumbnail.label_tag }}
                             </label>

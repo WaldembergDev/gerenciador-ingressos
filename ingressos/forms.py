@@ -43,10 +43,12 @@ class IngressoForm(forms.ModelForm):
                 format="%Y-%m-%dT%H:%M",
             ),
             "preco": forms.NumberInput(attrs={"class": "form-control", "step": "0.01"}),
+            "preco_par": forms.NumberInput(attrs={"class": "form-control", "step": "0.01"}),
             "estoque_disponivel": forms.NumberInput(attrs={"class": "form-control"}),
             "status": forms.Select(attrs={"class": "form-select"}),
         }
-        labels = {"preco": "Preço (R$)"}
+        labels = {"preco": "Preço Unitário(R$)",
+                  "preco_par": "Preço Par (R$)"}
 
     def __init__(self, *args, **kwargs):
         esconder_campo = kwargs.pop("esconder_campo", False)

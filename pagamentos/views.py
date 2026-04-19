@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required
 def criar_pagamento(request, id_historico_compra):
     # identificando o pedido
     pedido = get_object_or_404(HistoricoCompra, id=id_historico_compra)
@@ -44,7 +45,7 @@ def criar_pagamento(request, id_historico_compra):
     }
     return render(request, "pagamentos/cobranca.html", context)
 
-
+@login_required
 def criar_checkout(request, id_historico_compra):
     pedido = get_object_or_404(HistoricoCompra, id=id_historico_compra)
     item = {
@@ -53,7 +54,7 @@ def criar_checkout(request, id_historico_compra):
         "imageBase64": "",
         "name": pedido.titulo,
         "quantity": pedido.quantidade,
-        "value": str(pedido.ingresso.preco),
+        "value": str(pedido.valor_pago/pedido.quantidade),
     }
 
     asaas = Asaas()

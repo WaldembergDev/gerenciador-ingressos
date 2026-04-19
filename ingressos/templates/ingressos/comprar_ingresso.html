@@ -30,7 +30,8 @@
                 <h2 class="text-center">{{ ingresso.titulo }}</h2>
                 <div class='mb-3'>
                     <p><span class="fw-bold"> Data:</span> {{ ingresso.data_horario|date:"d/m/Y h:i" }}</p>
-                    <p><span class="fw-bold">Valor:</span> R$ {{ ingresso.preco }}</p>
+                    <p><span class="fw-bold">Valor Unitário:</span> R$ {{ ingresso.preco }}</p>
+                    <p><span class="fw-bold">Valor Promocional do Par:</span> R$ {{ ingresso.preco_par|default:"Não disponível" }}</p>
                     <p><span class="fw-bold">Ingressos disponíveis:</span> {{ ingresso.estoque_disponivel }}</p>
                     <label class="form-label fw-bold">{{ form.quantidade.label }}:</label>
                     {{ form.quantidade }}

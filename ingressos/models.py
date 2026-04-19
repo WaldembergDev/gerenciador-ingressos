@@ -23,7 +23,18 @@ class Ingresso(models.Model):
     descricao = models.CharField(max_length=255, verbose_name="Descrição do Ingresso")
     data_horario = models.DateTimeField()
     preco = models.DecimalField(
-        max_digits=6, decimal_places=2, validators=[MinValueValidator(0)]
+        max_digits=6,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        verbose_name='Preço Unitário'
+    )
+    preco_par = models.DecimalField(
+        verbose_name='Valor do par de ingressos',
+        max_digits=6,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
+        null=True,
+        blank=True
     )
     estoque_disponivel = models.PositiveSmallIntegerField(default=2)
     status = models.CharField(
