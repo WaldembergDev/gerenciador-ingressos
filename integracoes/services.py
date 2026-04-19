@@ -8,6 +8,11 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+# gerais
+from requests.exceptions import HTTPError
+import cloudscraper
+from pprint import pprint
+
 
 class Whapi:
     API_URL = "https://gate.whapi.cloud/"
@@ -63,3 +68,19 @@ class EmailService:
         email.attach_alternative(html_content, "text/html")
         # 6. Enviar o e-mail
         email.send()
+
+class ApiMaracaService:
+    URL = 'https://api.maracana.rio.br/v1/bievents'
+
+    def obter_proximos_jogos(self):
+        scraper = cloudscraper.create_scraper()
+
+        try:
+            response = scraper.get(self.URL)
+            response.raise_for_status()
+            dados = response.json()
+            return dados.get('res')
+        except HTTPError as e:
+            print(f'Erro de requisição: {e}')
+        except Exception as e:
+            print(f'Erro genérico: {e}')

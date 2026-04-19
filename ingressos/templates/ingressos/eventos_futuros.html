@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load cache %}
+{% block title %}Eventos Futuros{% endblock %}
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center">Dados da Api (Cadastro Automático - Função Futura)</h1>
+            <table class="table table-striped  table-hover">
+                <thead class="table-dark text-center">
+                    <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Campeonato</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Cadastrado</th>
+                    <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for evento in eventos %}
+                        <tr>
+                        <th scope="row">{{ evento.dthr_evento|date:'d/m/Y H:i' }}</th>
+                        <td>{{ evento.titulo }}</td>
+                        <td>{{ evento.info.campeonato }}</td>
+                        <td>{{ evento.info.modalidade }}</td>
+                        <td>
+                            {% if evento.existe_cadastro %}
+                            <span class="badge text-bg-success">
+                            {% else %}
+                            <span class="badge text-bg-warning">
+                            {% endif %}
+                            {{ evento.existe_cadastro|yesno:'Sim,Não' }}
+                            <span>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary evento-cadastro-botao" data-titulo='{{ evento.titulo }}' data-evento-dia='{{ evento.dthr_evento }}'>Cadastrar</button>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

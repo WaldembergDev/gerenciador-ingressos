@@ -11,6 +11,10 @@ from datetime import datetime
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required, user_passes_test
 from core.utils import superuser_check
+from integracoes.services import ApiMaracaService
+from django.core.cache import cache
+from django.utils import timezone
+import json
 
 
 @login_required
@@ -234,3 +238,37 @@ def venda_rapida(request):
         "form": form  # type: ignore
     }
     return render(request, "ingressos/venda_rapida_form.html", context)
+
+@login_required
+@user_passes_test(superuser_check)
+def ingresso_registro_lote(request):
+    # carregando os eventos do cache
+    eventos = cache.get('eventos_carregados')
+
+    # verificando se existem eventos cadastrados
+    if not eventos:
+        api = ApiMaracaService()
+        eventos = api.obter_proximos_jogos()
+        cache.set('eventos_carregados', eventos, 3_600*12)
+        print('requisição realizada')
+
+    # criando um novo campo para saber se o evento está cadastrado e convertendo str para datetime
+    if eventos:
+        # obtendo todas as datas cadastradas
+        datas_cadastradas = set(Ingresso.objects.values_list('data_horario', flat=True))
+        for evento in eventos:
+            if isinstance(evento.get('dthr_evento'), str):
+                evento['dthr_evento'] = timezone.make_aware(datetime.strptime(evento['dthr_evento'], '%Y-%m-%d %H:%M:%S'))
+            evento['existe_cadastro'] = True if evento['dthr_evento'] in datas_cadastradas else False
+    
+    # carregando os eventos no contexto
+    context = {
+        'eventos': eventos
+    }
+    return render(request, 'ingressos/eventos_futuros.html', context)
+
+@login_required
+@user_passes_test(superuser_check)
+def ingresso_create_via_api(request):
+    pass
+    
