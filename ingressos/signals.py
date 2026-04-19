@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from .models import HistoricoCompra
 from .tasks import enviar_notificacao_whatsapp, enviar_email_confirmacao_pagamento
 from .utils import criar_mensagem_whatsapp
+from django.conf import settings
 
 
 @receiver(post_save, sender=HistoricoCompra)
@@ -16,7 +17,7 @@ def pagamento_aprovado(sender, instance, created, **kwargs):
             instance.quantidade,
             instance.valor_pago,
             instance.cliente.usuario.first_name)
-        numero = instance.cliente.telefone
+        numero = settings.NUMERO_NOTIFICACAO
         enviar_notificacao_whatsapp.delay(numero, mensagem)
         # enviando notificação para o cliente
         template = "ingressos/emails/email_confirmacao_compra.html"

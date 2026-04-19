@@ -6,7 +6,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
         <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5Zm4 1a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5Zm0 5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5ZM4 8a1 1 0 0 0 1 1h6a1 1 0 1 0 0-2H5a1 1 0 0 0-1 1Z"/>
       </svg>
-      <span>Maraca</span> </a>
+      <span>IngressosMc</span> </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -30,11 +30,14 @@
                   Área Administrativa
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="{% url 'venda_rapida' %}">Venda Rápida</a></li>
-                  <li><a class="dropdown-item" href="{% url 'todos_ingressos_comprados' %}">Ingressos Vendidos</a></li>
                   <li><a class="dropdown-item" href="{% url 'cadastrar_ingresso' %}">Cadastrar Ingresso</a></li>
+                  <li><a class="dropdown-item" href="{% url 'todos_ingressos_comprados' %}">Ingressos Vendidos</a></li>
                   <li><a class="dropdown-item" href="{% url 'ingresso_list' %}">Listar Ingressos</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'admin_create_client' %}">Criar Cliente</a></li>
                   <li><a class="dropdown-item" href="{% url 'cliente_list' %}">Listar Clientes</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'venda_rapida' %}">Venda Rápida</a></li>
                 </ul>
               </li>
               <hr class="d-lg-none text-secondary-emphasis my-3">
