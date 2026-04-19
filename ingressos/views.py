@@ -43,6 +43,13 @@ def comprar_ingresso(request, id_ingresso):
                     ingresso_travado.estoque_disponivel -= quantidade
                     ingresso_travado.save()
 
+                    if ingresso_travado.preco_par is not None:
+                        ingressos_pares = int(quantidade/2)
+                        ingressos_unitarios = quantidade % 2
+                        valor_total = ingressos_pares * ingresso_travado.preco_par + ingressos_unitarios * ingresso_travado.preco
+                    else:
+                        valor_total = ingresso_travado.preco * quantidade
+                    
                     # obtendo o usuário logado
                     usuario = request.user
                     # obtendo o perfil de cliente do usuário logado
@@ -53,7 +60,7 @@ def comprar_ingresso(request, id_ingresso):
                         ingresso=ingresso_travado,
                         titulo=ingresso_travado.titulo,
                         local=ingresso_travado.local,
-                        valor_pago=ingresso_travado.preco * quantidade,
+                        valor_pago=valor_total,
                         quantidade=quantidade,
                         data_horario_evento=ingresso_travado.data_horario,
                     )

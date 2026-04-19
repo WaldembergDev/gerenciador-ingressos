@@ -21,8 +21,10 @@
                   <p class="card-text"><i class="bi bi-three-dots"></i> {{ ingresso.get_tipo_display }}</p>
                   <p class="card-text"><i class="bi bi-geo-alt"></i> {{ ingresso.local }}</p>
                   <p class="card-text"><i class="bi bi-box-seam"></i></i> {{ ingresso.estoque_disponivel }} ingresso(s) restante(s)</p>
+                  <p class="card-text"><i class="bi bi-box-seam"></i></i> Preço Unitário: R$ {{ ingresso.preco }}</p>
+                  <p class="card-text"><i class="bi bi-box-seam"></i></i> Preço Promocional Par: {{ ingresso.preco_par|default:"Não disponível" }}</p>
                   <div class="d-flex justify-content-end mt-auto">
-                    <a href="{% url 'comprar_ingresso' id_ingresso=ingresso.id %}" class="btn btn-primary">Comprar | R$ {{ ingresso.preco }}</a>
+                    <a href="{% url 'comprar_ingresso' id_ingresso=ingresso.id %}" class="btn btn-primary">Comprar</a>
                   </div>
                 </div>
               </div>
