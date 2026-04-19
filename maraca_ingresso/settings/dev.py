@@ -15,4 +15,4 @@ DATABASES = {
     }
 }
 
-USER_AGENT_STRING = f'{APP_NAME}/{APP_VERSION} (ambiente: dev)'
+USER_AGENT_STRING = f"{APP_NAME}/{APP_VERSION} (ambiente: dev)"

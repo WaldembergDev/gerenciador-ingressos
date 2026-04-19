@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from core.models import CustomUser
 
+
 # Create your models here.
 class Cliente(models.Model):
     class SexoEnum(models.TextChoices):
@@ -27,10 +28,10 @@ class Cliente(models.Model):
     @property
     def obter_status(self):
         return "Ativo" if self.usuario.is_active else "Inativo"
-    
+
     @property
     def obter_quantidade_comprada(self):
-        quantidade = self.compras.filter(status='A').count()
+        quantidade = self.compras.filter(status="A").count()
         return quantidade
 
 

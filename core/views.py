@@ -1,9 +1,17 @@
+from re import S
+
 from django.shortcuts import get_object_or_404, render, redirect
 from ingressos.models import Ingresso
 from django.contrib.auth import login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from .forms import EmailAuthenticationForm, AcessoGeralForm, CustomUserUpdateForm, ResetSenhaForm
+from .forms import (
+    EmailAuthenticationForm,
+    AcessoGeralForm,
+    CustomUserUpdateForm,
+    ResetSenhaForm,
+    AcessoGeralFormCreate
+)
 from .models import AcessoGeral
 from django.db.models import Q
 from django.utils import timezone
@@ -109,26 +117,48 @@ def minha_conta(request):
         form_cliente = ClienteForm(instance=perfil_cliente)
         form_reset_password = ResetSenhaForm()
 
-    context = {"form_custom_user": form_custom_user,
-               "form_cliente": form_cliente,
-               "form_reset_password": form_reset_password}
+    context = {
+        "form_custom_user": form_custom_user,
+        "form_cliente": form_cliente,
+        "form_reset_password": form_reset_password,
+    }
     return render(request, "core/minha_conta.html", context)
+
 
 @login_required
 def reset_senha(request):
     usuario = request.user
     form = ResetSenhaForm(request.POST, instance=usuario)
     if form.is_valid():
-        password = form.cleaned_data['password']
-        confirmacao_password = form.cleaned_data['confirmacao_password']
+        password = form.cleaned_data["password"]
+        confirmacao_password = form.cleaned_data["confirmacao_password"]
         if password != confirmacao_password:
-            messages.error(request, 'As senhas digitadas não são iguais!')
-            return redirect('minha_conta')
+            messages.error(request, "As senhas digitadas não são iguais!")
+            return redirect("minha_conta")
         usuario.set_password(password)
         usuario.save()
-        messages.success(request, 'Senha atualizada com sucesso!')
-        return redirect('minha_conta')
+        messages.success(request, "Senha atualizada com sucesso!")
+        return redirect("minha_conta")
     else:
-        messages.error(request, 'Erro ao validar o formulário')
-        return redirect('minha_conta')
-    
+        messages.error(request, "Erro ao validar o formulário")
+        return redirect("minha_conta")
+
+
+@login_required
+@user_passes_test(superuser_check) # type:ignore
+def acesso_geral_create(request):
+    if request.method == "POST":
+        form = AcessoGeralFormCreate(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data.get('senha')
+            confirmacao_password = form.cleaned_data.get('confirmacao_password')
+            if password != confirmacao_password:
+                messages.error(request, 'As senhas digitadas não são iguais!')      
+                return redirect('acesso_geral_create')
+            form.save()
+            messages.success(request, 'Senha atualizada com sucesso!')
+            return redirect('home')
+    else:
+        form = AcessoGeralFormCreate()
+    context = {"form": form} # type: ignore
+    return render(request, "core/acesso_geral_form.html", context)

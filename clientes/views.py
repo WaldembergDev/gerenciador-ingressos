@@ -79,6 +79,7 @@ def cliente_detail(request, id_cliente):
     }
     return render(request, "clientes/cliente_detail.html", context)
 
+
 @login_required
 @user_passes_test(superuser_check)
 def admin_create_client(request):

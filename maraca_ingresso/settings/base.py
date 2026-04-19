@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config("SECRET_KEY")
 
 # Application definition
 
@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     "core",
     "ingressos",
     "pagamentos",
-    'integracoes'
+    "integracoes",
 ]
 
 
@@ -178,10 +178,10 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 BASE_URL = config("BASE_URL")
 
-WHAPI_TOKEN = config('WHAPI_TOKEN')
+WHAPI_TOKEN = config("WHAPI_TOKEN")
 
-PATH_SETTINGS = config('PATH_SETTINGS')
+PATH_SETTINGS = config("PATH_SETTINGS")
 
 # Configurações para User Agent
-APP_NAME = 'ingresso_mc'
-APP_VERSION = '1.0.0'
+APP_NAME = "ingresso_mc"
+APP_VERSION = "1.0.0"

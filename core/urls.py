@@ -13,5 +13,6 @@ urlpatterns = [
         name="admin_resetar_senha_usuario",
     ),
     path("minha-conta/", views.minha_conta, name="minha_conta"),
-    path('reset-senha/', views.reset_senha, name='reset_senha')
+    path("reset-senha/", views.reset_senha, name="reset_senha"),
+    path('novo-acesso-geral/', views.acesso_geral_create, name='acesso_geral_create')
 ]

@@ -6,43 +6,120 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('clientes', '0001_initial'),
+        ("clientes", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Ingresso',
+            name="Ingresso",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tipo', models.CharField(choices=[('JOGO', 'Jogo'), ('SHOW', 'Show')], default='JOGO', max_length=5)),
-                ('thumbnail', models.ImageField(blank=True, null=True, upload_to='')),
-                ('titulo', models.CharField(max_length=120, verbose_name='Título')),
-                ('local', models.CharField(max_length=120, verbose_name='Local do ingresso')),
-                ('descricao', models.CharField(max_length=255, verbose_name='Descrição do Ingresso')),
-                ('data_horario', models.DateTimeField()),
-                ('preco', models.DecimalField(decimal_places=2, max_digits=6, validators=[django.core.validators.MinValueValidator(0)])),
-                ('estoque_disponivel', models.PositiveSmallIntegerField(default=2)),
-                ('status', models.CharField(choices=[('ATIVO', 'Ativo'), ('INATIVO', 'Inativo')], default='ATIVO', max_length=7)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "tipo",
+                    models.CharField(
+                        choices=[("JOGO", "Jogo"), ("SHOW", "Show")],
+                        default="JOGO",
+                        max_length=5,
+                    ),
+                ),
+                ("thumbnail", models.ImageField(blank=True, null=True, upload_to="")),
+                ("titulo", models.CharField(max_length=120, verbose_name="Título")),
+                (
+                    "local",
+                    models.CharField(max_length=120, verbose_name="Local do ingresso"),
+                ),
+                (
+                    "descricao",
+                    models.CharField(
+                        max_length=255, verbose_name="Descrição do Ingresso"
+                    ),
+                ),
+                ("data_horario", models.DateTimeField()),
+                (
+                    "preco",
+                    models.DecimalField(
+                        decimal_places=2,
+                        max_digits=6,
+                        validators=[django.core.validators.MinValueValidator(0)],
+                    ),
+                ),
+                ("estoque_disponivel", models.PositiveSmallIntegerField(default=2)),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("ATIVO", "Ativo"), ("INATIVO", "Inativo")],
+                        default="ATIVO",
+                        max_length=7,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='HistoricoCompra',
+            name="HistoricoCompra",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('titulo', models.CharField(max_length=120, verbose_name='Título')),
-                ('local', models.CharField(max_length=120)),
-                ('data_horario_evento', models.DateTimeField()),
-                ('data_compra', models.DateTimeField(auto_now_add=True)),
-                ('valor_pago', models.DecimalField(decimal_places=2, max_digits=6)),
-                ('quantidade', models.PositiveSmallIntegerField()),
-                ('status', models.CharField(choices=[('P', 'Pendente'), ('A', 'Aprovado'), ('C', 'Cancelado')], default='P', max_length=1)),
-                ('id_checkout_asaas', models.CharField(blank=True, max_length=64, null=True, verbose_name='Id do Checkout gerado no Asaas')),
-                ('cliente', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='compras', to='clientes.cliente')),
-                ('ingresso', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='ingressos_vendidos', to='ingressos.ingresso')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("titulo", models.CharField(max_length=120, verbose_name="Título")),
+                ("local", models.CharField(max_length=120)),
+                ("data_horario_evento", models.DateTimeField()),
+                ("data_compra", models.DateTimeField(auto_now_add=True)),
+                ("valor_pago", models.DecimalField(decimal_places=2, max_digits=6)),
+                ("quantidade", models.PositiveSmallIntegerField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("P", "Pendente"),
+                            ("A", "Aprovado"),
+                            ("C", "Cancelado"),
+                        ],
+                        default="P",
+                        max_length=1,
+                    ),
+                ),
+                (
+                    "id_checkout_asaas",
+                    models.CharField(
+                        blank=True,
+                        max_length=64,
+                        null=True,
+                        verbose_name="Id do Checkout gerado no Asaas",
+                    ),
+                ),
+                (
+                    "cliente",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="compras",
+                        to="clientes.cliente",
+                    ),
+                ),
+                (
+                    "ingresso",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="ingressos_vendidos",
+                        to="ingressos.ingresso",
+                    ),
+                ),
             ],
         ),
     ]

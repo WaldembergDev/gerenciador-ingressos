@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['ingressosmc.pythonanywhere.com']
+ALLOWED_HOSTS = ["ingressosmc.pythonanywhere.com"]
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -14,4 +14,4 @@ DATABASES = {
     }
 }
 
-USER_AGENT_STRING = f'{APP_NAME}/{APP_VERSION} (ambiente: prod)'
+USER_AGENT_STRING = f"{APP_NAME}/{APP_VERSION} (ambiente: prod)"

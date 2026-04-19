@@ -7,7 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -16,30 +15,116 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Cliente',
+            name="Cliente",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('telefone', models.CharField(max_length=20)),
-                ('data_nascimento', models.DateField()),
-                ('rg', models.CharField(blank=True, max_length=13, null=True, verbose_name='RG')),
-                ('cpf', models.CharField(blank=True, max_length=14, null=True, unique=True, verbose_name='CPF')),
-                ('sexo', models.CharField(blank=True, choices=[('M', 'Masculino'), ('F', 'Feminino'), ('O', 'Outro')], max_length=2, null=True)),
-                ('usuario', models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("telefone", models.CharField(max_length=20)),
+                ("data_nascimento", models.DateField()),
+                (
+                    "rg",
+                    models.CharField(
+                        blank=True, max_length=13, null=True, verbose_name="RG"
+                    ),
+                ),
+                (
+                    "cpf",
+                    models.CharField(
+                        blank=True,
+                        max_length=14,
+                        null=True,
+                        unique=True,
+                        verbose_name="CPF",
+                    ),
+                ),
+                (
+                    "sexo",
+                    models.CharField(
+                        blank=True,
+                        choices=[("M", "Masculino"), ("F", "Feminino"), ("O", "Outro")],
+                        max_length=2,
+                        null=True,
+                    ),
+                ),
+                (
+                    "usuario",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Endereco',
+            name="Endereco",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('cep', models.CharField(max_length=9)),
-                ('logradouro', models.CharField(max_length=120)),
-                ('numero', models.CharField(max_length=15)),
-                ('complemento', models.CharField(blank=True, max_length=120, null=True)),
-                ('bairro', models.CharField(max_length=25)),
-                ('cidade', models.CharField(max_length=25)),
-                ('estado', models.CharField(max_length=25)),
-                ('uf', models.CharField(choices=[('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'), ('AM', 'Amazonas'), ('BA', 'Bahia'), ('CE', 'Ceará'), ('ES', 'Espírito Santo'), ('GO', 'Goiás'), ('DF', 'Distrito Federal'), ('MA', 'Maranhão'), ('MT', 'Mato Grosso'), ('MS', 'Mato Grosso do Sul'), ('MG', 'Minas Gerais'), ('PA', 'Pará'), ('PB', 'Paraíba'), ('PR', 'Paraná'), ('PE', 'Pernambuco'), ('PI', 'Piauí'), ('RJ', 'Rio de Janeiro'), ('RN', 'Rio Grande do Norte'), ('RS', 'Rio Grande do Sul'), ('RO', 'Rondônia'), ('SC', 'Santa Catarina'), ('SP', 'São Paulo'), ('SE', 'Sergipe'), ('TO', 'Tocantins')], max_length=2)),
-                ('cliente', models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, to='clientes.cliente')),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("cep", models.CharField(max_length=9)),
+                ("logradouro", models.CharField(max_length=120)),
+                ("numero", models.CharField(max_length=15)),
+                (
+                    "complemento",
+                    models.CharField(blank=True, max_length=120, null=True),
+                ),
+                ("bairro", models.CharField(max_length=25)),
+                ("cidade", models.CharField(max_length=25)),
+                ("estado", models.CharField(max_length=25)),
+                (
+                    "uf",
+                    models.CharField(
+                        choices=[
+                            ("AC", "Acre"),
+                            ("AL", "Alagoas"),
+                            ("AP", "Amapá"),
+                            ("AM", "Amazonas"),
+                            ("BA", "Bahia"),
+                            ("CE", "Ceará"),
+                            ("ES", "Espírito Santo"),
+                            ("GO", "Goiás"),
+                            ("DF", "Distrito Federal"),
+                            ("MA", "Maranhão"),
+                            ("MT", "Mato Grosso"),
+                            ("MS", "Mato Grosso do Sul"),
+                            ("MG", "Minas Gerais"),
+                            ("PA", "Pará"),
+                            ("PB", "Paraíba"),
+                            ("PR", "Paraná"),
+                            ("PE", "Pernambuco"),
+                            ("PI", "Piauí"),
+                            ("RJ", "Rio de Janeiro"),
+                            ("RN", "Rio Grande do Norte"),
+                            ("RS", "Rio Grande do Sul"),
+                            ("RO", "Rondônia"),
+                            ("SC", "Santa Catarina"),
+                            ("SP", "São Paulo"),
+                            ("SE", "Sergipe"),
+                            ("TO", "Tocantins"),
+                        ],
+                        max_length=2,
+                    ),
+                ),
+                (
+                    "cliente",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="clientes.cliente",
+                    ),
+                ),
             ],
         ),
     ]

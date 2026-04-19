@@ -22,12 +22,19 @@ class CustomUserForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ["email", "password", "first_name", "last_name", 'autoriza_notificacoes']
+        fields = [
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "autoriza_notificacoes",
+        ]
         widgets = {
             "first_name": forms.TextInput(attrs={"class": "form-control"}),
             "last_name": forms.TextInput(attrs={"class": "form-control"}),
-            'autoriza_notificacoes': forms.Select(choices=((True, 'Sim'), (False, 'Não')),
-                                                  attrs={'class': 'form-control'}),
+            "autoriza_notificacoes": forms.Select(
+                choices=((True, "Sim"), (False, "Não")), attrs={"class": "form-control"}
+            ),
             "email": forms.EmailInput(attrs={"class": "form-control"}),
             "password": forms.PasswordInput(attrs={"class": "form-control"}),
         }
@@ -47,6 +54,16 @@ class AcessoGeralForm(forms.ModelForm):
         fields = "__all__"
         widgets = {"senha": forms.PasswordInput(attrs={"class": "form-control"})}
 
+
+class AcessoGeralFormCreate(forms.ModelForm):
+    confirmacao_password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
+    class Meta:
+        model = AcessoGeral
+        fields = "__all__"
+        widgets = {"senha": forms.PasswordInput(attrs={"class": "form-control"})}
+        
 
 class CustomUserUpdateFormAdmin(forms.ModelForm):
     class Meta:
@@ -88,14 +105,14 @@ class CustomUserUpdateForm(forms.ModelForm):
 
 class ResetSenhaForm(forms.ModelForm):
     confirmacao_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
         label="Confirmação de Senha",
         max_length=120,
-        )
-    
+    )
+
     class Meta:
         model = CustomUser
-        fields = ['password']
+        fields = ["password"]
         widgets = {
-            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+            "password": forms.PasswordInput(attrs={"class": "form-control"}),
         }

@@ -11,4 +11,6 @@ def confirmacao_cadastro(sender, instance, created, **kwargs):
         destinatario = instance.usuario.email
         contexto = {"nome_usuario": instance.usuario.first_name}
         assunto = "Confirmação de Cadastro"
-        enviar_email_confirmacao_cadastro.delay(template, destinatario, assunto, contexto)
+        enviar_email_confirmacao_cadastro.delay(
+            template, destinatario, assunto, contexto
+        )
