@@ -14,4 +14,5 @@ urlpatterns = [
         views.cliente_detail,
         name="cliente_detail",
     ),
+    path('admin-criar-cliente/', views.admin_create_client, name='admin_create_client'),
 ]

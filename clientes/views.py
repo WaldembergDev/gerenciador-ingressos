@@ -78,3 +78,25 @@ def cliente_detail(request, id_cliente):
         "valor_total_compras": valor_total_compras,
     }
     return render(request, "clientes/cliente_detail.html", context)
+
+@login_required
+@user_passes_test(superuser_check)
+def admin_create_client(request):
+    if request.method == "POST":
+        cliente_form = ClienteForm(request.POST)
+        custom_user_form = CustomUserForm(request.POST)
+        if cliente_form.is_valid() and custom_user_form.is_valid():
+            password = custom_user_form.cleaned_data.get("password")
+            usuario = custom_user_form.save(commit=False)
+            cliente = cliente_form.save(commit=False)
+            usuario.set_password(password)
+            cliente.usuario = usuario
+            usuario.save()
+            cliente.save()
+            messages.success(request, "Cadastro realizado com sucesso!")
+            return redirect("admin_create_client")
+    else:
+        cliente_form = ClienteForm()
+        custom_user_form = CustomUserForm()
+    context = {"cliente_form": cliente_form, "custom_user_form": custom_user_form}
+    return render(request, "clientes/admin_create_client.html", context=context)

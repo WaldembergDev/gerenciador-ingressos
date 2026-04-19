@@ -7,7 +7,6 @@ from .tasks import enviar_email_confirmacao_cadastro
 @receiver(post_save, sender=Cliente)
 def confirmacao_cadastro(sender, instance, created, **kwargs):
     if created:
-        print('Estou aqui')
         template = "clientes/emails/email_registro.html"
         destinatario = instance.usuario.email
         contexto = {"nome_usuario": instance.usuario.first_name}
