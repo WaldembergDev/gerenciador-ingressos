@@ -57,7 +57,8 @@ class AcessoGeralForm(forms.ModelForm):
 
 class AcessoGeralFormCreate(forms.ModelForm):
     confirmacao_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        label="Confirmação de Senha"
     )
     class Meta:
         model = AcessoGeral
