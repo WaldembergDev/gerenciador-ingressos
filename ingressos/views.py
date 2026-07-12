@@ -118,7 +118,7 @@ def cadastrar_ingresso(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Ingresso cadastrado com sucesso!")
-            return redirect("cadastrar_ingresso")
+            return redirect(request.META.get('HTTP_REFERER')) # retorna a página que o usuário estava
     else:
         form = IngressoForm()
     context = {"form": form}
@@ -269,8 +269,10 @@ def ingresso_registro_lote(request):
             evento['existe_cadastro'] = True if evento['dthr_evento'] in datas_cadastradas else False
     
     # carregando os eventos no contexto
+    form = IngressoForm() # formulário de cadastrado de ingresso
     context = {
-        'eventos': eventos
+        'eventos': eventos,
+        'form': form
     }
     return render(request, 'ingressos/eventos_futuros.html', context)
 
