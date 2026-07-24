@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Novo Time{% endblock %}
+{% block content %}
+<div class="col-md-8 mx-auto">
+    <div class="card table-responsive">
+                <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+            <h5 class="card-title">Lista de Times Cadastrados</h5>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#timeModal">
+                <i class="bi bi-plus-lg me-2"></i>Adicionar
+            </button>
+        </div>
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="w-25" scope="col">Escudo</th>
+                    <th class="w-75" scope="col">Nome</th>
+                </tr>
+            </thead>
+            <tbody class="align-middle">
+                {% for time in times %}
+                <tr>
+                    <th scope="row">
+                        <img src="{{ time.escudo.url }}" alt="" width='70'>
+                    </th>
+                    <td>{{ time.nome }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="timeModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="timeModalLabel">Novo Time</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row" action="{% url 'time-create' %}" method="POST" id="formTime"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-md-6 mb-3">
+                        <label for="" class="fw-bold form-label">Nome</label>
+                        {{ form.nome }}
+                        {{ form.nome.errors }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="" class="fw-bold form-label">Escudo</label>
+                        {{ form.escudo}}
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" form="formTime" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

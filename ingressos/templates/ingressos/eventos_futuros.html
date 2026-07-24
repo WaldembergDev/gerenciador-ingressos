@@ -35,15 +35,21 @@
                                     <span>
                                 </td>
                                 <td>
-                                    <button 
-                                        class="btn btn-primary evento-cadastro-botao"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#confirmacaoCadastro"
-                                        data-titulo='{{ evento.titulo }}'
-                                        data-campeonato='{{ evento.info.campeonato }}'
-                                        data-evento-dia='{{ evento.dthr_evento|date:"Y-m-d H:i" }}'>
-                                        Cadastrar
-                                    </button>
+                                    {% if evento.existe_cadastro %}
+                                        <button class="btn btn-secondary">
+                                            Cadastrado
+                                        </button>
+                                    {% else %}
+                                        <button 
+                                            class="btn btn-primary evento-cadastro-botao"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmacaoCadastro"
+                                            data-titulo='{{ evento.titulo }}'
+                                            data-campeonato='{{ evento.info.campeonato }}'
+                                            data-evento-dia='{{ evento.dthr_evento|date:"Y-m-d H:i" }}'>
+                                            Cadastrar
+                                        </button>
+                                    {% endif %}
                                 </td>
                                 </tr>
                             {% endfor %}
