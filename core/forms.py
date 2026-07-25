@@ -52,7 +52,7 @@ class AcessoGeralForm(forms.ModelForm):
     class Meta:
         model = AcessoGeral
         fields = "__all__"
-        widgets = {"senha": forms.PasswordInput(attrs={"class": "form-control"})}
+        widgets = {"senha": forms.PasswordInput(attrs={"class": "form-control", 'placeholder': 'Digite a senha fornecida pelo administrador'})}
 
 
 class AcessoGeralFormCreate(forms.ModelForm):

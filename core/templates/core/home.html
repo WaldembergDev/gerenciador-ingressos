@@ -2,36 +2,21 @@
 {% load static %}
 {% block title %}Página Inicial{% endblock %}
 {% block head %}
-  <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 {% endblock %}
 {% block content %}
-    <h1 class="display-4 text-center mb-4">Próximos Eventos</h1>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-          {% for ingresso in ingressos %}
-          <div class="col">
-            <div class="card h-100">
-                {% if ingresso.thumbnail %}
-                  <img src="{{ ingresso.thumbnail.url }}" class="card-img-top image-thumbnail" alt="jogo">
-                {% else %}
-                  <img src="{% static 'img/sem_imagem.png' %}" class="card-img-top image-thumbnail" alt="Sem foto cadastrada">
-                {% endif %}
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title">{{ ingresso.titulo }}</h5>
-                  <p class="card-text"><i class="bi bi-calendar-event"></i> {{ ingresso.data_horario }}</p>
-                  <p class="card-text"><i class="bi bi-three-dots"></i> {{ ingresso.get_tipo_display }}</p>
-                  <p class="card-text"><i class="bi bi-geo-alt"></i> {{ ingresso.local }}</p>
-                  <p class="card-text"><i class="bi bi-box-seam"></i></i> {{ ingresso.estoque_disponivel }} ingresso(s) restante(s)</p>
-                  <p class="card-text"><i class="bi bi-box-seam"></i></i> Preço Unitário: R$ {{ ingresso.preco }}</p>
-                  <p class="card-text"><i class="bi bi-box-seam"></i></i> Preço Promocional Par: {{ ingresso.preco_par|default:"Não disponível" }}</p>
-                  <div class="d-flex justify-content-end mt-auto">
-                    <a href="{% url 'comprar_ingresso' id_ingresso=ingresso.id %}" class="btn btn-primary">Comprar</a>
-                  </div>
-                </div>
-              </div>
-          </div>
-          {% endfor %}
-        </div>
-        {% if not ingressos %}
-          <p class="text-center alert alert-info">Nenhum evento próximo disponível.</p>
-        {% endif%}
+<div class="row justify-content-center">
+  <div class="col-md-6 ">
+    <div class="input-icon mb-3">
+      <input type="text" value="" class="form-control form-control-lg form-control-rounded" placeholder="Buscar" />
+      <span class="input-icon-addon">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <circle cx="10" cy="10" r="7" />
+          <line x1="21" y1="21" x2="15" y2="15" />
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -1,16 +1,27 @@
 /* CSS do template base.html */
-#header-logo{
-    width: 70px;
+#header-logo {
+  width: 70px;
 }
 
-header {
-    border-bottom: 2px solid #000000;
-}
+/* header {
+  border-bottom: 2px solid #000000;
+} */
 
 /* colocando asterísco (*) em todos os campos de formulários obrigatórios */
 label:has(+ input[required])::after,
 label:has(+ select[required])::after,
 label:has(+ textarea[required])::after {
-    content: " *";
-    color: red;
+  content: ' *';
+  color: red;
+}
+
+/* Personaliza os icones que estão dentro da nav */
+.navbar-nav i {
+  font-size: 20px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

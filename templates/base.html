@@ -1,29 +1,27 @@
-{% load static %}
 <!doctype html>
+{% load static %}
 <html lang="pt-br">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %} {% endblock %}</title>
-    <!-- import do bootstrap 5.3 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!-- Logo do bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    {% block head %} {% endblock %}
-  </head>
-  <body>
-    {% include 'partials/_navbar.html' %}
-    <!-- Main -->
-    <div class="container pt-3 ">
-      <!-- messages -->
-      {% include 'partials/_messages.html' %}
-      {% block content %} {% endblock %}
-    </div>
-    <!-- scripts -->
-    <!-- script do bootstrap 5.3-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <!-- scripts personalizados -->
-    {% block script %} {% endblock %}
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IngressosMC</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+  <!-- Header -->
+  {% include 'partials/_navbar.html' %}
+
+  <!-- Block content -->
+  <div class="container py-5">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/js/tabler.min.js"></script>
+</body>
+
 </html>

@@ -8,7 +8,7 @@ urlpatterns = [
         name="comprar_ingresso",
     ),
     path("cadastrar-ingresso/", views.cadastrar_ingresso, name="cadastrar_ingresso"),
-    path("meus-ingressos/", views.exibir_meus_ingressos, name="meus_ingressos"),
+    path("meus-ingressos/", views.exibir_meus_ingressos, name="meus-ingressos"),
     path(
         "json-detalhes-compra/<int:id_historico>",
         views.json_detalhes_compra,
