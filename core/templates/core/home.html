@@ -6,8 +6,9 @@
 {% endblock %}
 {% block content %}
 <div class="row justify-content-center">
-  <div class="col-md-6 ">
-    <div class="input-icon mb-3">
+  <div class="col-md-8 col-lg-6">
+    <!-- Campo Buscar -->
+    <div class="input-icon mb-4">
       <input type="text" value="" class="form-control form-control-lg form-control-rounded" placeholder="Buscar" />
       <span class="input-icon-addon">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -16,6 +17,35 @@
           <line x1="21" y1="21" x2="15" y2="15" />
         </svg>
       </span>
+    </div>
+  </div>
+  <!-- Cards -->
+  <div class="container-xl">
+    <div class="row row-cards justify-content-center">
+      {% for ingresso in ingressos %}
+      <div class="col-sm-6 col-lg-4">
+        <div class="card card-sm card-link card-link-pop h-100 shadow-sm">
+          <a href="#" class="d-block">
+            {% if ingresso.thumbnail %}
+            <img src="{{ ingresso.thumbnail.url }}" class="card-img-top">
+            {% else %}
+            <img src="{% static 'img/sem_imagem.png' %}" class="card-img-top">
+            {% endif%}
+          </a>
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex align-items-center justify-content-between mt-auto">
+              <div class="d-flex flex-column">
+                <span class="fw-bold">{{ ingresso.descricao }}</span>
+                <span class="text-secondary">{{ ingresso.data_horario|date:'d/m/Y H:i' }}</span>
+              </div>
+              <a href="{% url 'comprar-ingresso' ingresso.id %}" class="btn btn-primary">
+                <i class="ti ti-shopping-bag"></i>Comprar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
 </div>

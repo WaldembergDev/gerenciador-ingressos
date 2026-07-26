@@ -20,6 +20,16 @@ label:has(+ textarea[required])::after {
   font-size: 20px;
 }
 
+a i {
+  font-size: 20px;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .nav-link {
   display: flex;
   align-items: center;

@@ -5,7 +5,7 @@ urlpatterns = [
     path(
         "comprar-ingresso/<int:id_ingresso>",
         views.comprar_ingresso,
-        name="comprar_ingresso",
+        name="comprar-ingresso",
     ),
     path("cadastrar-ingresso/", views.cadastrar_ingresso, name="cadastrar_ingresso"),
     path("meus-ingressos/", views.exibir_meus_ingressos, name="meus-ingressos"),

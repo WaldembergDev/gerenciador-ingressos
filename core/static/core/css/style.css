@@ -4,6 +4,11 @@
   object-fit: cover;
 }
 
+.card-img-top {
+  aspect-ratio: 9 / 9;
+  object-fit: cover;
+}
+
 /* configurando imagem da tela de login */
 .login-icon-main {
   font-size: 15rem;

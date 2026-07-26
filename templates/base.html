@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block head %} {% endblock %}
 </head>
 
 <body>
@@ -17,8 +18,7 @@
 
   <!-- Block content -->
   <div class="container py-5">
-    {% block content %}
-    {% endblock %}
+    {% block content %} {% endblock %}
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/js/tabler.min.js"></script>
