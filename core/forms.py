@@ -6,10 +6,18 @@ from django.forms import ValidationError
 
 class EmailAuthenticationForm(AuthenticationForm):
     username = forms.CharField(
-        label="E-mail", widget=forms.TextInput(attrs={"class": "form-control"})
+        label="E-mail", widget=forms.TextInput(attrs={
+            "class": "form-control",
+            'placeholder': 'Seu E-mail'
+            }
+            )
     )
     password = forms.CharField(
-        label="Senha", widget=forms.PasswordInput(attrs={"class": "form-control"})
+        label="Senha", widget=forms.PasswordInput(attrs={
+            "class": "form-control",
+            'placeholder': 'Sua Senha'
+            }
+            )
     )
 
 

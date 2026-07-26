@@ -1,4 +1,3 @@
-from re import S
 
 from django.shortcuts import get_object_or_404, render, redirect
 from ingressos.models import Ingresso
@@ -76,7 +75,6 @@ def login(request):
         form = EmailAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             proxima_pagina = request.POST.get("next")
-            print(proxima_pagina)
             user = form.get_user()
             auth_login(request, user)
             # verificando se existe página a ser redirecionada

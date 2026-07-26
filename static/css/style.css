@@ -24,7 +24,7 @@ a i {
   font-size: 20px;
 }
 
-a {
+button {
   display: flex;
   align-items: center;
   gap: 0.5rem;

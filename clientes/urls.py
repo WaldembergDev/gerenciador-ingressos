@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("criar-conta/", views.criar_conta_cliente, name="criar_conta_cliente"),
+    path("criar-conta/", views.criar_conta_cliente, name="criar-conta-cliente"),
     path("lista-clientes/", views.cliente_list, name="cliente_list"),
     path(
         "toggle-cliente-status/<uuid:id_cliente>/",

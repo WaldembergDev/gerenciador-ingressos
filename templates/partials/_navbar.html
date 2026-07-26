@@ -67,7 +67,7 @@
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-          <a href="./settings.html" class="dropdown-item">
+          <a href="{% url 'minha-conta' %}" class="dropdown-item">
             <i class="ti ti-settings"></i>Configurações
           </a>
           <form action="{% url 'logout'%}" method="POST">

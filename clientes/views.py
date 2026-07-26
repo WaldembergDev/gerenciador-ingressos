@@ -24,7 +24,7 @@ def criar_conta_cliente(request):
             usuario.save()
             cliente.save()
             messages.success(request, "Cadastro realizado com sucesso!")
-            return redirect("criar_conta_cliente")
+            return redirect("criar-conta-cliente")
     else:
         cliente_form = ClienteForm()
         custom_user_form = CustomUserForm()
