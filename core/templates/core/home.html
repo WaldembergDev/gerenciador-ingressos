@@ -8,8 +8,8 @@
 <div class="row justify-content-center">
   <div class="col-md-8 col-lg-6">
     <!-- Campo Buscar -->
-    <div class="input-icon mb-4">
-      <input type="text" value="" class="form-control form-control-lg form-control-rounded" placeholder="Buscar" />
+    <form action="." method="GET" class="input-icon mb-4">
+      <input type="text" value="{{ query }}" name="q" class="form-control form-control-lg form-control-rounded" placeholder="Buscar" />
       <span class="input-icon-addon">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -17,7 +17,7 @@
           <line x1="21" y1="21" x2="15" y2="15" />
         </svg>
       </span>
-    </div>
+    </form>
   </div>
   <!-- Cards -->
   <div class="container-xl">
