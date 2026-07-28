@@ -1,18 +1,14 @@
 <!-- mensagens de alerta -->
 {% if messages %}
-{% for message in messages %}
-    <div class="position-fixed end-10">
-        <div class="alert alert-{{ message.tags }} d-flex justify-content-center" role="alert">
-            <div class="alert-icon ">
-                <!-- Download SVG icon from http://tabler.io/icons/icon/alert-circle -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon icon-2">
-                    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
-                    <path d="M12 8v4"></path>
-                    <path d="M12 16h.01"></path>
-                </svg>
+    <!-- Adicionado 'top-0' para fixar no topo e movido o 'z-index' para cá -->
+    <div class="position-fixed top-0 end-0 p-3 mt-5" style="z-index: 1000;">
+    {% for message in messages %}
+        <div class="alert alert-important alert-{{ message.tags }} alert-dismissible" role="alert">
+            <div>
+                <div class="alert-description">{{ message }}</div>
             </div>
-            {{ message }}
+            <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
         </div>
+    {% endfor %}
     </div>
-{% endfor %}
 {% endif %}

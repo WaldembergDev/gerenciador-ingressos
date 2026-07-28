@@ -29,6 +29,12 @@
         <h2 class="h2 text-center mb-4">Entrar na Plataforma</h2>
         <form action="{% url 'acesso_inicial' %}" method="POST" autocomplete="off" novalidate="">
           {% csrf_token %}
+          <!-- Tratamento de erros globais -->
+          {% if form.non_field_errors %}
+              <div class="alert alert-danger">
+              {{ form.non_field_errors }}
+              </div>
+          {% endif %}
           <div class="mb-3">
             <label for="{{ form_acesso.senha.id_for_label }}" class="form-label">Senha</label>
             {{ form_acesso.senha }}

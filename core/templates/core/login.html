@@ -28,6 +28,13 @@
                 <h2 class="h2 text-center mb-4">Logue em sua conta</h2>
                 <form action="./" method="POST" autocomplete="off" novalidate="">
                     {% csrf_token %}
+                    <!-- Exibição de erros globais -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+                    <!-- renderizando os campos do formulário-->
                     <div class="mb-3">
                         <label class="form-label">Email</label>
                         {{ form.username }}

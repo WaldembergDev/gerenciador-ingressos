@@ -63,7 +63,6 @@ def home(request):
             (Q(titulo__icontains=query) | Q(descricao__icontains=query))
             & Q(data_horario__gte=agora)
         ).distinct()
-    messages.success(request, 'Teste')
     context = {"ingressos": ingressos, "query": query, 'tipos': tipos}
     return render(request, "core/home.html", context)
 
