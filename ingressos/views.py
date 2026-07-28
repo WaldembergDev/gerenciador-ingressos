@@ -14,7 +14,6 @@ from core.utils import superuser_check
 from integracoes.services import ApiMaracaService
 from django.core.cache import cache
 from django.utils import timezone
-import json
 
 
 @login_required
@@ -26,12 +25,13 @@ def comprar_ingresso(request, id_ingresso):
     if request.method == "POST":
         form = CompraForm(request.POST, ingresso=ingresso)
         if form.is_valid():
-            if request.user.is_admin:
+            print('estou aqui')
+            if request.user.is_superuser:
                 messages.error(
                     request,
                     "Você está logado como administrador. Para testar compras, use uma conta de cliente",
                 )
-                return redirect("comprar_ingresso", ingresso.id)
+                return redirect("comprar-ingresso", ingresso.id)
             try:
                 with transaction.atomic():
                     quantidade = form.cleaned_data["quantidade"]
@@ -67,7 +67,7 @@ def comprar_ingresso(request, id_ingresso):
                     return redirect("criar_pagamento", id_historico_compra=historico.id)
             except Exception as e:
                 messages.error(request, e)
-                return redirect("comprar_ingresso", ingresso.id)
+                return redirect("comprar-ingresso", ingresso.id)
     else:
         form = CompraForm()
     context = {"form": form, "ingresso": ingresso}

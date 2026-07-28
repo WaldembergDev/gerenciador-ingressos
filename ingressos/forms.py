@@ -22,7 +22,8 @@ class CompraForm(forms.Form):
         quantidade = cleaned_data.get("quantidade")
         if quantidade is not None:
             if quantidade > self.ingresso.estoque_disponivel:
-                raise forms.ValidationError(
+                self.add_error(
+                    'quantidade', 
                     f"A quantidade selecionada ({quantidade}) não pode ser superior ao estoque disponível ({self.ingresso.estoque_disponivel})."
                 )
         return cleaned_data
