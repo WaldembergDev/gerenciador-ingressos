@@ -50,7 +50,9 @@
                                             {{ compra.get_status_display }}
                                         </span>
                             </td>
-                            <td><button type="button" id="botaoAbrirModal" class="btn btn-primary btn-ingresso" data-id="{{ compra.id }}">Detalhes</button>
+                            <td>
+                                <button type="button" id="botaoAbrirModal" data-bs-toggle="modal" data-bs-target="#modalDetalhes" class="btn btn-primary btn-ingresso" data-id="{{ compra.id }}">Detalhes</button>
+                            </td>
                         </tr>
                         {% empty %}
                         <!-- modo desktop -->
@@ -72,13 +74,12 @@
     </div>
 </div>
 
-
 <!-- Modal -->
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDetalhes" tabindex="-1" aria-labelledby="modalDetalhes" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Dados da Compra</h1>
+                <h1 class="modal-title" id="modalDetalhes">Dados da Compra</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -99,5 +100,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'ingressos/js/meus-ingressos.js' %}"></script>
+    <script src="{% static 'ingressos/js/meus-ingressos.js' %}"></script>
 {% endblock %}
