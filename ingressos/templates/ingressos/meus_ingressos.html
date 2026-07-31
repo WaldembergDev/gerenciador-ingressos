@@ -2,61 +2,84 @@
 {% load static %}
 {% block title %}Meus Ingressos{% endblock %}
 {% block content %}
-    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
-        <i class="bi bi-arrow-left"></i> Voltar
-    </a>
-    <h1 class="text-center mb-4">Meus ingressos</h1>
-    <table class="table table-striped table-hover">
-        <thead class="table-dark">
-        <tr class="align-middle text-center">
-            <th class="d-none d-sm-table-cell" scope="col">Data da Compra</th>
-            <th scope="col">Evento</th>
-            <th scope="col">Local</th>
-            <th scope="col">Data do Evento</th>
-            <th scope="col">Status</th>
-            <th scope="col">Ações</th> 
-        </tr>
-        </thead>
-        <tbody>
-            {% for compra in page_obj %}
-        <tr class="align-middle text-center">
-            <td class="d-none d-sm-table-cell">{{ compra.data_compra|date:"d/m/Y H:i" }}</td>
-            <td>{{ compra.titulo }}</td>
-            <td>{{ compra.local }}</td>
-            <td>{{ compra.ingresso.data_horario|date:"d/m/Y H:i" }}</td>
-            <td>
-                  {% if compra.status == 'P' %}
-                    <span class="badge text-bg-warning">
-                  {% elif compra.status == 'A' %}
-                    <span class="badge text-bg-success">
-                  {% else %}
-                    <span class="badge text-bg-danger">
-                  {% endif %}                    
-                    {{ compra.get_status_display }}
-                  </span>
-                </td>
-            <td><button type="button" id="botaoAbrirModal" class="btn btn-primary btn-ingresso" data-id="{{ compra.id }}">Detalhes</button>
-        </tr>
-            {% empty %}
-            <!-- modo desktop -->
-            <tr class="d-none d-md-table-row text-center">
-                <td colspan="5">Ainda não existem compras registradas em seu nome.</td>
-            </tr>
-            <!-- Modo mobile -->
-             <tr class="d-md-none text-center">
-                <td colspan="4">Ainda não existem compras registradas em seu nome.</td>
-             </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% include 'partials/_paginacao.html' %}
-    <!-- Modal -->
-    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <!-- Header -->
+            <div class="card-header card-header-light">
+                <h3 class="card-title d-flex align-items-center gap-2">
+                    <a href="{% url 'home' %}"
+                        class="btn btn-animate-icon btn-animate-icon-move-start"><!-- Download SVG icon from http://tabler.io/icons/icon/chevron-left -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-1">
+                            <path d="M15 6l-6 6l6 6"></path>
+                        </svg>
+                        Voltar
+                    </a>
+                    Meus Ingressos
+                </h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr class="align-middle text-center">
+                            <th class="d-none d-sm-table-cell" scope="col">Data da Compra</th>
+                            <th scope="col">Evento</th>
+                            <th class="d-none d-lg-table-cell" scope="col">Local</th>
+                            <th scope="col">Data do Evento</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for compra in page_obj %}
+                        <tr class="align-middle text-center">
+                            <td class="d-none d-sm-table-cell">{{ compra.data_compra|date:"d/m/Y H:i" }}</td>
+                            <td>{{ compra.titulo }}</td>
+                            <td class="d-none d-lg-table-cell">{{ compra.local }}</td>
+                            <td>{{ compra.ingresso.data_horario|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                {% if compra.status == 'P' %}
+                                <span class="badge text-bg-warning">
+                                    {% elif compra.status == 'A' %}
+                                    <span class="badge text-bg-success">
+                                        {% else %}
+                                        <span class="badge text-bg-danger">
+                                            {% endif %}
+                                            {{ compra.get_status_display }}
+                                        </span>
+                            </td>
+                            <td><button type="button" id="botaoAbrirModal" class="btn btn-primary btn-ingresso" data-id="{{ compra.id }}">Detalhes</button>
+                        </tr>
+                        {% empty %}
+                        <!-- modo desktop -->
+                        <tr class="d-none d-md-table-row text-center">
+                            <td colspan="5">Ainda não existem compras registradas em seu nome.</td>
+                        </tr>
+                        <!-- Modo mobile -->
+                        <tr class="d-md-none text-center">
+                            <td colspan="4">Ainda não existem compras registradas em seu nome.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                {% include 'partials/_paginacao.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Dados da Compra</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-3">
@@ -71,10 +94,10 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
-        </div>
     </div>
+</div>
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'ingressos/js/meus-ingressos.js' %}"></script>
+<script src="{% static 'ingressos/js/meus-ingressos.js' %}"></script>
 {% endblock %}

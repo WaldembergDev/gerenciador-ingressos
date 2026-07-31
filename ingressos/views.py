@@ -25,7 +25,6 @@ def comprar_ingresso(request, id_ingresso):
     if request.method == "POST":
         form = CompraForm(request.POST, ingresso=ingresso)
         if form.is_valid():
-            print('estou aqui')
             if request.user.is_superuser:
                 messages.error(
                     request,
