@@ -2,22 +2,49 @@
 {% load static %}
 {% block title %}Acesso inicial{% endblock %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'core/css/style.css' %}">
+{% comment %}
+<link rel="stylesheet" type="text/css" href="{% static 'core/css/style.css' %}"> {% endcomment %}
 {% endblock %}
 {% block content %}
-    <div class="row justify-content-center vh-100 align-items-center">
-        <div class="col-md-8 col-lg-6">
-        <form action="{% url 'acesso_inicial' %}"
-              method="POST"
-              class="d-flex flex-column justify-content-center border rounded-4 p-4 shadow-sm">
-            {% csrf_token %}
-            <i class="text-center bi bi-lock-fill cadeado"></i>
-            <div class="mb-3 text-center">
-                <label for="{{ form_acesso.senha.id_for_label }}" class="form-label fw-bold">Senha fornecida pelo administrador</label>
-                {{ form_acesso.senha }}
-            </div>
-            <button type="submit" class="btn btn-primary">Entrar da plataforma</button>
+<div class="page page-center">
+  <div class="container container-tight py-4">
+    <div class="text-center mb-4">
+      <!-- BEGIN NAVBAR LOGO --><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary">
+        <!-- Estrutura do Ticket/Ingresso -->
+        <path d="M15 5H7a2 2 0 0 0-2 2v3a2 2 0 0 1 0 4v3a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3a2 2 0 0 1 0-4V7a2 2 0 0 0-2-2z" />
+        <!-- Linha tracejada do ingresso -->
+        <path d="M12 5v14" stroke-dasharray="2 2" />
+        <!-- Arcos do Estádio Maracanã -->
+        <path d="M7 9c2-1 6-1 8 0" />
+        <path d="M7 15c2 1 6 1 8 0" />
+      </svg>
+
+      <!-- Nome do Sistema -->
+      <span class="fw-bold fs-1 text-reset">
+        Ingressos<span class="text-primary">MC</span>
+      </span><!-- END NAVBAR LOGO -->
+    </div>
+    <div class="card card-md">
+      <div class="card-body">
+        <h2 class="h2 text-center mb-4">Entrar na Plataforma</h2>
+        <form action="{% url 'acesso_inicial' %}" method="POST" autocomplete="off" novalidate="">
+          {% csrf_token %}
+          <!-- Tratamento de erros globais -->
+          {% if form.non_field_errors %}
+              <div class="alert alert-danger">
+              {{ form.non_field_errors }}
+              </div>
+          {% endif %}
+          <div class="mb-3">
+            <label for="{{ form_acesso.senha.id_for_label }}" class="form-label">Senha</label>
+            {{ form_acesso.senha }}
+          </div>
+          <div class="form-footer">
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+          </div>
         </form>
+      </div>
     </div>
-    </div>
+  </div>
+</div>
 {% endblock %}

@@ -22,7 +22,8 @@ class CompraForm(forms.Form):
         quantidade = cleaned_data.get("quantidade")
         if quantidade is not None:
             if quantidade > self.ingresso.estoque_disponivel:
-                raise forms.ValidationError(
+                self.add_error(
+                    'quantidade', 
                     f"A quantidade selecionada ({quantidade}) não pode ser superior ao estoque disponível ({self.ingresso.estoque_disponivel})."
                 )
         return cleaned_data
@@ -75,5 +76,7 @@ class VendaRapidaForm(forms.ModelForm):
             usuario__is_active=True
         ).all()
         self.fields["ingresso"].queryset = Ingresso.objects.filter(  # type: ignore
-            data_horario__gte=now(), status=Ingresso.StatusIngresso.ATIVO
+            data_horario__gte=now(),
+            status=Ingresso.StatusIngresso.ATIVO,
+            estoque_disponivel__gte=1
         )

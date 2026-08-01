@@ -1,4 +1,3 @@
-from re import S
 
 from django.shortcuts import get_object_or_404, render, redirect
 from ingressos.models import Ingresso
@@ -51,19 +50,20 @@ def acesso_inicial(request):
 
 
 def home(request):
-    query = request.GET.get("q")
+    query = request.GET.get("q", '')
     agora = timezone.now()
     ingressos = Ingresso.objects.filter(
         data_horario__gte=agora, status=Ingresso.StatusIngresso.ATIVO
     ).order_by("data_horario")
+
+    tipos = Ingresso.TipoIngresso.choices
 
     if request.GET.get("q"):
         ingressos = ingressos.filter(
             (Q(titulo__icontains=query) | Q(descricao__icontains=query))
             & Q(data_horario__gte=agora)
         ).distinct()
-
-    context = {"ingressos": ingressos, "query": query}
+    context = {"ingressos": ingressos, "query": query, 'tipos': tipos}
     return render(request, "core/home.html", context)
 
 
@@ -76,7 +76,6 @@ def login(request):
         form = EmailAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             proxima_pagina = request.POST.get("next")
-            print(proxima_pagina)
             user = form.get_user()
             auth_login(request, user)
             # verificando se existe página a ser redirecionada

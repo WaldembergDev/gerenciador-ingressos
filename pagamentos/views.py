@@ -61,7 +61,7 @@ def criar_checkout(request, id_historico_compra):
     dados = asaas.criar_checkout(item)
     if dados is None:
         messages.error(request, "Erro ao gerar cobrança")
-        return redirect("comprar_ingresso", pedido.ingresso.id)
+        return redirect("comprar-ingresso", pedido.ingresso.id)
     id, link = dados
     pedido.id_checkout_asaas = id
     pedido.save()

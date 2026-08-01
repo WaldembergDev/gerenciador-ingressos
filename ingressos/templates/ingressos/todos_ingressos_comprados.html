@@ -1,84 +1,96 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Todos os ingressos comprados{% endblock %}
+{% block title %}Todos os Ingressos Vendidos{% endblock %}
 {% block content %}
-    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
-        <i class="bi bi-arrow-left"></i> Voltar
-    </a>
-    <h1 class="text-center mb-4 mt-4">Todos os ingressos vendidos</h1>
+<div class="col-12">
+    <form action="." method="GET" class="card shadow-sm mb-4">
+        <!-- Header alinhado com o padrão das outras telas -->
+        <div class="card-header card-header-light">
+            <h3 class="card-title d-flex align-items-center gap-2 m-0">
+                <a href="{% url 'home' %}" class="btn btn-animate-icon btn-animate-icon-move-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-1">
+                        <path d="M15 6l-6 6l6 6"></path>
+                    </svg>
+                    Voltar
+                </a>
+                Ingressos Vendidos
+            </h3>
+        </div>
 
-    <!-- Filtros -->
-    <form action="." method="GET" class="row g-1 mb-3 border rounded p-4">
-          <h2 class="text-center col-12">Filtros</h2>
-          <div class="col-md-3">
-            <label for="inputComprador" class="form-label">Comprador</label>
-            <input value="{{ request.GET.comprador }}" type="text" class="form-control" name="comprador" id="inputComprador" aria-describedby="Data da Compra">
-          </div>
-          <div class="col-md-3">
-            <label for="inputEvento" class="form-label">Evento</label>
-            <input value="{{ request.GET.evento }}" type="text" class="form-control" name="evento" id="inputEvento" aria-describedby="Data da Compra">
-          </div>
-          <div class="col-md-3">
-            <label for="inputDataEvento" class="form-label">Data do Evento</label>
-            <input value="{{ request.GET.dataEvento }}" type="date" class="form-control" name="dataEvento" id="inputDataEvento" aria-describedby="Data da Compra">
-          </div>
-          <div class="col-md-3 d-flex flex-column flex-md-row justify-content-center align-items-md-end gap-3 mt-3 mt-md-0">
-            <a href="." type="button" class="btn btn-secondary col-md-6">Limpar</a>
-            <button type="submit" class="btn btn-primary">Buscar</button>
-          </div>
+        <!-- Corpos do Filtro -->
+        <div class="card-body row g-3">
+            <div class="col-md-3">
+                <label for="inputComprador" class="form-label fw-bold">Comprador</label>
+                <input value="{{ request.GET.comprador }}" type="text" class="form-control" name="comprador" id="inputComprador">
+            </div>
+            <div class="col-md-3">
+                <label for="inputEvento" class="form-label fw-bold">Evento</label>
+                <input value="{{ request.GET.evento }}" type="text" class="form-control" name="evento" id="inputEvento">
+            </div>
+            <div class="col-md-3">
+                <label for="inputDataEvento" class="form-label fw-bold">Data do Evento</label>
+                <input value="{{ request.GET.dataEvento }}" type="date" class="form-control" name="dataEvento" id="inputDataEvento">
+            </div>
+            <div class="col-md-3 d-flex justify-content-end align-items-end gap-2">
+                <a href="." class="btn btn-outline-secondary w-100">Limpar</a>
+                <button type="submit" class="btn btn-primary w-100">Buscar</button>
+            </div>
+        </div>
     </form>
 
-    <!-- Tabela com os dados-->
-    <table class="table table-striped table-hover">
-        <thead class="table-dark text-center">
-            <tr class="align-middle">
-              <th scope="col">Data da Compra</th>
-              <th class="d-none d-lg-table-cell" scope="col">Comprador</th>
-              <th scope="col">Data do Evento</th>
-              <th scope="col">Evento</th>
-              <th class="d-none d-lg-table-cell" scope="col">Quantidade</th>
-              <th scope="col">Total (R$)</th>
-              <th scope="col">Status</th>
-              <th scope="col">Ações</th>
-            </tr>
-          </thead>
-          <tbody class="align-middle text-center">
-            {% for historico in page_obj %}
-                <tr>
-                <th scope="row">{{ historico.data_compra|date:"d/m/Y H:i" }}</th>
-                <td class="d-none d-lg-table-cell">{{ historico.cliente.usuario.first_name }}</td>
-                <td>{{ historico.ingresso.data_horario|date:"d/m/Y H:i" }}</td>
-                <td>{{ historico.titulo }}</td>
-                <td class="d-none d-lg-table-cell">{{ historico.quantidade }}</td>
-                <td>{{ historico.valor_pago }}</td>
-                <td>
-                  {% if historico.status == 'P' %}
-                    <span class="badge text-bg-warning">
-                  {% elif historico.status == 'A' %}
-                    <span class="badge text-bg-success">
-                  {% else %}
-                    <span class="badge text-bg-danger">
-                  {% endif %}                    
-                    {{ historico.get_status_display }}
-                  </span>
-                </td>
-                <td>
-                  <a href="{% url 'historico_venda' historico.id %}" class="btn btn-primary">Detalhes</button>
-                </td>
-                </tr>
-            {% empty %}
-                <!-- Para pc -->
-                <tr class="d-none d-md-table-row text-center">
-                  <td colspan="8">Ainda não houve nenhuma compra na plataforma!</td>
-                </tr>
-                <!-- Para dispositivos móveis -->
-                <tr class="d-md-none d-sm-table-row text-center">
-                  <td colspan="5">Ainda não houve nenhuma compra na plataforma!</td>
-                </tr>
-            {% endfor %}
-          </tbody>
-    </table>
-
-    <!-- Paginação -->
-    {% include 'partials/_paginacao.html' %}
+    <!-- Tabela com os dados -->
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table card-table table-striped table-hover mb-0">
+                <thead class="table-dark text-center">
+                    <tr class="align-middle">
+                        <th scope="col">Data da Compra</th>
+                        <th class="d-none d-lg-table-cell" scope="col">Comprador</th>
+                        <th scope="col">Data do Evento</th>
+                        <th scope="col">Evento</th>
+                        <th class="d-none d-lg-table-cell" scope="col">Quantidade</th>
+                        <th scope="col">Total (R$)</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle text-center">
+                    {% for historico in page_obj %}
+                        <tr>
+                            <th scope="row">{{ historico.data_compra|date:"d/m/Y H:i" }}</th>
+                            <td class="d-none d-lg-table-cell">{{ historico.cliente.usuario.first_name }}</td>
+                            <td>{{ historico.ingresso.data_horario|date:"d/m/Y H:i" }}</td>
+                            <td>{{ historico.titulo }}</td>
+                            <td class="d-none d-lg-table-cell">{{ historico.quantidade }}</td>
+                            <td>{{ historico.valor_pago }}</td>
+                            <td>
+                                {% if historico.status == 'P' %}
+                                    <span class="badge text-bg-warning">
+                                {% elif historico.status == 'A' %}
+                                    <span class="badge text-bg-success">
+                                {% else %}
+                                    <span class="badge text-bg-danger">
+                                {% endif %}                    
+                                    {{ historico.get_status_display }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{% url 'historico_venda' historico.id %}" class="btn btn-primary btn-sm">Detalhes</a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center py-3">Ainda não houve nenhuma compra na plataforma!</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            {% include 'partials/_paginacao.html' %}
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -14,7 +14,6 @@ from core.utils import superuser_check
 from integracoes.services import ApiMaracaService
 from django.core.cache import cache
 from django.utils import timezone
-import json
 
 
 @login_required
@@ -26,12 +25,12 @@ def comprar_ingresso(request, id_ingresso):
     if request.method == "POST":
         form = CompraForm(request.POST, ingresso=ingresso)
         if form.is_valid():
-            if request.user.is_admin:
+            if request.user.is_superuser:
                 messages.error(
                     request,
                     "Você está logado como administrador. Para testar compras, use uma conta de cliente",
                 )
-                return redirect("comprar_ingresso", ingresso.id)
+                return redirect("comprar-ingresso", ingresso.id)
             try:
                 with transaction.atomic():
                     quantidade = form.cleaned_data["quantidade"]
@@ -67,7 +66,7 @@ def comprar_ingresso(request, id_ingresso):
                     return redirect("criar_pagamento", id_historico_compra=historico.id)
             except Exception as e:
                 messages.error(request, e)
-                return redirect("comprar_ingresso", ingresso.id)
+                return redirect("comprar-ingresso", ingresso.id)
     else:
         form = CompraForm()
     context = {"form": form, "ingresso": ingresso}
@@ -203,7 +202,8 @@ def ingresso_list(request):
 @require_POST
 def ingresso_delete(request, id_ingresso):
     ingresso = get_object_or_404(Ingresso, id=id_ingresso)
-    if ingresso.quantidade_vendido > 0:
+    historico = ingresso.ingressos_vendidos.all()
+    if historico.exists():
         messages.error(
             request,
             "Não é possível excluir o ingresso, pois já existem ingressos vendidos",
@@ -278,4 +278,20 @@ def ingresso_registro_lote(request):
 @user_passes_test(superuser_check)
 def ingresso_create_via_api(request):
     pass
+
+@login_required
+def calcular_total(request):
+    ingresso_id = request.GET.get('ingresso')
+    quantidade = request.GET.get('quantidade', 0)
+
+    total = 0
+    if ingresso_id and quantidade:
+        try:
+            ingresso = Ingresso.objects.get(id=ingresso_id)
+            total = ingresso.preco * int(quantidade)
+        except (Ingresso.DoesNotExist, ValueError):
+            total = 0
     
+    return render(request,
+                  'ingressos/partials/_card_valor.html',
+                  {'total': total})

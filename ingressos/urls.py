@@ -5,10 +5,10 @@ urlpatterns = [
     path(
         "comprar-ingresso/<int:id_ingresso>",
         views.comprar_ingresso,
-        name="comprar_ingresso",
+        name="comprar-ingresso",
     ),
     path("cadastrar-ingresso/", views.cadastrar_ingresso, name="cadastrar_ingresso"),
-    path("meus-ingressos/", views.exibir_meus_ingressos, name="meus_ingressos"),
+    path("meus-ingressos/", views.exibir_meus_ingressos, name="meus-ingressos"),
     path(
         "json-detalhes-compra/<int:id_historico>",
         views.json_detalhes_compra,
@@ -33,4 +33,5 @@ urlpatterns = [
     path("deletar/<int:id_ingresso>/", views.ingresso_delete, name="ingresso_delete"),
     path("venda-rapida/", views.venda_rapida, name="venda_rapida"),
     path('eventos-futuros/', views.ingresso_registro_lote, name='ingresso_registro_lote'),
+    path('calcular-total/', views.calcular_total, name='calcular_total'),
 ]

@@ -1,42 +1,21 @@
-function cancelarCompra(){
-        let botao = document.querySelector('.btnCancelarAlteracoes');
-        botao.addEventListener('click', function(){
-        window.location.href = '/core/home/';
-        });
-    }
+const modalConfirmacao = document.getElementById('modalConfirmacao');
+const botaoConfirmar = document.getElementById('botaoConfirmar');
+const inputQuantidade = document.getElementById('id_quantidade');
+const spanQuantidade = document.getElementById('spanQuantidade');
 
-function confirmarCompra(){
-    const formularioCompra = document.getElementById('formularioCompra');
-    const modal = document.getElementById('modalConfirmarCompra');
-    const modalBootstrap = new bootstrap.Modal(modal);
-    formularioCompra.addEventListener('submit', function(event){
-        event.preventDefault();
-        /* obtendo o botao e a qnt de ingressos */
-        const botao = document.getElementById('btnConfirmarCompra');
-        const qntIngressos = document.getElementById('id_quantidade').value;
-        /* Exibindo o modal */
-        modalBootstrap.show();
-        /* detalhes do corpo do modal */
-        const spanQuantidade = document.getElementById('spanQuantidade');
-        const spanEvento = document.getElementById('spanEvento');
-        /* personalizando o modal de acordo com o ingresso e quantidade */
-        spanQuantidade.innerText = qntIngressos;
-        spanEvento.innerText = botao.dataset.evento;
-        /* confirmando a compra */
-        const formConfirmacaoCompra = document.getElementById('formConfirmacaoCompra');
-        formConfirmacaoCompra.addEventListener('submit', function(e){
-            e.preventDefault();
-            formularioCompra.submit();
-        });
+
+modalConfirmacao.addEventListener('show.bs.modal', () => {
+    if (spanQuantidade && inputQuantidade) {
+        spanQuantidade.textContent = inputQuantidade.value;
+    }
+});
+
+
+if (botaoConfirmar) {
+    botaoConfirmar.addEventListener('click', () => {
+        const formulario = document.querySelector('#formularioComprarIngresso');
+        if (formulario) {
+            formulario.submit();
+        }
     });
 }
-
-/* Aguardando toda a página carregar */
-document.addEventListener('DOMContentLoaded', function(event){
-    /* função que cancela a compra */
-    cancelarCompra();
-    
-    /* função que cofirma a compra*/
-    confirmarCompra();
-    
-});
