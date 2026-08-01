@@ -202,7 +202,8 @@ def ingresso_list(request):
 @require_POST
 def ingresso_delete(request, id_ingresso):
     ingresso = get_object_or_404(Ingresso, id=id_ingresso)
-    if ingresso.quantidade_vendido > 0:
+    historico = ingresso.ingressos_vendidos.all()
+    if historico.exists():
         messages.error(
             request,
             "Não é possível excluir o ingresso, pois já existem ingressos vendidos",

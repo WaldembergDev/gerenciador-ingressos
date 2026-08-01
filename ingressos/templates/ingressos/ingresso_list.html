@@ -2,26 +2,26 @@
 {% load static %}
 {% block title %}Lista de ingressos{% endblock %}
 {% block content %}
-    <div class="col-12">
-        <div class="card shadow-sm">
-            <!-- Header -->
-            <div class="card-header card-header-light">
-                <h3 class="card-title d-flex align-items-center gap-2">
-                    <a href="{% url 'home' %}"
-                        class="btn btn-animate-icon btn-animate-icon-move-start"><!-- Download SVG icon from http://tabler.io/icons/icon/chevron-left -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="icon icon-1">
-                            <path d="M15 6l-6 6l6 6"></path>
-                        </svg>
-                        Voltar
-                    </a>
-                    Lista de Ingressos
-                </h3>
-            </div>
-            <table class="card-body table table-striped table-hover mb-0">
-                <thead class="">
-                    <tr class="align-middle text-center">
+<div class="col-12">
+    <div class="card shadow-sm">
+        <!-- Header -->
+        <div class="card-header card-header-light">
+            <h3 class="card-title d-flex align-items-center gap-2">
+                <a href="{% url 'home' %}"
+                    class="btn btn-animate-icon btn-animate-icon-move-start"><!-- Download SVG icon from http://tabler.io/icons/icon/chevron-left -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-1">
+                        <path d="M15 6l-6 6l6 6"></path>
+                    </svg>
+                    Voltar
+                </a>
+                Lista de Ingressos
+            </h3>
+        </div>
+        <table class="card-body table table-striped table-hover mb-0">
+            <thead class="">
+                <tr class="align-middle text-center">
                     <th class="d-none d-md-table-cell" scope="col ">Tipo</th>
                     <th scope="col">Titulo</th>
                     <th class="d-none d-md-table-cell" scope="col">Local</th>
@@ -31,65 +31,80 @@
                     <th class="d-none d-md-table-cell" scope="col">Venda</th>
                     <th scope="col">Status</th>
                     <th scope="col">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for ingresso in page_obj %}
-                    <tr class="align-middle">
+                </tr>
+            </thead>
+            <tbody>
+                {% for ingresso in page_obj %}
+                <tr class="align-middle">
                     <th class="d-none d-md-table-cell" scope="row">{{ ingresso.get_tipo_display }}</th>
                     <td>{{ ingresso.titulo }}</td>
                     <td class="d-none d-md-table-cell">{{ ingresso.local }}</td>
                     <td>{{ ingresso.descricao }}</td>
                     <td>{{ ingresso.data_horario|date:"d/m/Y H:i" }}</td>
                     <td>{{ ingresso.preco }}</td>
-                    <td class="d-none d-md-table-cell">{{ ingresso.quantidade_vendido }}/{{ ingresso.estoque_inicial }}</td>
+                    <td class="d-none d-md-table-cell">{{ ingresso.quantidade_vendido }}/{{ ingresso.estoque_inicial }}
+                    </td>
                     <td>{{ ingresso.get_status_display }}</td>
                     <td>
-                        <div class="d-flex gap-2">
-                            <a href="{% url 'editar_ingresso' ingresso.id %}" class="btn btn-primary"><i class="bi bi-eye"></i></a>
-                            <!-- Excluir ingresso -->
-                            <button data-ingresso-id="{{ ingresso.id }}"
-                                    data-ingresso-evento="{{ ingresso.titulo }}"
-                                    class="bntConfirmarExclusao btn btn-danger"><i class="bi bi-trash"></i>
-                            </button>
+                        <div class="dropdown">
+                            <a href="#" class="btn-action" data-bs-toggle="dropdown" aria-expanded="false">
+                                <!-- Download SVG icon from http://tabler.io/icons/icon/dots-vertical -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="icon icon-1">
+                                    <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                    <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                    <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <form method="POST" id="formExclusao">
+                                    {% csrf_token %}
+                                    <a href="{% url 'editar_ingresso' ingresso.id %}" class="dropdown-item">Editar</a>
+                                    <button class="dropdown-item text-danger bntConfirmarExclusao" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#modalConfirmacaoExclusao"
+                                        data-ingresso-id="{{ ingresso.id }}"
+                                        data-ingresso-evento="{{ ingresso.titulo }}">
+                                        Excluir
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <div class="card-footer">
-                {% include 'partials/_paginacao.html' %}
-            </div>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="card-footer">
+            {% include 'partials/_paginacao.html' %}
         </div>
     </div>
+</div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="modalConfirmacaoExclusao" tabindex="-1" aria-labelledby="modalConfirmacaoExclusao" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Modal -->
+<div class="modal fade" id="modalConfirmacaoExclusao" tabindex="-1" aria-labelledby="modalConfirmacaoExclusao"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5">Confirmação de Exclusão</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <p>Confirma a exclusão do evento <b id="corpoModal"></b></p>
-        </div>
-        
-        <form id="formConfirmacaoExclusao" method="POST">
+            <div class="modal-header">
+                <h1 class="modal-title">Confirmação de Exclusão</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Confirma a exclusão do evento <b id="corpoModal"></b></p>
+            </div>
+
             <div class="modal-footer d-flex justify-content-between">
                 {% csrf_token %}
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar Exclusão</button>
-                    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar
+                    Exclusão</button>
+                <button type="button" class="btn btn-danger btnModalConfirmacao">Confirmar Exclusão</button>
             </div>
-        </form>
-        
         </div>
     </div>
-    </div>
-    
-    
-    <script src="{% static 'ingressos/js/listar-ingressos.js' %}">
-        
-    </script>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'ingressos/js/listar-ingressos.js' %}"></script>
 {% endblock %}
