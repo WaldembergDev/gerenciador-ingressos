@@ -76,5 +76,7 @@ class VendaRapidaForm(forms.ModelForm):
             usuario__is_active=True
         ).all()
         self.fields["ingresso"].queryset = Ingresso.objects.filter(  # type: ignore
-            data_horario__gte=now(), status=Ingresso.StatusIngresso.ATIVO
+            data_horario__gte=now(),
+            status=Ingresso.StatusIngresso.ATIVO,
+            estoque_disponivel__gte=1
         )

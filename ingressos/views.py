@@ -277,4 +277,20 @@ def ingresso_registro_lote(request):
 @user_passes_test(superuser_check)
 def ingresso_create_via_api(request):
     pass
+
+@login_required
+def calcular_total(request):
+    ingresso_id = request.GET.get('ingresso')
+    quantidade = request.GET.get('quantidade', 0)
+
+    total = 0
+    if ingresso_id and quantidade:
+        try:
+            ingresso = Ingresso.objects.get(id=ingresso_id)
+            total = ingresso.preco * int(quantidade)
+        except (Ingresso.DoesNotExist, ValueError):
+            total = 0
     
+    return render(request,
+                  'ingressos/partials/_card_valor.html',
+                  {'total': total})
