@@ -2,14 +2,25 @@
 {% load static %}
 {% block title %}Cadastrar Evento{% endblock %}
 {% block content %}
-    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
-        <i class="bi bi-arrow-left"></i> Voltar
-    </a>
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <h1 class='text-center'>Cadastrar Evento</h1>
-            <form class="border p-5 row rounded mt-4 shadow-lg" method='POST' action="{% url 'cadastrar_ingresso' %}" enctype="multipart/form-data">
-                {% csrf_token %}
+    <div class="col-md-8 col-lg-6 mx-auto">
+        <form class="card shadow-sm" method='POST' action="{% url 'cadastrar_ingresso' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Header -->
+            <div class="card-header card-header-light">
+                <h3 class="card-title d-flex align-items-center gap-2">
+                    <a href="{% url 'home' %}"
+                        class="btn btn-animate-icon btn-animate-icon-move-start"><!-- Download SVG icon from http://tabler.io/icons/icon/chevron-left -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-1">
+                            <path d="M15 6l-6 6l6 6"></path>
+                        </svg>
+                        Voltar
+                    </a>
+                    Cadastrar Evento
+                </h3>
+            </div>
+            <div class="card-body row">
                 <div class="mb-3">
                     <label for="{{ form.titulo.id_for_label }}" class="form-label fw-bold">
                         {{ form.titulo.label_tag }}
@@ -81,12 +92,12 @@
                     {{ form.thumbnail.errors }}
                 </div>
                 
-                <div class="d-flex justify-content-between">
-                    <button id="bntCancelar" type="button" class="btn btn-secondary">Cancelar</button>
-                    <input type="submit" value="Salvar Evento" class='btn btn-primary'>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <button id="bntCancelar" type="button" class="btn btn-outline-secondary">Cancelar</button>
+                <input type="submit" value="Salvar Evento" class='btn btn-primary'>
+            </div>
+        </form>
     </div>
     <!-- Scripts -->
     <script src="{% static 'ingressos/js/cadastrar-ingresso.js' %}">
