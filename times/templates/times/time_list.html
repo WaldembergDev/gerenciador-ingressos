@@ -13,7 +13,8 @@
             <thead class="table-light">
                 <tr>
                     <th class="w-25" scope="col">Escudo</th>
-                    <th class="w-75" scope="col">Nome</th>
+                    <th class="w-50" scope="col">Nome</th>
+                    <th class="w-25" scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody class="align-middle">
@@ -23,6 +24,16 @@
                         <img src="{{ time.escudo.url }}" alt="" width='70'>
                     </th>
                     <td>{{ time.nome }}</td>
+                    <td>
+                        <button
+                            class="btn btn-primary"
+                            hx-get="{% url 'time_edit' time.id %}"
+                            hx-target="#editar-content"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalEditar">
+                            Editar
+                        </button>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -30,7 +41,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Criar-->
 <div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="timeModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -43,12 +54,12 @@
                     enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="col-md-6 mb-3">
-                        <label for="" class="fw-bold form-label">Nome</label>
+                        <label class="fw-bold form-label">Nome</label>
                         {{ form.nome }}
                         {{ form.nome.errors }}
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="" class="fw-bold form-label">Escudo</label>
+                        <label class="fw-bold form-label">Escudo</label>
                         {{ form.escudo}}
                     </div>
                 </form>
@@ -59,5 +70,14 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal Editar -->
+<div class="modal fade" id="modalEditar" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" id="editar-content">
+        
+    </div>
+  </div>
 </div>
 {% endblock %}

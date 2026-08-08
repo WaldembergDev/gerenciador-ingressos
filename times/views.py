@@ -4,8 +4,12 @@ from times.models import Time
 from .forms import TimeForm
 from django.contrib import messages
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+
 
 # Create your views here.
+@login_required
 @require_POST
 def time_create(request: HttpRequest) -> HttpResponse:
     """ Cria novo registro no banco de dados.
@@ -27,7 +31,7 @@ def time_create(request: HttpRequest) -> HttpResponse:
         print(form.errors)
         return redirect('time-list')
 
-
+@login_required
 def time_list(request: HttpRequest) -> HttpResponse:
     """Lista os times registrados
 
@@ -45,3 +49,22 @@ def time_list(request: HttpRequest) -> HttpResponse:
     }
     return render(request, 'times/time_list.html', context)
 
+@login_required
+def time_edit(request: HttpRequest, id_time: int) -> HttpResponse:
+    """ Edita um time com base no id """
+    time = get_object_or_404(Time, id=id_time)
+    if request.method == 'POST':
+        print('Inicio')
+        form = TimeForm(request.POST, request.FILES, instance=time)
+        print('Entrei aqui')
+        if form.is_valid():
+            print('Agora aqui')
+            form.save()
+            messages.success(request, 'Time atualizado com sucesso!')
+            return redirect('time-list')
+    else:
+        form = TimeForm(instance=time)
+    context = {
+        'form': form
+    }
+    return render(request, 'times/partials/_modal_editar.html', context)
