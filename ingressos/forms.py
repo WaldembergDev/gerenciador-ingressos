@@ -34,6 +34,8 @@ class IngressoForm(forms.ModelForm):
         model = Ingresso
         fields = "__all__"
         widgets = {
+            'time_casa': forms.Select(attrs={'class': 'form-select'}),
+            'time_visitante': forms.Select(attrs={'class': 'form-select'}),
             "titulo": forms.TextInput(attrs={"class": "form-control"}),
             "tipo": forms.Select(attrs={"class": "form-select"}),
             "thumbnail": forms.FileInput(attrs={"class": "form-control"}),
@@ -51,12 +53,22 @@ class IngressoForm(forms.ModelForm):
         labels = {"preco": "Preço Unitário(R$)",
                   "preco_par": "Preço Par (R$)"}
 
+
     def __init__(self, *args, **kwargs):
         esconder_campo = kwargs.pop("esconder_campo", False)
+        
         super().__init__(*args, **kwargs)
 
         if esconder_campo:
             del self.fields["status"]
+
+        # obtendo o tipo
+        tipo = self.data.get('tipo')
+        time_casa = self.data.get('time_casa')
+        time_visitante = self.data.get('time_visitante')
+
+        if tipo == Ingresso.TipoIngresso.JOGO:
+            self.fields['titulo'].initial = f'{time_casa} vs {time_visitante}'        
 
 
 class VendaRapidaForm(forms.ModelForm):
