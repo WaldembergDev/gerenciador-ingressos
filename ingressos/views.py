@@ -276,10 +276,6 @@ def ingresso_registro_lote(request):
     }
     return render(request, 'ingressos/eventos_futuros.html', context)
 
-@login_required
-@user_passes_test(superuser_check)
-def ingresso_create_via_api(request):
-    pass
 
 @login_required
 def calcular_total(request):
