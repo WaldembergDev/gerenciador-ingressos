@@ -3,7 +3,10 @@
 {% block title %}Página Inicial{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+
 {% endblock %}
+
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-8 col-lg-6">
@@ -19,30 +22,56 @@
       </span>
     </form>
   </div>
+
   <!-- Cards -->
   <div class="container-xl">
     <div class="row row-cards justify-content-center">
       {% for ingresso in ingressos %}
       <div class="col-sm-6 col-lg-4">
-        <div class="card card-sm card-link card-link-pop h-100 shadow-sm">
-          <a href="#" class="d-block">
-            {% if ingresso.thumbnail %}
-            <img src="{{ ingresso.thumbnail.url }}" class="card-img-top">
-            {% else %}
-            <img src="{% static 'img/sem_imagem.png' %}" class="card-img-top">
-            {% endif%}
-          </a>
+        <div class="card card-sm card-link card-link-pop h-100 shadow-sm overflow-hidden">
+          
+          <!-- CONTAINER DA IMAGEM (Agora engloba o título) -->
+          <div class="position-relative">
+            
+            <!-- TÍTULO POR CIMA DA IMAGEM -->
+            <div class="position-absolute top-0 start-0 w-100 p-3" style="z-index: 15; background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);">
+              <h4 class="card-title mb-0 text-uppercase tracking-wider text-white small fw-bold text-shadow text-center">
+                {{ ingresso.titulo }}
+              </h4>
+            </div>
+
+            <a href="#" class="d-block">
+              <!-- Condicional: Se for JOGO e tiver os dois times, mostra a sobreposição -->
+              {% if ingresso.tipo == "JOGO" and ingresso.time_casa.escudo and ingresso.time_visitante.escudo %}
+                <div class="vs-overlap-container">
+                  <img src="{{ ingresso.time_casa.escudo.url }}" class="img-time-casa" alt="{{ ingresso.time_casa.nome }}">
+                  <div class="badge-vs-overlay">VS</div>
+                  <img src="{{ ingresso.time_visitante.escudo.url }}" class="img-time-visitante" alt="{{ ingresso.time_visitante.nome }}">
+                </div>
+              {% else %}
+                <!-- Se for SHOW ou não tiver os escudos, mostra a thumbnail padrão do evento -->
+                {% if ingresso.thumbnail %}
+                  <img src="{{ ingresso.thumbnail.url }}" class="card-img-standard">
+                {% else %}
+                  <img src="{% static 'img/sem_imagem.png' %}" class="card-img-standard">
+                {% endif %}
+              {% endif %}
+            </a>
+          </div>
+
+          <!-- CORPO DO CARD (Informações e Botão) -->
           <div class="card-body d-flex flex-column">
-            <div class="d-flex align-items-center justify-content-between mt-auto">
-              <div class="d-flex flex-column">
-                <span class="fw-bold">{{ ingresso.descricao }}</span>
-                <span class="text-secondary">{{ ingresso.data_horario|date:'d/m/Y H:i' }}</span>
+            <div class="row align-items-center justify-content-between mt-auto">
+              <div class="d-flex flex-column col-8">
+                <span class="fw-bold text-truncate" style="max-width: 250px;">{{ ingresso.descricao }}</span>
+                <span class="text-secondary small">{{ ingresso.data_horario|date:'d/m/Y H:i' }}</span>
               </div>
-              <a href="{% url 'comprar-ingresso' ingresso.id %}" class="btn btn-primary">
+              <a href="{% url 'comprar-ingresso' ingresso.id %}" class="btn btn-primary col-4">
                 <i class="ti ti-shopping-bag"></i>Comprar
               </a>
             </div>
           </div>
+
         </div>
       </div>
       {% endfor %}

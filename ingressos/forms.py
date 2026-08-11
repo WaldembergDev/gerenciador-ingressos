@@ -62,13 +62,19 @@ class IngressoForm(forms.ModelForm):
         if esconder_campo:
             del self.fields["status"]
 
-        # obtendo o tipo
-        tipo = self.data.get('tipo')
-        time_casa = self.data.get('time_casa')
-        time_visitante = self.data.get('time_visitante')
+    def clean(self):
+        cleaned_data = super().clean()
+        tipo_evento = cleaned_data.get('tipo')
+        time_casa = cleaned_data.get('time_casa')
+        time_visitante = cleaned_data.get('time_visitante')
 
-        if tipo == Ingresso.TipoIngresso.JOGO:
-            self.fields['titulo'].initial = f'{time_casa} vs {time_visitante}'        
+        if tipo_evento == Ingresso.TipoIngresso.JOGO:
+            if not time_casa or not time_visitante:
+                raise forms.ValidationError({
+                    'time_casa': 'Deve selecionar time de casa e visitante para o tipo Jogo.',
+                    'time_visitante': 'Deve selecionar time de casa e visitante para o tipo Jogo.'})
+
+        return cleaned_data
 
 
 class VendaRapidaForm(forms.ModelForm):

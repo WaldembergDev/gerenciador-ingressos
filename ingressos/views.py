@@ -114,7 +114,7 @@ def json_detalhes_compra(request, id_historico):
 @user_passes_test(superuser_check)
 def cadastrar_ingresso(request):
     if request.method == "POST":
-        form = IngressoForm(request.POST, request.FILES, esconder_campo=True)
+        form = IngressoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Ingresso cadastrado com sucesso!")

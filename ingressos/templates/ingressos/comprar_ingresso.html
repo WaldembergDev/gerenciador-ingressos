@@ -3,6 +3,8 @@
 {% block title %}Venda de Ingresso{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'ingressos/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'ingressos/css/comprar_ingresso.css' %}">
+
 {% endblock %}
 {% block content %}
 <div class="row justify-content-center">
@@ -13,7 +15,7 @@
             <div class="card-header card-header-light">
                 <h3 class="card-title d-flex align-items-center gap-2">
                     <a href="{% url 'home' %}"
-                        class="btn btn-animate-icon btn-animate-icon-move-start"><!-- Download SVG icon from http://tabler.io/icons/icon/chevron-left -->
+                        class="btn btn-animate-icon btn-animate-icon-move-start">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="icon icon-1">
@@ -27,16 +29,28 @@
             <div class="card-body">
                 <form id="formularioComprarIngresso" action="{% url 'comprar-ingresso' ingresso.id %}" method="POST" class="row">
                     {% csrf_token %}
-                    <div class="col-md-7 col-lg-8">
-                        {% if ingresso.thumbnail %}
-                        <img src="{{ ingresso.thumbnail.url }}" class="w-100 h-100 rounded object-fit-cover" alt="" srcset="">
+                    
+                    <div class=" col-lg-8 mb-3 mb-md-0">
+                        <!-- Condicional Versus idêntica à página inicial -->
+                        {% if ingresso.tipo == "JOGO" and ingresso.time_casa.escudo and ingresso.time_visitante.escudo %}
+                            <div class="vs-overlap-details rounded border">
+                                <img src="{{ ingresso.time_casa.escudo.url }}" class="img-time-casa" alt="{{ ingresso.time_casa.nome }}">
+                                <div class="badge-vs-details">VS</div>
+                                <img src="{{ ingresso.time_visitante.escudo.url }}" class="img-time-visitante" alt="{{ ingresso.time_visitante.nome }}">
+                            </div>
                         {% else %}
-                        <img src="{% static 'img/sem_imagem.png' %}" alt="" srcset="" class="w-100 h-100 rounded object-fit-cover">
+                            <!-- Fallback para show ou sem imagem -->
+                            {% if ingresso.thumbnail %}
+                                <img src="{{ ingresso.thumbnail.url }}" class="img-standard-details rounded" alt="{{ ingresso.titulo }}">
+                            {% else %}
+                                <img src="{% static 'img/sem_imagem.png' %}" class="img-standard-details rounded" alt="Sem imagem">
+                            {% endif %}
                         {% endif %}
                     </div>
-                    <div class="col-md-5 col-lg-4 d-flex flex-column justify-content-center">
-                        <h2 class="h2 fw-bold mb-3">{{ ingresso.titulo }}</h2>
-                        <p><span class="fw-bold"> Data:</span> {{ ingresso.data_horario|date:"d/m/Y h:i" }}</p>
+
+                    <div class=" col-lg-4 d-flex flex-column justify-content-center">
+                        <h2 class="h2 fw-bold mb-3 text-center">{{ ingresso.titulo }}</h2>
+                        <p><span class="fw-bold"> Data:</span> {{ ingresso.data_horario|date:"d/m/Y H:i" }}</p>
                         <p><span class="fw-bold">Valor Unitário:</span> R$ {{ ingresso.preco }}</p>
                         <p><span class="fw-bold">Valor do Par:</span> R$ {{ ingresso.preco_par|default:"Não disponível"}}</p>
                         <p><span class="fw-bold">Ingressos disponíveis:</span> {{ ingresso.estoque_disponivel }}</p>
@@ -46,7 +60,7 @@
                     </div>
                     <div class="d-flex justify-content-between mt-3">
                         <a href='{% url "home" %}'
-                            class="btn btn-animate-icon btn-animate-icon-rotate btn-outline-secondary"><!-- Download SVG icon from http://tabler.io/icons/icon/x -->
+                            class="btn btn-animate-icon btn-animate-icon-rotate btn-outline-secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="icon icon-1">
