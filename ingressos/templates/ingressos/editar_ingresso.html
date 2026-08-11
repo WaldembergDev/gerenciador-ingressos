@@ -32,6 +32,20 @@
                             {{ form.status }}
                             {{ form.status.errors }}
                         </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.time_casa.label_tag }}
+                            </label>
+                            {{ form.time_casa }}
+                            {{ form.time_casa.errors }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">
+                            {{ form.time_visitante.label_tag }}
+                            </label>
+                            {{ form.time_visitante }}
+                            {{ form.time_visitante.errors }}
+                        </div>
                         <div class="col-md-12 mb-3">
                             <label class="form-label fw-bold">
                             {{ form.local.label_tag }}

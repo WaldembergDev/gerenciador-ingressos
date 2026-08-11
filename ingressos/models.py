@@ -2,6 +2,7 @@ from django.db import models
 from clientes.models import Cliente
 from django.core.validators import MinValueValidator
 from django.db.models import Sum
+from times.models import Time
 
 
 # Create your models here.
@@ -17,8 +18,20 @@ class Ingresso(models.Model):
     tipo = models.CharField(
         max_length=5, choices=TipoIngresso.choices, default=TipoIngresso.JOGO
     )
+    time_casa = models.ForeignKey(
+        Time,
+        on_delete=models.PROTECT,
+        related_name='ingressos_como_casa',
+        null=True,
+        blank=True)
+    time_visitante = models.ForeignKey(
+        Time,
+        on_delete=models.PROTECT,
+        related_name='ingressos_como_visitante',
+        null=True,
+        blank=True)
     thumbnail = models.ImageField(blank=True, null=True)
-    titulo = models.CharField(max_length=30, verbose_name="Título")
+    titulo = models.CharField(max_length=50, verbose_name="Título")
     local = models.CharField(max_length=120, verbose_name="Local do ingresso")
     descricao = models.CharField(max_length=255, verbose_name="Descrição do Ingresso")
     data_horario = models.DateTimeField()
@@ -70,7 +83,7 @@ class HistoricoCompra(models.Model):
     ingresso = models.ForeignKey(
         Ingresso, on_delete=models.PROTECT, related_name="ingressos_vendidos"
     )
-    titulo = models.CharField(max_length=30, verbose_name="Título")
+    titulo = models.CharField(max_length=50, verbose_name="Título")
     local = models.CharField(max_length=120)
     data_horario_evento = models.DateTimeField()
     data_compra = models.DateTimeField(auto_now_add=True)

@@ -34,6 +34,8 @@ class IngressoForm(forms.ModelForm):
         model = Ingresso
         fields = "__all__"
         widgets = {
+            'time_casa': forms.Select(attrs={'class': 'form-select'}),
+            'time_visitante': forms.Select(attrs={'class': 'form-select'}),
             "titulo": forms.TextInput(attrs={"class": "form-control"}),
             "tipo": forms.Select(attrs={"class": "form-select"}),
             "thumbnail": forms.FileInput(attrs={"class": "form-control"}),
@@ -51,12 +53,33 @@ class IngressoForm(forms.ModelForm):
         labels = {"preco": "Preço Unitário(R$)",
                   "preco_par": "Preço Par (R$)"}
 
+
     def __init__(self, *args, **kwargs):
         esconder_campo = kwargs.pop("esconder_campo", False)
+        
         super().__init__(*args, **kwargs)
 
         if esconder_campo:
             del self.fields["status"]
+
+    def clean(self):
+        cleaned_data = super().clean()
+        tipo_evento = cleaned_data.get('tipo')
+        time_casa = cleaned_data.get('time_casa')
+        time_visitante = cleaned_data.get('time_visitante')
+
+        if tipo_evento == Ingresso.TipoIngresso.JOGO:
+            if not time_casa or not time_visitante:
+                raise forms.ValidationError({
+                    'time_casa': 'Deve selecionar time de casa e visitante para o tipo Jogo.',
+                    'time_visitante': 'Deve selecionar time de casa e visitante para o tipo Jogo.'})
+
+        if time_casa == time_visitante:
+            raise forms.ValidationError({
+                'time_visitante': 'O time visitante não deve ser igual ao time de casa'
+            })
+
+        return cleaned_data
 
 
 class VendaRapidaForm(forms.ModelForm):

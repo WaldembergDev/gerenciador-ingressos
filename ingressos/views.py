@@ -114,11 +114,11 @@ def json_detalhes_compra(request, id_historico):
 @user_passes_test(superuser_check)
 def cadastrar_ingresso(request):
     if request.method == "POST":
-        form = IngressoForm(request.POST, request.FILES, esconder_campo=True)
+        form = IngressoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Ingresso cadastrado com sucesso!")
-            return redirect("cadastrar_ingresso")
+            return redirect(request.META.get('HTTP_REFERER')) # retorna a página que o usuário estava
     else:
         form = IngressoForm()
     context = {"form": form}
@@ -269,15 +269,13 @@ def ingresso_registro_lote(request):
             evento['existe_cadastro'] = True if evento['dthr_evento'] in datas_cadastradas else False
     
     # carregando os eventos no contexto
+    form = IngressoForm() # formulário de cadastrado de ingresso
     context = {
-        'eventos': eventos
+        'eventos': eventos,
+        'form': form
     }
     return render(request, 'ingressos/eventos_futuros.html', context)
 
-@login_required
-@user_passes_test(superuser_check)
-def ingresso_create_via_api(request):
-    pass
 
 @login_required
 def calcular_total(request):

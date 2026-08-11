@@ -1,44 +1,142 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load cache %}
 {% block title %}Eventos Futuros{% endblock %}
 {% block content %}
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1 class="text-center">Dados da Api (Cadastro Automático - Função Futura)</h1>
-            <table class="table table-striped  table-hover">
-                <thead class="table-dark text-center">
-                    <tr>
-                    <th scope="col">Data</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Campeonato</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Cadastrado</th>
-                    <th scope="col">Ações</th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    {% for evento in eventos %}
+<div class="row justify-content-center mb-3">
+    <div class="col-md-10">
+        <h1 class="text-center mb-3">Dados da Api (Cadastro Automático - Em Andamento)</h1>
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class=" text-center">
                         <tr>
-                        <th scope="row">{{ evento.dthr_evento|date:'d/m/Y H:i' }}</th>
-                        <td>{{ evento.titulo }}</td>
-                        <td>{{ evento.info.campeonato }}</td>
-                        <td>{{ evento.info.modalidade }}</td>
-                        <td>
-                            {% if evento.existe_cadastro %}
-                            <span class="badge text-bg-success">
-                            {% else %}
-                            <span class="badge text-bg-warning">
-                            {% endif %}
-                            {{ evento.existe_cadastro|yesno:'Sim,Não' }}
-                            <span>
-                        </td>
-                        <td>
-                            <button class="btn btn-primary evento-cadastro-botao" data-titulo='{{ evento.titulo }}' data-evento-dia='{{ evento.dthr_evento }}'>Cadastrar</button>
-                        </td>
+                            <th scope="col">Data</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Campeonato</th>
+                            <th scope="col" class="d-none d-md-table-cell">Tipo</th>
+                            <th scope="col">Cadastrado</th>
+                            <th scope="col">Ações</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="text-center ">
+                        {% for evento in eventos %}
+                        <tr>
+                            <th scope="row">{{ evento.dthr_evento|date:'d/m/Y H:i' }}</th>
+                            <td>{{ evento.titulo }}</td>
+                            <td>{{ evento.info.campeonato }}</td>
+                            <td class="d-none d-md-table-cell">{{ evento.info.modalidade }}</td>
+                            <td>
+                                {% if evento.existe_cadastro %}
+                                <span class="badge text-bg-success">
+                                    {% else %}
+                                    <span class="badge text-bg-warning">
+                                        {% endif %}
+                                        {{ evento.existe_cadastro|yesno:'Sim,Não' }}
+                                        <span>
+                            </td>
+                            <td>
+                                {% if evento.existe_cadastro %}
+                                <button class="btn btn-secondary">
+                                    Cadastrado
+                                </button>
+                                {% else %}
+                                <button class="btn btn-primary evento-cadastro-botao" data-bs-toggle="modal"
+                                    data-bs-target="#confirmacaoCadastro" data-titulo='{{ evento.titulo }}'
+                                    data-campeonato='{{ evento.info.campeonato }}'
+                                    data-evento-dia='{{ evento.dthr_evento|date:"Y-m-d H:i" }}'>
+                                    Cadastrar
+                                </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- Modal Confirmação de Cadastro -->
+<div class="modal fade" id="confirmacaoCadastro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmação de Cadastro</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formModal" class="row" action="{% url 'cadastrar_ingresso' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.titulo.id_for_label}}" class="fw-bold form-label">Titulo</label>
+                        {{ form.titulo }}
+                        {{ form.titulo.errors }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.status.id_for_label}}" class="fw-bold form-label">Status</label>
+                        {{ form.status }}
+                        {{ form.status.errors }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.time_casa.id_for_label}}" class="fw-bold form-label">Time Casa</label>
+                        {{ form.time_casa }}
+                        {{ form.time_casa.errors }}
+                        <span class="text-danger" id="span-time-casa"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.time_visitante.id_for_label}}" class="fw-bold form-label">Time
+                            Visitante</label>
+                        {{ form.time_visitante }}
+                        {{ form.time_visitante.errors }}
+                        <span class="text-danger" id="span-time-visitante"></span>
+                    </div>
+                    <div class="col-12 mb-3 d-none">
+                        <label for="{{ form.tipo.id_for_label}}" class="fw-bold form-label">Tipo</label>
+                        {{ form.tipo }}
+                        {{ form.tipo.errors }}
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="{{ form.local.id_for_label }}" class="fw-bold form-label">Local</label>
+                        {{ form.local }}
+                        {{ form.local.errors }}
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="{{ form.descricao.id_for_label }}" class="fw-bold form-label">Descrição</label>
+                        {{ form.descricao }}
+                        {{ form.descricao.errors }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.data_horario.id_for_label }}" class="fw-bold form-label">Data e Hora</label>
+                        {{ form.data_horario }}
+                        {{ form.data_horario.errors }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.estoque_disponivel.id_for_label }}"
+                            class="fw-bold form-label">Quantidade</label>
+                        {{ form.estoque_disponivel }}
+                        {{ form.estoque_disponivel.errors }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.preco.id_for_label }}" class="fw-bold form-label">Preço</label>
+                        {{ form.preco }}
+                        {{ form.preco.errors }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.preco_par.id_for_label }}" class="fw-bold form-label">Preço Par</label>
+                        {{ form.preco_par }}
+                        {{ form.preco_par.errors }}
+                    </div>
+            </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" form="formModal" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'ingressos/js/eventos-futuros.js' %}"></script>
 {% endblock %}

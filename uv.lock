@@ -190,6 +190,15 @@ wheels = [
 ]
 
 [[package]]
+name = "defusedxml"
+version = "0.7.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0f/d5/c66da9b79e5bdb124974bfe172b4daf3c984ebd9c2a06e2b8a4dc7331c72/defusedxml-0.7.1.tar.gz", hash = "sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69", size = 75520, upload-time = "2021-03-08T10:59:26.269Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/07/6c/aa3f2f849e01cb6a001cd8554a88d4c77c5c1a31c95bdf1cf9301e6d9ef4/defusedxml-0.7.1-py2.py3-none-any.whl", hash = "sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61", size = 25604, upload-time = "2021-03-08T10:59:24.45Z" },
+]
+
+[[package]]
 name = "django"
 version = "5.2.7"
 source = { registry = "https://pypi.org/simple" }
@@ -218,6 +227,7 @@ dependencies = [
     { name = "click-repl" },
     { name = "cloudscraper" },
     { name = "django" },
+    { name = "django-svg-image-form-field" },
     { name = "kombu" },
     { name = "mysqlclient" },
     { name = "packaging" },
@@ -246,6 +256,7 @@ requires-dist = [
     { name = "click-repl", specifier = "==0.3.0" },
     { name = "cloudscraper", specifier = ">=1.2.71" },
     { name = "django", specifier = "==5.2.7" },
+    { name = "django-svg-image-form-field", specifier = ">=1.0.1" },
     { name = "kombu", specifier = "==5.5.4" },
     { name = "mysqlclient", specifier = ">=2.2.8" },
     { name = "packaging", specifier = "==25.0" },
@@ -260,6 +271,20 @@ requires-dist = [
     { name = "tzdata", specifier = "==2025.2" },
     { name = "vine", specifier = "==5.1.0" },
     { name = "wcwidth", specifier = "==0.2.14" },
+]
+
+[[package]]
+name = "django-svg-image-form-field"
+version = "1.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "defusedxml" },
+    { name = "django" },
+    { name = "pillow" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/88/7a/270068010e8c0e6be5f710786d8ff88e323f8b8b41f8c672dcf16bce9cab/django-svg-image-form-field-1.0.1.tar.gz", hash = "sha256:396430e4ed6577cdd2858f06654084030f477a31efc43453f13d07023136dbc1", size = 5101, upload-time = "2021-06-13T22:36:29.876Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d7/ca/28264123b37ff43698073993d7481adc0af1215a41488b0bac13c70d6e27/django_svg_image_form_field-1.0.1-py2.py3-none-any.whl", hash = "sha256:06944dfda41e6fd7f7179acb16c04001eeeb873ffada8c8e88d1b7eb5d3ce766", size = 4996, upload-time = "2021-06-13T22:36:28.472Z" },
 ]
 
 [[package]]
