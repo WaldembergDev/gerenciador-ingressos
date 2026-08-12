@@ -34,4 +34,5 @@ urlpatterns = [
     path("venda-rapida/", views.venda_rapida, name="venda_rapida"),
     path('eventos-futuros/', views.ingresso_registro_lote, name='ingresso_registro_lote'),
     path('calcular-total/', views.calcular_total, name='calcular_total'),
+    path('eventos-webhook/', views.eventos_webhook, name='eventos_webhook')
 ]

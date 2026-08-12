@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db import transaction
 from django.urls import reverse
@@ -14,6 +14,9 @@ from core.utils import superuser_check
 from integracoes.services import ApiMaracaService
 from django.core.cache import cache
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+import hmac
 
 
 @login_required
@@ -293,3 +296,28 @@ def calcular_total(request):
     return render(request,
                   'ingressos/partials/_card_valor.html',
                   {'total': total})
+
+@csrf_exempt
+def eventos_webhook(request):
+    if request.method != 'POST':
+        return HttpResponse(status=405)
+    chave_recebida = request.headers.get('X-Webhook-Token', '')
+
+    chave_env = getattr(settings, 'WEBHOOK_TOKEN', '')
+
+    if not hmac.compare_digest(
+        bytes(chave_recebida, 'utf-8'), bytes(chave_env, 'utf-8')
+        ):
+        return JsonResponse({'erro': 'Não autorizado'}, status=403)
+
+    eventos = cache.get('eventos_carregados')
+
+    # verificando se existem eventos cadastrados
+    if not eventos:
+        api = ApiMaracaService()
+        eventos = api.obter_proximos_jogos()
+        cache.set('eventos_carregados', eventos, 3_600*12)
+        print('requisição realizada')
+    
+    return JsonResponse({'status': 'dados_recebidos'}, status=200)
+    
