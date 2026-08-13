@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from email.policy import default
 from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
@@ -186,3 +187,6 @@ PATH_SETTINGS = config("PATH_SETTINGS")
 # Configurações para User Agent
 APP_NAME = "ingresso_mc"
 APP_VERSION = "1.0.0"
+
+# webhook para receber os eventos do maracanã
+WEBHOOK_TOKEN = config('WEBHOOK_TOKEN', default="")
