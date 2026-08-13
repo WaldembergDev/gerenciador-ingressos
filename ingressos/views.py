@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db import transaction
@@ -260,7 +261,6 @@ def ingresso_registro_lote(request):
         api = ApiMaracaService()
         eventos = api.obter_proximos_jogos()
         cache.set('eventos_carregados', eventos, 3_600*12)
-        print('requisição realizada')
 
     # criando um novo campo para saber se o evento está cadastrado e convertendo str para datetime
     if eventos:
@@ -302,7 +302,6 @@ def eventos_webhook(request):
     if request.method != 'POST':
         return HttpResponse(status=405)
     chave_recebida = request.headers.get('X-Webhook-Token', '')
-
     chave_env = getattr(settings, 'WEBHOOK_TOKEN', '')
 
     if not hmac.compare_digest(
@@ -310,14 +309,15 @@ def eventos_webhook(request):
         ):
         return JsonResponse({'erro': 'Não autorizado'}, status=403)
 
-    eventos = cache.get('eventos_carregados')
-
-    # verificando se existem eventos cadastrados
-    if not eventos:
-        api = ApiMaracaService()
-        eventos = api.obter_proximos_jogos()
+    try:
+        # obtém os dados enviados
+        dados = json.loads(request.body)
+        # extrai os eventos
+        eventos = dados.get('res')
+        # salva no cache
         cache.set('eventos_carregados', eventos, 3_600*12)
-        print('requisição realizada')
+    except json.JSONDecodeError:
+        return JsonResponse({'erro': 'JSON inválido'}, status=400)
     
     return JsonResponse({'status': 'dados_recebidos'}, status=200)
     

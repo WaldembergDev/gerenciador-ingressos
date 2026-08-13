@@ -8,6 +8,7 @@ def middleware_acesso_inicial(get_response):
             and not request.path == "/core/acesso-inicial/"
             and not request.path.startswith("/admin/")
             and not request.path.startswith("/pagamentos/webhook/")
+            and not request.path.startswith("/ingressos/eventos-webhook/")
         ):
             return redirect("acesso_inicial")
 
