@@ -4,13 +4,15 @@ from times.models import Time
 from .forms import TimeForm
 from django.contrib import messages
 from django.views.decorators.http import require_POST
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404
+from core.utils import superuser_check
 
 
 # Create your views here.
 @login_required
 @require_POST
+@user_passes_test(superuser_check)
 def time_create(request: HttpRequest) -> HttpResponse:
     """ Cria novo registro no banco de dados.
 
@@ -32,6 +34,7 @@ def time_create(request: HttpRequest) -> HttpResponse:
         return redirect('time-list')
 
 @login_required
+@user_passes_test(superuser_check)
 def time_list(request: HttpRequest) -> HttpResponse:
     """Lista os times registrados
 
@@ -50,6 +53,7 @@ def time_list(request: HttpRequest) -> HttpResponse:
     return render(request, 'times/time_list.html', context)
 
 @login_required
+@user_passes_test(superuser_check)
 def time_edit(request: HttpRequest, id_time: int) -> HttpResponse:
     """ Edita um time com base no id """
     time = get_object_or_404(Time, id=id_time)
