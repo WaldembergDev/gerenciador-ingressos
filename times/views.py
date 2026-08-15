@@ -58,11 +58,8 @@ def time_edit(request: HttpRequest, id_time: int) -> HttpResponse:
     """ Edita um time com base no id """
     time = get_object_or_404(Time, id=id_time)
     if request.method == 'POST':
-        print('Inicio')
         form = TimeForm(request.POST, request.FILES, instance=time)
-        print('Entrei aqui')
         if form.is_valid():
-            print('Agora aqui')
             form.save()
             messages.success(request, 'Time atualizado com sucesso!')
             return redirect('time-list')
