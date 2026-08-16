@@ -89,7 +89,6 @@ def login(request):
     return render(request, "core/login.html", context=context)
 
 
-@login_required
 @user_passes_test(superuser_check)
 def admin_resetar_senha_usuario(request, id_usuario):
     usuario = get_object_or_404(User, id=id_usuario)
@@ -143,7 +142,6 @@ def reset_senha(request):
         return redirect("minha_conta")
 
 
-@login_required
 @user_passes_test(superuser_check) # type:ignore
 def acesso_geral_create(request):
     if request.method == "POST":
