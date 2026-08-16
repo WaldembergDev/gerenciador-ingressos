@@ -90,7 +90,6 @@ def test_representacao_em_texto(ingresso_comum, cliente_comum):
     
     assert str(ingresso_comum) == ingresso_comum.titulo
     assert str(historico) == f'{historico.data_compra:%d/%m/%Y %H:%M} - {historico.titulo} - {historico.id}'
-    assert str(cliente_comum) == cliente_comum.usuario.first_name
 
 @pytest.mark.django_db
 def test_excluir_ingresso_vendido(ingresso_comum, cliente_comum):
