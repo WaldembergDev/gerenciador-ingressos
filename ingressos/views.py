@@ -125,7 +125,6 @@ def cadastrar_ingresso(request):
     return render(request, "ingressos/cadastrar_ingresso.html", context=context)
 
 
-@login_required
 @user_passes_test(superuser_check)
 def exibir_todos_ingressos_comprados(request):
     # obtendo os ingressos comprados
@@ -159,7 +158,6 @@ def exibir_todos_ingressos_comprados(request):
     return render(request, "ingressos/todos_ingressos_comprados.html", context=context)
 
 
-@login_required
 @user_passes_test(superuser_check)
 def editar_ingresso(request, id_ingresso):
     ingresso = get_object_or_404(Ingresso, id=id_ingresso)
@@ -175,7 +173,6 @@ def editar_ingresso(request, id_ingresso):
     return render(request, "ingressos/editar_ingresso.html", context=context)
 
 
-@login_required
 @user_passes_test(superuser_check)
 def historico_venda_detail(request, id_historico):
     historico = get_object_or_404(HistoricoCompra, id=id_historico)
@@ -183,7 +180,6 @@ def historico_venda_detail(request, id_historico):
     return render(request, "ingressos/historico_compra_detail.html", context)
 
 
-@login_required
 @user_passes_test(superuser_check)
 def ingresso_list(request):
     ingressos = Ingresso.objects.all().order_by("data_horario")
@@ -197,7 +193,6 @@ def ingresso_list(request):
     return render(request, "ingressos/ingresso_list.html", context)
 
 
-@login_required
 @user_passes_test(superuser_check)
 @require_POST
 def ingresso_delete(request, id_ingresso):
@@ -214,7 +209,6 @@ def ingresso_delete(request, id_ingresso):
     return redirect("ingresso_list")
 
 
-@login_required
 @user_passes_test(superuser_check)
 def venda_rapida(request):
     if request.method == "POST":
@@ -246,7 +240,6 @@ def venda_rapida(request):
     }
     return render(request, "ingressos/venda_rapida_form.html", context)
 
-@login_required
 @user_passes_test(superuser_check)
 def ingresso_registro_lote(request):
     # carregando os eventos do cache
