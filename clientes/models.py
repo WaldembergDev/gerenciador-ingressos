@@ -30,7 +30,7 @@ class Cliente(models.Model):
         return "Ativo" if self.usuario.is_active else "Inativo"
 
     @property
-    def obter_quantidade_comprada(self):
+    def obter_pedidos_aprovados(self):
         quantidade = self.compras.filter(status="A").count()
         return quantidade
 

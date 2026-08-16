@@ -40,12 +40,6 @@ class CustomUser(AbstractUser):
 
     objects = MeuUserManager()
 
-    def get_full_name(self):
-        return self.email
-
-    def get_short_name(self):
-        return self.email
-
     def __str__(self):
         return self.email
 

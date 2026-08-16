@@ -1,6 +1,6 @@
 import pytest
-from ingressos.models import Ingresso
-from clientes.models import Cliente
+from ingressos.models import Ingresso, HistoricoCompra
+from clientes.models import Cliente, Endereco
 from core.models import CustomUser
 from datetime import datetime, date
 from django.utils import timezone
@@ -35,3 +35,31 @@ def cliente_comum(db):
         usuario = usuario
     )
     return cliente
+
+@pytest.fixture
+def historico_comum(db, cliente_comum, ingresso_comum):
+    historico = HistoricoCompra.objects.create(
+        cliente = cliente_comum,
+        ingresso = ingresso_comum,
+        titulo = ingresso_comum.titulo,
+        local = ingresso_comum.local,
+        data_horario_evento = ingresso_comum.data_horario,
+        valor_pago = ingresso_comum.preco,
+        quantidade = 1,
+        status = HistoricoCompra.Status.APROVADO
+    )
+    return historico
+
+@pytest.fixture
+def endereco_comum(db, cliente_comum):
+    endereco = Endereco.objects.create(
+        cep = '21250610',
+        logradouro = 'Rua Andrade',
+        numero = '100',
+        bairro = 'Andrade',
+        cidade = 'Rio de Janeiro',
+        estado = 'Rio de Janeiro',
+        uf = Endereco.UfEnum.RIO_DE_JANEIRO,
+        cliente = cliente_comum
+    )
+    return endereco
