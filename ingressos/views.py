@@ -249,7 +249,7 @@ def ingresso_registro_lote(request):
     if not eventos:
         api = ApiMaracaService()
         eventos = api.obter_proximos_jogos()
-        cache.set('eventos_carregados', eventos, 3_600*12)
+        cache.set('eventos_carregados', eventos, 3_600*24*5)
 
     # criando um novo campo para saber se o evento está cadastrado e convertendo str para datetime
     if eventos:
@@ -304,7 +304,7 @@ def eventos_webhook(request):
         # extrai os eventos
         eventos = dados.get('res')
         # salva no cache
-        cache.set('eventos_carregados', eventos, 3_600*12)
+        cache.set('eventos_carregados', eventos, 3_600*24*5)
     except json.JSONDecodeError:
         return JsonResponse({'erro': 'JSON inválido'}, status=400)
     
