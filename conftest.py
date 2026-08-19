@@ -1,9 +1,11 @@
 import pytest
 from ingressos.models import Ingresso, HistoricoCompra
 from clientes.models import Cliente, Endereco
+from times.models import Time
 from core.models import CustomUser
 from datetime import datetime, date
 from django.utils import timezone
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 @pytest.fixture
 def ingresso_comum(db):
@@ -63,3 +65,23 @@ def endereco_comum(db, cliente_comum):
         cliente = cliente_comum
     )
     return endereco
+
+@pytest.fixture
+def time_comum(db):
+    conteudo_imagem = (
+        b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff'
+        b'\x00\x00\x00\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00'
+        b'\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b'
+    )
+
+    escudo_fake = SimpleUploadedFile(
+        name = 'teste.gif',
+        content = conteudo_imagem,
+        content_type = 'image/gif'
+    )
+    time = Time.objects.create(
+        nome = 'Flamengo',
+        escudo = escudo_fake
+    )
+
+    return time
