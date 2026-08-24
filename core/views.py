@@ -53,7 +53,7 @@ def home(request):
     query = request.GET.get("q", '')
     agora = timezone.now()
     ingressos = Ingresso.objects.filter(
-        data_horario__gte=agora, status=Ingresso.StatusIngresso.ATIVO
+        data_horario__gte=agora, status=Ingresso.StatusIngresso.ATIVO, estoque_disponivel__gte=1
     ).order_by("data_horario")
 
     tipos = Ingresso.TipoIngresso.choices
