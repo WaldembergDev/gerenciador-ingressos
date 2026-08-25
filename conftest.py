@@ -24,17 +24,21 @@ def ingresso_comum(db):
     return ingresso
 
 @pytest.fixture
-def cliente_comum(db):
+def usuario_comum(db):
     usuario = CustomUser.objects.create_user(
         first_name = 'Waldemberg',
         last_name = 'Pereira',
         username = 'usuario',
         email = 'teste@gmail.com'
     )
+    return usuario
+
+@pytest.fixture
+def cliente_comum(db, usuario_comum):
     cliente = Cliente.objects.create(
         telefone = '21974005040',
         data_nascimento = date(1993, 9, 30),
-        usuario = usuario
+        usuario = usuario_comum
     )
     return cliente
 
