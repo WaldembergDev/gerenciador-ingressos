@@ -129,17 +129,12 @@ def reset_senha(request):
     form = ResetSenhaForm(request.POST, instance=usuario)
     if form.is_valid():
         password = form.cleaned_data["password"]
-        confirmacao_password = form.cleaned_data["confirmacao_password"]
-        if password != confirmacao_password:
-            messages.error(request, "As senhas digitadas não são iguais!")
-            return redirect("minha_conta")
         usuario.set_password(password)
         usuario.save()
         messages.success(request, "Senha atualizada com sucesso!")
-        return redirect("minha_conta")
-    else:
-        messages.error(request, "Erro ao validar o formulário")
-        return redirect("minha_conta")
+        return redirect("minha-conta")
+    messages.error(request, "Login ou senha não são iguais")
+    return redirect("minha-conta")
 
 
 @user_passes_test(superuser_check) # type:ignore
@@ -147,15 +142,10 @@ def acesso_geral_create(request):
     if request.method == "POST":
         form = AcessoGeralFormCreate(request.POST)
         if form.is_valid():
-            password = form.cleaned_data.get('senha')
-            confirmacao_password = form.cleaned_data.get('confirmacao_password')
-            if password != confirmacao_password:
-                messages.error(request, 'As senhas digitadas não são iguais!')      
-                return redirect('acesso_geral_create')
             form.save()
             messages.success(request, 'Senha atualizada com sucesso!')
             return redirect('home')
     else:
         form = AcessoGeralFormCreate()
-    context = {"form": form} # type: ignore
+    context = {"form": form}
     return render(request, "core/acesso_geral_form.html", context)
