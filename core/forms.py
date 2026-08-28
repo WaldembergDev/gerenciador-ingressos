@@ -72,7 +72,19 @@ class AcessoGeralFormCreate(forms.ModelForm):
         model = AcessoGeral
         fields = "__all__"
         widgets = {"senha": forms.PasswordInput(attrs={"class": "form-control"})}
-        
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        password = cleaned_data.get('senha')
+        confirmacao = cleaned_data.get('confirmacao_password')
+
+        if password != confirmacao:
+            mensagem_erro = "As senhas digitadas não são iguais"
+            self.add_error('senha', mensagem_erro)
+            self.add_error('confirmacao_password', mensagem_erro)
+        return cleaned_data
+
 
 class CustomUserUpdateFormAdmin(forms.ModelForm):
     class Meta:
@@ -125,3 +137,15 @@ class ResetSenhaForm(forms.ModelForm):
         widgets = {
             "password": forms.PasswordInput(attrs={"class": "form-control"}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        confirmacao = cleaned_data.get('confirmacao_password')
+        password = cleaned_data.get('password')
+
+        if password != confirmacao:
+            mensagem_error = 'As senhas digitadas não são iguais'
+            self.add_error('confirmacao_password', mensagem_error)
+            self.add_error('password', mensagem_error)
+        return cleaned_data

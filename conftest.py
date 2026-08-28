@@ -29,7 +29,8 @@ def usuario_comum(db):
         first_name = 'Waldemberg',
         last_name = 'Pereira',
         username = 'usuario',
-        email = 'teste@gmail.com'
+        email = 'teste@gmail.com',
+        password='@1234@456@'
     )
     return usuario
 
