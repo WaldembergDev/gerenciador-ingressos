@@ -189,7 +189,7 @@ def historico_venda_detail(request, id_historico):
 
 @user_passes_test(superuser_check)
 def ingresso_list(request):
-    ingressos = Ingresso.objects.all().order_by("data_horario")
+    ingressos = Ingresso.objects.all().order_by("-data_horario")
 
     paginator = Paginator(ingressos, 30)
 
