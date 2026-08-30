@@ -131,9 +131,10 @@ def exibir_todos_ingressos_comprados(request):
     ingressos_comprados = HistoricoCompra.objects.order_by("-data_horario_evento")
     # aplicando filtro
     filtros = {}
-    comprador = request.GET.get("comprador")
-    evento = request.GET.get("evento")
-    data_evento_str = request.GET.get("dataEvento")
+    comprador = request.GET.get("comprador", None)
+    evento = request.GET.get("evento", None)
+    data_evento_str = request.GET.get("dataEvento", None)
+    status_evento = request.GET.get('status_evento', None)
 
     if comprador:
         filtros["cliente__usuario__first_name__icontains"] = comprador
@@ -144,6 +145,12 @@ def exibir_todos_ingressos_comprados(request):
     if data_evento_str:
         data_evento = datetime.strptime(data_evento_str, "%Y-%m-%d").date()
         filtros["data_horario_evento__date"] = data_evento
+
+    if status_evento:
+        if status_evento == 'passado':
+            filtros['data_horario_evento__lt'] = timezone.now()
+        if status_evento == 'futuro':
+            filtros['data_horario_evento__gt'] = timezone.now()
 
     if filtros:
         ingressos_comprados = ingressos_comprados.filter(**filtros)
