@@ -128,7 +128,7 @@ def cadastrar_ingresso(request):
 @user_passes_test(superuser_check)
 def exibir_todos_ingressos_comprados(request):
     # obtendo os ingressos comprados
-    ingressos_comprados = HistoricoCompra.objects.order_by("data_horario_evento")
+    ingressos_comprados = HistoricoCompra.objects.order_by("-data_horario_evento")
     # aplicando filtro
     filtros = {}
     comprador = request.GET.get("comprador")
