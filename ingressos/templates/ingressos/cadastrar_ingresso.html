@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Cadastrar Evento{% endblock %}
 {% block content %}
-    <div class="col-md-8 col-lg-6 mx-auto">
+    <div class="col-md-10 col-lg-8 col-xxl-8 mx-auto">
         <form class="card shadow-sm" method='POST' action="{% url 'cadastrar_ingresso' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <!-- Header -->

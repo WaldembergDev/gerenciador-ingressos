@@ -5,8 +5,8 @@
 <div class="col-12">
     <form action="." method="GET" class="card shadow-sm mb-4">
         <!-- Header alinhado com o padrão das outras telas -->
-        <div class="card-header card-header-light">
-            <h3 class="card-title d-flex align-items-center gap-2 m-0">
+        <div class="card-header card-header-light justify-content-between">
+            <div class="w-25">
                 <a href="{% url 'home' %}" class="btn btn-animate-icon btn-animate-icon-move-start">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -15,8 +15,11 @@
                     </svg>
                     Voltar
                 </a>
+            </div>
+            <h3 class="card-title d-flex align-items-center gap-2 m-0">
                 Ingressos Vendidos
             </h3>
+            <div class="invisible w-25"></div>
         </div>
 
         <!-- Corpos do Filtro -->
@@ -33,9 +36,17 @@
                 <label for="inputDataEvento" class="form-label fw-bold">Data do Evento</label>
                 <input value="{{ request.GET.dataEvento }}" type="date" class="form-control" name="dataEvento" id="inputDataEvento">
             </div>
-            <div class="col-md-3 d-flex justify-content-end align-items-end gap-2">
-                <a href="." class="btn btn-outline-secondary w-100">Limpar</a>
-                <button type="submit" class="btn btn-primary w-100">Buscar</button>
+            <div class="col-md-3">
+                <label for="inputOcorrido" class="form-label fw-bold">Status do Evento</label>
+                <select name="status_evento" id="inputStatusEvento" class="form-select">
+                    <option {% if request.GET.status_evento == 'todos' %}selected{% endif %} value="todos">Todos</option>
+                    <option value="passado" {% if request.GET.status_evento == 'passado' %}selected{% endif %}>Passado</option>
+                    <option value="futuro" {% if request.GET.status_evento == 'futuro' %}selected{% endif %}>Futuro</option>
+                </select>
+            </div>
+            <div class="col-12 d-flex flex-md-row flex-column justify-content-md-end gap-2">
+                <a href="." class="btn btn-outline-secondary">Limpar</a>
+                <button type="submit" class="btn btn-primary">Buscar</button>
             </div>
         </div>
     </form>
@@ -82,7 +93,7 @@
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="8" class="text-center py-3">Ainda não houve nenhuma compra na plataforma!</td>
+                            <td colspan="8" class="text-center py-3">Ainda não houve nenhuma compra na plataforma ou ajuste os filtros!</td>
                         </tr>
                     {% endfor %}
                 </tbody>

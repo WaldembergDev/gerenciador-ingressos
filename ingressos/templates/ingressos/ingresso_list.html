@@ -5,8 +5,8 @@
 <div class="col-12">
     <div class="card shadow-sm">
         <!-- Header -->
-        <div class="card-header card-header-light">
-            <h3 class="card-title d-flex align-items-center gap-2">
+        <div class="card-header card-header-light justify-content-between">
+            <div class="w-25">
                 <a href="{% url 'home' %}"
                     class="btn btn-animate-icon btn-animate-icon-move-start"><!-- Download SVG icon from http://tabler.io/icons/icon/chevron-left -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -16,15 +16,18 @@
                     </svg>
                     Voltar
                 </a>
+            </div>
+            <h3 class="card-title d-flex align-items-center gap-2">
                 Lista de Ingressos
             </h3>
+            <div class="w-25 invisible"></div>
         </div>
         <table class="card-body table table-striped table-hover mb-0">
             <thead class="">
                 <tr class="align-middle text-center">
-                    <th class="d-none d-md-table-cell" scope="col ">Tipo</th>
+                    <th class="d-none d-lg-table-cell" scope="col ">Tipo</th>
                     <th scope="col">Titulo</th>
-                    <th class="d-none d-md-table-cell" scope="col">Local</th>
+                    <th class="d-none d-lg-table-cell" scope="col">Local</th>
                     <th scope="col">Descricao</th>
                     <th scope="col">Data Hora</th>
                     <th scope="col">Preço(R$)</th>
@@ -36,9 +39,9 @@
             <tbody>
                 {% for ingresso in page_obj %}
                 <tr class="align-middle">
-                    <th class="d-none d-md-table-cell" scope="row">{{ ingresso.get_tipo_display }}</th>
+                    <th class="d-none d-lg-table-cell" scope="row">{{ ingresso.get_tipo_display }}</th>
                     <td>{{ ingresso.titulo }}</td>
-                    <td class="d-none d-md-table-cell">{{ ingresso.local }}</td>
+                    <td class="d-none d-lg-table-cell">{{ ingresso.local }}</td>
                     <td>{{ ingresso.descricao }}</td>
                     <td>{{ ingresso.data_horario|date:"d/m/Y H:i" }}</td>
                     <td>{{ ingresso.preco }}</td>
