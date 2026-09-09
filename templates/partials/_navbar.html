@@ -45,7 +45,7 @@
         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Abrir menu do usuário">
           <i class="ti ti-user-circle fs-2 me-1"></i>
           <div class="d-none d-xl-block ps-1">
-            <div class="fw-bold">{{ user.get_full_name|default:user.username }}</div>
+            <div class="fw-bold">{{ user.first_name|default:user.email }}</div>
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

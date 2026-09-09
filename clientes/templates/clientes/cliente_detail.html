@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Detalhes do Cliente{% endblock %}
 {% block content %}
     <div class="col-md-12 col-lg-10 col-xl-8 mx-auto">
@@ -83,11 +84,31 @@
                 <h3 class="card-title">Reset de Senha</h3>
                 </div>
             <div class="card-body">
-                <form method="POST" action="{% url 'admin_resetar_senha_usuario' usuario_form.instance.id %}" class="d-flex col justify-content-end mb-2">
+                <form id="form-reset-senha" method="POST" action="{% url 'admin_resetar_senha_usuario' usuario_form.instance.id %}" class="d-flex col justify-content-end mb-2">
                     {% csrf_token %}
-                    <input value="Reset de Senha" type="submit" class="btn btn-outline-warning">
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">Reset de Senha</button>
                 </form>
             </div>
             </div>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Reset de Senha</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">Confirma o reset da senha? A senha do usuário será alterada para <span class="fw-bold">12345678</span>. Após isso, oriente o usuário a alterar para uma nova senha.</div>
+        <div class="modal-footer">
+            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Cancelar</button>
+            <button id="btn-confirmar-reset" type="button" class="btn btn-danger" data-bs-dismiss="modal">Confirmar</button>
+        </div>
+        </div>
+    </div>
+    </div>
 {% endblock%}
+
+{% block script %}
+    <script src="{% static 'clientes/js/cliente-detail.js' %}"></script>
+{% endblock %}

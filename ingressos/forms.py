@@ -74,10 +74,10 @@ class IngressoForm(forms.ModelForm):
                     'time_casa': 'Deve selecionar time de casa e visitante para o tipo Jogo.',
                     'time_visitante': 'Deve selecionar time de casa e visitante para o tipo Jogo.'})
 
-        if time_casa == time_visitante:
-            raise forms.ValidationError({
-                'time_visitante': 'O time visitante não deve ser igual ao time de casa'
-            })
+            if time_casa == time_visitante:
+                raise forms.ValidationError({
+                    'time_visitante': 'O time visitante não deve ser igual ao time de casa'
+                })
 
         return cleaned_data
 
