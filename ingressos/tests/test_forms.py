@@ -1,5 +1,5 @@
 import pytest
-from ingressos.forms import CompraForm, IngressoForm
+from ingressos.forms import CompraForm, IngressoForm, VendaRapidaForm
 from times.models import Time
 from django.core.files.uploadedfile import SimpleUploadedFile
 from datetime import datetime
@@ -94,5 +94,33 @@ def test_ingresso_form_invalido_times_iguais():
     }
 
     form = IngressoForm(data=dados)
+
+    assert form.is_valid() is False
+
+
+@pytest.mark.django_db
+def test_venda_form_valido(cliente_comum, ingresso_comum):
+    dados = {
+        'cliente': cliente_comum.id,
+        'ingresso': ingresso_comum.id,
+        'quantidade': 2,
+        'status': 'P'
+    }
+
+    form = VendaRapidaForm(data=dados)
+
+    assert form.is_valid() is True
+
+
+@pytest.mark.django_db
+def test_venda_form_invalido(cliente_comum, ingresso_comum):
+    dados = {
+        'cliente': cliente_comum.id,
+        'ingresso': ingresso_comum.id,
+        'quantidade': -2,
+        'status': 'P'
+    }
+
+    form = VendaRapidaForm(data=dados)
 
     assert form.is_valid() is False
