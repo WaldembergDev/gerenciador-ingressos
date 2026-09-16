@@ -18,12 +18,14 @@ from django.contrib.auth.hashers import check_password
 from .utils import superuser_check
 from clientes.models import Cliente
 from clientes.forms import ClienteForm
+from django_ratelimit.decorators import ratelimit
 
 
 User = get_user_model()
 
 
 # Create your views here.
+@ratelimit(key='ip', rate='20/m', block=True)
 def acesso_inicial(request):
     if request.session.get("acesso_geral"):
         return redirect("home")
@@ -67,6 +69,7 @@ def home(request):
     return render(request, "core/home.html", context)
 
 
+@ratelimit(key='ip', rate='20/m', block=True)
 def login(request):
     next = None
     # verificando se o usuário está logado
@@ -149,3 +152,6 @@ def acesso_geral_create(request):
         form = AcessoGeralFormCreate()
     context = {"form": form}
     return render(request, "core/acesso_geral_form.html", context)
+
+def handler429(request, exception=None):
+    return render(request, 'errors/429.html', status=429)

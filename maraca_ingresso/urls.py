@@ -34,3 +34,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# redireciona o usuário para a página
+handler429 = 'core.views.handler429'
+handler403 = 'core.views.handler429'

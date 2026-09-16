@@ -14,5 +14,5 @@ urlpatterns = [
     ),
     path("minha-conta/", views.minha_conta, name="minha-conta"),
     path("reset-senha/", views.reset_senha, name="reset_senha"),
-    path('novo-acesso-geral/', views.acesso_geral_create, name='acesso_geral_create')
+    path('novo-acesso-geral/', views.acesso_geral_create, name='acesso_geral_create'),
 ]
