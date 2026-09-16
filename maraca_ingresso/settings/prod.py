@@ -18,11 +18,8 @@ USER_AGENT_STRING = f"{APP_NAME}/{APP_VERSION} (ambiente: prod)"
 
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": f"unix://{str(BASE_DIR / 'redislite.sock')}",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "django_cache_table",
     }
 }
 
