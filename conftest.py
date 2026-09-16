@@ -2,7 +2,7 @@ import pytest
 from ingressos.models import Ingresso, HistoricoCompra
 from clientes.models import Cliente, Endereco
 from times.models import Time
-from core.models import CustomUser
+from core.models import CustomUser, AcessoGeral
 from datetime import datetime, date
 from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -90,3 +90,12 @@ def time_comum(db):
     )
 
     return time
+
+
+@pytest.fixture
+def acesso_geral_comum(db):
+    acesso_geral = AcessoGeral.objects.create(
+        senha='teste@123'
+    )
+
+    return acesso_geral
