@@ -16,3 +16,11 @@ DATABASES = {
 }
 
 USER_AGENT_STRING = f"{APP_NAME}/{APP_VERSION} (ambiente: dev)"
+
+# configurações django cache
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
+    }
+}
