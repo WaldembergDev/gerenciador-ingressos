@@ -25,7 +25,7 @@ User = get_user_model()
 
 
 # Create your views here.
-@ratelimit(key='ip', rate='30/m', block=True)
+@ratelimit(key='ip', rate='20/m', block=True)
 def acesso_inicial(request):
     if request.session.get("acesso_geral"):
         return redirect("home")
