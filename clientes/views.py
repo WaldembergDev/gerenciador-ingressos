@@ -63,7 +63,6 @@ def cliente_detail(request, id_cliente):
     if request.method == "POST":
         cliente_form = ClienteForm(request.POST, instance=cliente)
         usuario_form = CustomUserUpdateFormAdmin(request.POST, instance=cliente.usuario)
-        print(cliente_form.errors)
         if cliente_form.is_valid() and usuario_form.is_valid():
             usuario_form.save()
             cliente_form.save()
