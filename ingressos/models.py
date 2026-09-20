@@ -70,6 +70,17 @@ class Ingresso(models.Model):
         estoque = self.estoque_disponivel + self.quantidade_vendido
         return estoque
 
+    @property
+    def situacao(self):
+        vendas = HistoricoCompra.objects.filter(
+            ingresso=self, status=HistoricoCompra.Status.APROVADO
+        )
+        quantidade_vendida = vendas.aggregate(total_soma=Sum('quantidade')).get('total_soma')
+        quantidade_vendida = quantidade_vendida if quantidade_vendida else 0
+        if quantidade_vendida < self.estoque_disponivel:
+            return 'Disponível'
+        return 'Esgotado'
+    
 
 class HistoricoCompra(models.Model):
     class Status(models.TextChoices):
