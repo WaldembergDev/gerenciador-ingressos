@@ -105,3 +105,15 @@ def test_excluir_ingresso_vendido(ingresso_comum, cliente_comum):
                 )
     with pytest.raises(ProtectedError):
         ingresso_comum.delete()
+
+
+@pytest.mark.django_db
+def test_situacao_ingresso_disponivel(ingresso_comum):
+    assert ingresso_comum.situacao == 'Disponível'
+
+
+@pytest.mark.django_db
+def test_situacao_ingresso_indisponivel(ingresso_comum):
+    ingresso_comum.estoque_disponivel = 0
+    ingresso_comum.save()
+    assert ingresso_comum.situacao == 'Esgotado'
