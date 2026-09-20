@@ -28,10 +28,11 @@
                     <th class="d-none d-lg-table-cell" scope="col ">Tipo</th>
                     <th scope="col">Titulo</th>
                     <th class="d-none d-lg-table-cell" scope="col">Local</th>
-                    <th scope="col">Descricao</th>
+                    <th class="d-none d-lg-table-cell" scope="col">Descricao</th>
                     <th scope="col">Data Hora</th>
                     <th scope="col">Preço(R$)</th>
-                    <th class="d-none d-md-table-cell" scope="col">Venda</th>
+                    <th class="d-none d-md-table-cell" scope="col">Vendas</th>
+                    <th class="d-none d-md-table-cell" scope="col">Situação</th>
                     <th scope="col">Status</th>
                     <th scope="col">Ações</th>
                 </tr>
@@ -42,12 +43,34 @@
                     <th class="d-none d-lg-table-cell" scope="row">{{ ingresso.get_tipo_display }}</th>
                     <td>{{ ingresso.titulo }}</td>
                     <td class="d-none d-lg-table-cell">{{ ingresso.local }}</td>
-                    <td>{{ ingresso.descricao }}</td>
+                    <td class="d-none d-lg-table-cell">{{ ingresso.descricao }}</td>
                     <td>{{ ingresso.data_horario|date:"d/m/Y H:i" }}</td>
                     <td>{{ ingresso.preco }}</td>
-                    <td class="d-none d-md-table-cell">{{ ingresso.quantidade_vendido }}/{{ ingresso.estoque_inicial }}
+                    <td class="d-none d-md-table-cell">
+                        {{ ingresso.quantidade_vendido }}/{{ ingresso.estoque_inicial }}
                     </td>
-                    <td>{{ ingresso.get_status_display }}</td>
+                    <td>
+                        <span
+                            {% if ingresso.situacao == 'Disponível'%}
+                            class="badge bg-green text-green-fg"
+                            {% else %}
+                            class="badge bg-orange text-orange-fg"
+                            {% endif %}
+                        >
+                            {{ ingresso.situacao }}
+                        </span>
+                    </td>
+                    <td>
+                        <span
+                            {% if ingresso.status == 'ATIVO' %}
+                            class="badge bg-blue text-blue-fg"
+                            {% else %}
+                            class="badge bg-dark text-dark-fg"
+                            {% endif %}
+                        >
+                        {{ ingresso.get_status_display }}
+                        </span>
+                    </td>
                     <td>
                         <div class="dropdown">
                             <a href="#" class="btn-action" data-bs-toggle="dropdown" aria-expanded="false">

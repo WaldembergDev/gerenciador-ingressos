@@ -70,6 +70,12 @@ class Ingresso(models.Model):
         estoque = self.estoque_disponivel + self.quantidade_vendido
         return estoque
 
+    @property
+    def situacao(self):
+        if self.estoque_disponivel > 0:
+            return 'Disponível'
+        return 'Esgotado'
+    
 
 class HistoricoCompra(models.Model):
     class Status(models.TextChoices):
