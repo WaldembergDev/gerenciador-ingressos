@@ -15,6 +15,6 @@ DATABASES = {
     }
 }
 
-USER_AGENT_STRING = f"{APP_NAME}/{APP_VERSION} (ambiente: prod)"
+USER_AGENT_STRING = f"{APP_NAME}/{APP_VERSION} (ambiente: test)"
 
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
