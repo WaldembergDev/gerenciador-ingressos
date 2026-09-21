@@ -29,4 +29,17 @@ def test_acesso_inicial_status_code_302(client):
 
     assert response.status_code == 302
 
-    
+
+@pytest.mark.django_db
+def test_home(client, ingresso_comum):
+    url = reverse('home')
+
+    sessao = client.session
+    sessao['acesso_geral'] = 'teste@123'
+    sessao.save()
+
+    response = client.get(url)
+
+    assert response.status_code == 200
+
+    assert ingresso_comum in response.context['ingressos']
