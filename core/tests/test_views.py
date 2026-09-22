@@ -1,5 +1,9 @@
 import pytest
 from django.urls import reverse
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 
 @pytest.mark.django_db
 def test_acesso_inicial_senha_valida(client, acesso_geral_comum):
@@ -99,4 +103,31 @@ def test_login_autenticado(client, usuario_comum):
     assert response.status_code == 302
 
     assert response['Location'] == reverse('home')
-    
+
+
+@pytest.mark.django_db
+def test_admin_resetar_senha_usuario(client, cliente_comum):
+    usuario = cliente_comum.usuario
+    usuario_admin = User.objects.create_superuser(
+        username='usuario_admin@gmail.com',
+        email='usuario_admin@gmail.com',
+        password='teste@123'
+    )
+
+    url = reverse('admin_resetar_senha_usuario', kwargs={'id_usuario': usuario.id})
+
+    session = client.session
+    session['acesso_geral'] = 'teste@123'
+    session.save()
+
+    client.force_login(usuario_admin)
+
+    response = client.post(url)
+
+    assert response.status_code == 302
+
+    # atualiza o objecto com os novos dados do banco
+    usuario.refresh_from_db()
+    # verifica se a senha foi alterada
+    assert usuario.check_password('12345678')
+
