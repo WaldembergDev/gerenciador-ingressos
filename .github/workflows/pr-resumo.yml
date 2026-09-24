@@ -29,6 +29,7 @@ jobs:
       - name: Executar os Testes com Pytest
         env:
             SECRET_KEY: "ci-secret-key-temporary"
+            
             DJANGO_SETTINGS_MODULE: "maraca_ingresso.settings.test"
         run: |
           pytest
