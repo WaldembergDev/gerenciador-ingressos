@@ -12,6 +12,9 @@ jobs:
 
     steps:
       - name: Baixar código do respositório
+        uses: actions/checkout@v4
+        
+      - name: 
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
