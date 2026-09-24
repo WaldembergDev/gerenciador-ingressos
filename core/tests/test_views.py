@@ -131,3 +131,52 @@ def test_admin_resetar_senha_usuario(client, cliente_comum):
     # verifica se a senha foi alterada
     assert usuario.check_password('12345678')
 
+
+@pytest.mark.django_db
+def test_view_minha_conta_modo_get(client, usuario_comum):
+    url = reverse('minha-conta')
+
+    session = client.session
+    session['acesso_geral'] = 'teste@123'
+    session.save()
+
+    client.force_login(usuario_comum)    
+    
+    response = client.get(url)
+
+    assert response.status_code == 200
+
+    # obtém o formulário enviado para o template
+    form = response.context['form_custom_user']
+
+    assert form.instance.first_name == 'Waldemberg'
+
+
+@pytest.mark.django_db
+def test_view_minha_conta_atualizacao(client, usuario_comum, cliente_comum):
+    url = reverse('minha-conta')
+
+    session = client.session
+    session['acesso_geral'] = 'teste@123'
+    session.save()
+
+    client.force_login(usuario_comum)
+
+    formulario = {
+        # novos dados para o usuário
+        'first_name': 'Pedro',
+        'last_name': 'Teste',
+        'email': 'teste_atualizacao@gmail.com',
+        'autoriza_notificacoes': True,
+        'telefone': cliente_comum.telefone,
+        'data_nascimento': cliente_comum.data_nascimento,
+    }
+
+    response = client.post(url, data=formulario)
+
+    assert response.status_code == 302
+
+    usuario_comum.refresh_from_db()
+
+    assert usuario_comum.first_name == 'Pedro'
+ 
