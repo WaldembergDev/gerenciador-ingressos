@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from email.policy import default
 from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
@@ -151,27 +152,27 @@ CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "America/Sao_Paulo"  # Opcional
 
 # configurações de notificações de Whatsapp
-TOKEN_WHATSAPP = config("TOKEN_WHATSAPP")
-NUMERO_NOTIFICACAO = config("NUMERO_NOTIFICACAO")
+TOKEN_WHATSAPP = config("TOKEN_WHATSAPP", default='')
+NUMERO_NOTIFICACAO = config("NUMERO_NOTIFICACAO", default='')
 
 # desativando o celery
 CELERY_TASK_ALWAYS_EAGER = True
 # CELERY_TASK_EAGER_PROPAGATES = True # exibe o erro: faz o código tentar novamente se der erro.
 
 # Configurações do Asaas
-ASAAS_API_KEY = config("ASAAS_API_KEY")
-ASAAS_END_POINT = config("ASAAS_END_POINT")
-ASAAS_USER_AGENT = config("ASAAS_USER_AGENT")
-ASAAS_TOKEN_WEBHOOK = config("ASAAS_TOKEN_WEBHOOK")
+ASAAS_API_KEY = config("ASAAS_API_KEY", default='')
+ASAAS_END_POINT = config("ASAAS_END_POINT", default='')
+ASAAS_USER_AGENT = config("ASAAS_USER_AGENT", default='')
+ASAAS_TOKEN_WEBHOOK = config("ASAAS_TOKEN_WEBHOOK", default='')
 
 # configurações para subir a aplicação utilizando ngrok
 CSRF_TRUSTED_ORIGINS = ["https://*.ngrok-free.app"]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-BASE_URL = config("BASE_URL")
+BASE_URL = config("BASE_URL", default='')
 
-WHAPI_TOKEN = config("WHAPI_TOKEN")
+WHAPI_TOKEN = config("WHAPI_TOKEN", default='')
 
 PATH_SETTINGS = config("PATH_SETTINGS")
 
