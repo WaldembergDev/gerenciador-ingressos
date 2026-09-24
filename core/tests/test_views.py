@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from core.models import AcessoGeral
 
 User = get_user_model()
 
@@ -205,4 +206,29 @@ def test_reset_senha(client, usuario_comum, cliente_comum):
     assert usuario_comum.check_password('@teste123')
 
 
- 
+@pytest.mark.django_db
+def test_acesso_geral_create(client, usuario_comum):
+    url = reverse('acesso_geral_create')
+
+    usuario_comum.is_superuser = True
+    usuario_comum.is_staff = True
+    usuario_comum.save()
+
+    session = client.session
+    session['acesso_geral'] = 'teste@123'
+    session.save()
+
+    client.force_login(usuario_comum)
+
+    formulario = {
+        'senha': '@teste',
+        'confirmacao_password': '@teste'
+    }
+
+    response = client.post(url, data=formulario)
+
+    assert response.status_code == 302
+
+    acesso = AcessoGeral.objects.get(id=1)
+
+    assert acesso.verificar_senha('@teste')
