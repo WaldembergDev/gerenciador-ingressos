@@ -179,4 +179,30 @@ def test_view_minha_conta_atualizacao(client, usuario_comum, cliente_comum):
     usuario_comum.refresh_from_db()
 
     assert usuario_comum.first_name == 'Pedro'
+
+
+@pytest.mark.django_db
+def test_reset_senha(client, usuario_comum, cliente_comum):
+    url = reverse('reset_senha')
+
+    session = client.session
+    session['acesso_geral'] = 'teste@123'
+    session.save()
+
+    client.force_login(usuario_comum)
+
+    formulario = {
+        'password': '@teste123',
+        'confirmacao_password': '@teste123'
+    }
+
+    response = client.post(url, data=formulario)
+
+    assert response.status_code == 302
+
+    usuario_comum.refresh_from_db()
+
+    assert usuario_comum.check_password('@teste123')
+
+
  
