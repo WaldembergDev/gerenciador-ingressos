@@ -112,7 +112,7 @@ def minha_conta(request):
             form_custom_user.save()
             form_cliente.save()
             messages.success(request, "Dados atualizados com sucesso!")
-            return redirect("minha_conta")
+            return redirect("minha-conta")
     else:
         form_custom_user = CustomUserUpdateForm(instance=perfil_usuario)
         form_cliente = ClienteForm(instance=perfil_cliente)

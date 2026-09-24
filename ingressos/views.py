@@ -75,7 +75,7 @@ def comprar_ingresso(request, id_ingresso):
 
 @login_required
 def exibir_meus_ingressos(request):
-    if request.user.is_admin:
+    if request.user.is_superuser:
         messages.error(
             request,
             "Você está logado como administrador. Para visualizar seus ingressos comprados, logue como cliente.",
