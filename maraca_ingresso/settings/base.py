@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from email.policy import default
 from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
@@ -136,12 +135,12 @@ LOGOUT_REDIRECT_URL = "/core/login"
 # configurações de e-mails
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-EMAIL_HOST = config("EMAIL_HOST")
-EMAIL_PORT = config("EMAIL_PORT", cast=int)
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-EMAIL_FROM_ADDRESS = config("EMAIL_FROM_ADDRESS")
+EMAIL_HOST = config("EMAIL_HOST", default='')
+EMAIL_PORT = config("EMAIL_PORT", cast=int, default='')
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default='')
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default='')
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default='')
+EMAIL_FROM_ADDRESS = config("EMAIL_FROM_ADDRESS", default='')
 
 # configurações do celery
 CELERY_BROKER_URL = "redis://localhost:6379/0"
