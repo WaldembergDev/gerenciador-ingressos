@@ -11,7 +11,7 @@ jobs:
 
         env:
             WEBHOOK_TOKEN: ${{ secrets.WEBHOOK_TOKEN }}
-
+            SECRET_KEY: 'teste@script'
         steps:
             - name: Copiar código do repositório
               uses: actions/checkout@v4
