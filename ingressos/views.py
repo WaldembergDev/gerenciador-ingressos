@@ -298,7 +298,7 @@ def eventos_webhook(request):
     if request.method != 'POST':
         return HttpResponse(status=405)
     chave_recebida = request.headers.get('X-Webhook-Token', '')
-    chave_env = getattr(settings, 'WEBHOOK_TOKEN', '')
+    chave_env = getattr(settings, 'WEBHOOK_TOKEN')
 
     if not hmac.compare_digest(
         bytes(chave_recebida, 'utf-8'), bytes(chave_env, 'utf-8')
