@@ -10,10 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from email.policy import default
 from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
+from sentry_sdk.integrations.django import DjangoIntegration
+import sentry_sdk
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -180,3 +181,15 @@ APP_VERSION = "1.0.0"
 
 # webhook para receber os eventos do maracanã
 WEBHOOK_TOKEN = config('WEBHOOK_TOKEN', default="")
+
+
+# configurações do Sentry
+DSN = config('DSN', default=None, cast=str)
+
+sentry_sdk.init(
+    dsn=DSN,
+    integrations=[DjangoIntegration()],
+    send_default_pii=True,
+    traces_sample_rate=0.1,
+    profile_session_sample_rate=0.1,
+)
