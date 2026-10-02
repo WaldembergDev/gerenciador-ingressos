@@ -31,5 +31,6 @@ jobs:
             SECRET_KEY: "ci-secret-key-temporary"
             PATH_SETTINGS: 'maraca_ingresso.settings.test'
             DJANGO_SETTINGS_MODULE: "maraca_ingresso.settings.test"
+            DSN: 'https://fake-public-key@fake-project.ingest.sentry.io/123456'
         run: |
           pytest
